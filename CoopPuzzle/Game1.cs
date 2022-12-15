@@ -66,9 +66,9 @@ namespace CoopPuzzle
             player = new Player(new Vector2(100, 200), Color.White, new AnimatedSprite(spriteSheet));
             otherPlayer = new Player(new Vector2(100, 300), Color.Black, new AnimatedSprite(spriteSheet));
 
-            ip = "localhost";
-            password = "password";
-            port = 27960;
+            //ip = "localhost";
+            //password = "password";
+            //port = 27960;
 
             objects = new List<GameObject>()
             {
@@ -142,6 +142,7 @@ namespace CoopPuzzle
             if (connected)
             {
                 player.Update(gameTime, objects);
+                otherPlayer.UpdateOther(gameTime, objects);
 
                 Player[] players = new Player[] { player, otherPlayer };
                 for (int i = 0; i < objects.Count; i++)
@@ -155,7 +156,7 @@ namespace CoopPuzzle
 
                 NetDataWriter writer = new NetDataWriter();
                 netManager.PollEvents();
-                writer.PutArray(new float[] { player.Pos.X, player.Pos.Y });
+                writer.PutArray(new float[] { player.Vel.X, player.Vel.Y });
                 netManager.SendToAll(writer, DeliveryMethod.ReliableOrdered);
             }
             base.Update(gameTime);
@@ -200,7 +201,7 @@ namespace CoopPuzzle
             listener.NetworkReceiveEvent += (fromPeer, dataReader, deliveryMethod) =>
             {
                 float[] array = dataReader.GetFloatArray();
-                otherPlayer.Pos = new Vector2(array[0], array[1]);
+                otherPlayer.Vel = new Vector2(array[0], array[1]);
 
                 dataReader.Recycle();
             };
