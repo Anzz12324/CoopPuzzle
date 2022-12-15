@@ -17,12 +17,12 @@ namespace CoopPuzzle
 
     public class Game1 : Game
     {
-        bool connected = false, host = false;
+        bool active = false, host = false, connected = false;
         NetManager netManager;
 
         Player player, otherPlayer;
 
-        SpriteFont font;
+        SpriteFont font, bigFont;
         Block block;
         List<GameObject> objects;
 
@@ -60,15 +60,12 @@ namespace CoopPuzzle
 
             Assets.LoadTextures(Content);
             font = Content.Load<SpriteFont>("font");
+            bigFont = Content.Load<SpriteFont>("bigFont");
             block = new Block(new Vector2(500), Color.Red);
             var spriteSheet = Content.Load<SpriteSheet>("frisk.sf", new JsonContentLoader());
 
             player = new Player(new Vector2(100, 200), Color.White, new AnimatedSprite(spriteSheet));
             otherPlayer = new Player(new Vector2(100, 300), Color.Black, new AnimatedSprite(spriteSheet));
-
-            //ip = "localhost";
-            //password = "password";
-            //port = 27960;
 
             objects = new List<GameObject>()
             {
@@ -77,73 +74,25 @@ namespace CoopPuzzle
                 new Block(new Vector2(500), Color.Red)
             };
         }
-        public void Host()
-        {
-            if (!connected)
-            {
-                ConnectionSetup(out EventBasedNetListener listener);
-
-                netManager.Start(port /* port */);
-
-                listener.ConnectionRequestEvent += request =>
-                {
-                    if (netManager.ConnectedPeersCount < 2 /* max connections */)
-                        request.AcceptIfKey(password);
-                    else
-                        request.Reject();
-                };
-
-                listener.PeerConnectedEvent += peer =>
-                {
-                    Debug.WriteLine("We got connection: {0}", peer.EndPoint); // Show peer ip
-
-                };
-                host = true;
-            }
-        }
-
-        public void Join()
-        {
-            if (!connected)
-            {
-                (player, otherPlayer) = (otherPlayer, player);
-
-                ConnectionSetup(out EventBasedNetListener listener);
-
-                netManager.Start();
-                netManager.Connect(ip /* host ip */, port /* port */, password /* Password */);
-            }
-            //Andreas ip: 217.210.114.224
-            //Johannes ip: 84.217.51.42
-            //Localhost: localhost eller 127.0.0.1
-            //Port: 27960
-            //192.168.1.207
-        }
-
 
 
         protected override void Update(GameTime gameTime)
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
-                if (netManager != null)
-                    netManager.Stop();
-
+                netManager?.Stop();
                 Exit();
             }
-            //Starta servern
-            if (Keyboard.GetState().IsKeyDown(Keys.J))
-                Host();
-            //Starta clienten
-            if (Keyboard.GetState().IsKeyDown(Keys.K))
-                Join();
 
 
-            if (connected)
+            if (active)
             {
-                player.Update(gameTime, objects);
-                otherPlayer.UpdateOther(gameTime, objects);
-
+                if (connected)
+                {
+                    player.Update(gameTime, objects);
+                    otherPlayer.UpdateOther(gameTime, objects);
+                }
+                
                 Player[] players = new Player[] { player, otherPlayer };
                 for (int i = 0; i < objects.Count; i++)
                 {
@@ -167,9 +116,10 @@ namespace CoopPuzzle
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin(samplerState: SamplerState.PointWrap);
 
-
-            if (connected)
-                spriteBatch.DrawString(font, (host) ? "Server   P1" : "Client   P2", new Vector2(100), Color.Black);
+            if (!connected)
+                spriteBatch.DrawString(bigFont, "Waiting on your friend to join!", new Vector2(100,360), Color.Black);
+            if (active)
+                spriteBatch.DrawString(font, (host) ? "Server   P1" : "Client   P2", new Vector2(100,0), Color.Black);
 
             spriteBatch.DrawString(font, "Server: J \nClient: K", new Vector2(), Color.Black);
             spriteBatch.DrawString(font, "P1", new Vector2(player.Pos.X, player.Pos.Y - 20), Color.Black);
@@ -205,7 +155,55 @@ namespace CoopPuzzle
 
                 dataReader.Recycle();
             };
-            connected = true;
+            active = true;
+        }
+
+        public void Host()
+        {
+            if (!active)
+            {
+                ConnectionSetup(out EventBasedNetListener listener);
+
+                netManager.Start(port /* port */);
+
+                listener.ConnectionRequestEvent += request =>
+                {
+                    if (netManager.ConnectedPeersCount < 2 /* max connections */)
+                        request.AcceptIfKey(password);
+                    else
+                        request.Reject();
+                };
+
+                listener.PeerConnectedEvent += peer =>
+                {
+                    Debug.WriteLine("We got connection: {0}", peer.EndPoint); // Show peer ip
+                    connected = true;
+                };
+                host = true;
+            }
+        }
+
+        public void Join()
+        {
+            if (!active)
+            {
+                (player, otherPlayer) = (otherPlayer, player);
+
+                ConnectionSetup(out EventBasedNetListener listener);
+
+                netManager.Start();
+                netManager.Connect(ip /* host ip */, port /* port */, password /* Password */);
+                listener.PeerConnectedEvent += peer =>
+                {
+                    Debug.WriteLine("We got connection: {0}", peer.EndPoint); // Show peer ip
+                    connected = true;
+                };
+            }
+            //Andreas ip: 217.210.114.224
+            //Johannes ip: 84.217.51.42
+            //Localhost: localhost eller 127.0.0.1
+            //Port: 27960
+            //192.168.1.207
         }
     }
 }
