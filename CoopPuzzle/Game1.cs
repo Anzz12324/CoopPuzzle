@@ -33,7 +33,7 @@ namespace CoopPuzzle
         public int ScreenWidth { get { return 1280; } }
         public int ScreenHeight { get { return 720; } }
 
-        public string ip, password;
+        public string ip, password; 
         public int port;
 
         public Game1()
