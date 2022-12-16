@@ -26,7 +26,7 @@ namespace CoopPuzzle
             particles = new ParticleSystem(position);
         }
 
-        public override void Update(GameTime gt, List<GameObject> objects)
+        public override void Update(GameTime gt, List<GameObject> objects, Game1 game1)
         {
             velocity = Vector2.Zero;
             oldPos = Pos;
@@ -78,12 +78,15 @@ namespace CoopPuzzle
             }
 
             sprite.Play(animation);
+
             particles.EmitterLocation = emitterPos;
-            particles.Update(dt, Vel);
+            Color groundColor = game1.GetColorOfPixel(emitterPos);
+            particles.Update(dt, Vel, groundColor);
+
             sprite.Update(dt);
         }
 
-        public void UpdateOther(GameTime gt, List<GameObject> objects)
+        public void UpdateOther(GameTime gt, List<GameObject> objects, Game1 game1)
         {
             oldPos = Pos;
             float dt = (float)gt.ElapsedGameTime.TotalSeconds;
@@ -122,8 +125,11 @@ namespace CoopPuzzle
             }
 
             sprite.Play(animation);
+
             particles.EmitterLocation = emitterPos;
-            particles.Update(dt, Vel);
+            Color groundColor = game1.GetColorOfPixel(emitterPos);
+            particles.Update(dt, Vel, groundColor);
+
             sprite.Update(dt);
         }
 

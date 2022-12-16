@@ -40,7 +40,7 @@ namespace CoopPuzzle
         //    return new Particle(position, velocity, angle, angularVelocity, color, size, ttl);
         //}
 
-        public void Update(float dt, Vector2 playerVel)
+        public void Update(float dt, Vector2 playerVel, Color color)
         {
             timeElapsed += dt;
 
@@ -51,7 +51,16 @@ namespace CoopPuzzle
                     Vector2 velocity = new Vector2((playerVel.X * (float)random.NextDouble() + (float)random.NextDouble() * random.Next(-1, 2)) / 10,
                                                     (playerVel.Y * (float)random.NextDouble() + (float)random.NextDouble() * random.Next(-1, 2)) / 10) * -5;
 
-                    particles.Add(new Particle(EmitterLocation, velocity, 0, 0, Color.Black, 4, 50)); //position, velocity, angle, angularVelocity, color, size, ttl
+                    //// Color variation, broken om färgen går över 255 eller under 0.
+                    //if(random.Next(2) == 1)
+                    //{
+                    //    color.R += 10; color.G += 10; color.B += 10;
+                    //}
+                    //else
+                    //{
+                    //    color.R -= 10; color.G -= 10; color.B -= 10;
+                    //}
+                    particles.Add(new Particle(EmitterLocation, velocity, 0, 0, color, 4, 50)); //position, velocity, angle, angularVelocity, color, size, ttl
                 }
 
                 timeElapsed = 0;

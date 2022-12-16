@@ -23,8 +23,9 @@ namespace CoopPuzzle
         Player player, otherPlayer;
 
         SpriteFont font, bigFont;
-        Block block;
         List<GameObject> objects;
+
+        RenderTarget2D renderTarget;
 
         
         private GraphicsDeviceManager graphics;
@@ -50,6 +51,7 @@ namespace CoopPuzzle
         protected override void Initialize()
         {
             TargetElapsedTime = TimeSpan.FromSeconds(1f / 144f);
+            renderTarget = new RenderTarget2D(graphics.GraphicsDevice, ScreenWidth, ScreenHeight);
 
             base.Initialize();
         }
@@ -61,7 +63,6 @@ namespace CoopPuzzle
             Assets.LoadTextures(Content);
             font = Content.Load<SpriteFont>("font");
             bigFont = Content.Load<SpriteFont>("bigFont");
-            block = new Block(new Vector2(500), Color.Red);
             var spriteSheet = Content.Load<SpriteSheet>("frisk.sf", new JsonContentLoader());
 
             player = new Player(new Vector2(100, 200), Color.White, new AnimatedSprite(spriteSheet));
@@ -89,8 +90,8 @@ namespace CoopPuzzle
             {
                 if (connected)
                 {
-                    player.Update(gameTime, objects);
-                    otherPlayer.UpdateOther(gameTime, objects);
+                    player.Update(gameTime, objects, this);
+                    otherPlayer.UpdateOther(gameTime, objects, this);
                 }
                 
                 Player[] players = new Player[] { player, otherPlayer };
@@ -114,8 +115,19 @@ namespace CoopPuzzle
 
         protected override void Draw(GameTime gameTime)
         {
+            GraphicsDevice.SetRenderTarget(renderTarget);
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin(samplerState: SamplerState.PointWrap);
+            spriteBatch.Draw(Content.Load<Texture2D>("ExamplePNG"), new Vector2(400, 100), Color.White);
+            for (int i = 0; i < objects.Count; i++)
+            {
+                objects[i].Draw(spriteBatch);
+            }
+            spriteBatch.End();
+
+            GraphicsDevice.SetRenderTarget(null);
+            spriteBatch.Begin(samplerState: SamplerState.PointWrap);
+            spriteBatch.Draw(renderTarget, Vector2.Zero, Color.White);
 
             if (!connected)
                 spriteBatch.DrawString(bigFont, "Waiting on your friend to join!", new Vector2(100,360), Color.Black);
@@ -127,18 +139,8 @@ namespace CoopPuzzle
             spriteBatch.DrawString(font, "P2", new Vector2(otherPlayer.Pos.X, otherPlayer.Pos.Y - 20), Color.Black);
             spriteBatch.DrawString(font, $"FPS:{(int)(1 / gameTime.ElapsedGameTime.TotalSeconds)}", new Vector2(500, 0), Color.Black);
 
-            block.Draw(spriteBatch);
-
-            for (int i = 0; i < objects.Count; i++)
-            {
-                objects[i].Draw(spriteBatch);
-            }
-
             player.Draw(spriteBatch);
             otherPlayer.Draw(spriteBatch);
-
-
-
 
             spriteBatch.End();
             base.Draw(gameTime);
@@ -205,6 +207,13 @@ namespace CoopPuzzle
             //Localhost: localhost eller 127.0.0.1
             //Port: 27960
             //192.168.1.207
+        }
+
+        public Color GetColorOfPixel(Vector2 position)
+        {
+            Color[] data = new Color[ScreenWidth * ScreenHeight];
+            renderTarget.GetData(data);
+            return data[(int)position.X + (int)position.Y * ScreenWidth];
         }
     }
 }
