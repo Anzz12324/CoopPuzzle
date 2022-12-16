@@ -51,15 +51,26 @@ namespace CoopPuzzle
                     Vector2 velocity = new Vector2((playerVel.X * (float)random.NextDouble() + (float)random.NextDouble() * random.Next(-1, 2)) / 10,
                                                     (playerVel.Y * (float)random.NextDouble() + (float)random.NextDouble() * random.Next(-1, 2)) / 10) * -5;
 
-                    //// Color variation, broken om färgen går över 255 eller under 0.
-                    //if(random.Next(2) == 1)
-                    //{
-                    //    color.R += 10; color.G += 10; color.B += 10;
-                    //}
-                    //else
-                    //{
-                    //    color.R -= 10; color.G -= 10; color.B -= 10;
-                    //}
+
+                    // Color variation
+                    if (random.Next(2) == 1)
+                    {
+                        if (color.R > 230) color.R = 250;
+                        else color.R += 20;
+                        if (color.G > 230) color.G = 250;
+                        else color.G += 20;
+                        if (color.B > 230) color.B = 250;
+                        else color.B += 20;
+                    }
+                    else
+                    {
+                        if (color.R < 20) color.R = 0;
+                        else color.R -= 20;
+                        if (color.G < 20) color.G = 0;
+                        else color.G -= 20;
+                        if (color.B < 20) color.B = 0;
+                        else color.B -= 20;
+                    }
                     particles.Add(new Particle(EmitterLocation, velocity, 0, 0, color, 4, 50)); //position, velocity, angle, angularVelocity, color, size, ttl
                 }
 
