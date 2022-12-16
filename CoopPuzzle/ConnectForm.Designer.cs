@@ -44,8 +44,12 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.radBtnEdit = new System.Windows.Forms.RadioButton();
+            this.grpEdit = new System.Windows.Forms.GroupBox();
+            this.btnEditMode = new System.Windows.Forms.Button();
             this.grpHost.SuspendLayout();
             this.grpJoin.SuspendLayout();
+            this.grpEdit.SuspendLayout();
             this.SuspendLayout();
             // 
             // radBtnHost
@@ -63,7 +67,7 @@
             // radBtnJoin
             // 
             this.radBtnJoin.AutoSize = true;
-            this.radBtnJoin.Location = new System.Drawing.Point(179, 69);
+            this.radBtnJoin.Location = new System.Drawing.Point(134, 69);
             this.radBtnJoin.Name = "radBtnJoin";
             this.radBtnJoin.Size = new System.Drawing.Size(63, 19);
             this.radBtnJoin.TabIndex = 1;
@@ -207,11 +211,46 @@
             this.label3.TabIndex = 0;
             this.label3.Text = "Port";
             // 
+            // radBtnEdit
+            // 
+            this.radBtnEdit.AutoSize = true;
+            this.radBtnEdit.Location = new System.Drawing.Point(203, 69);
+            this.radBtnEdit.Name = "radBtnEdit";
+            this.radBtnEdit.Size = new System.Drawing.Size(45, 19);
+            this.radBtnEdit.TabIndex = 4;
+            this.radBtnEdit.TabStop = true;
+            this.radBtnEdit.Text = "Edit";
+            this.radBtnEdit.UseVisualStyleBackColor = true;
+            this.radBtnEdit.CheckedChanged += new System.EventHandler(this.radBtnEdit_CheckedChanged);
+            // 
+            // grpEdit
+            // 
+            this.grpEdit.Controls.Add(this.btnEditMode);
+            this.grpEdit.Location = new System.Drawing.Point(12, 94);
+            this.grpEdit.Name = "grpEdit";
+            this.grpEdit.Size = new System.Drawing.Size(280, 187);
+            this.grpEdit.TabIndex = 5;
+            this.grpEdit.TabStop = false;
+            this.grpEdit.Text = "Edit";
+            // 
+            // btnEditMode
+            // 
+            this.btnEditMode.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnEditMode.Location = new System.Drawing.Point(49, 55);
+            this.btnEditMode.Name = "btnEditMode";
+            this.btnEditMode.Size = new System.Drawing.Size(181, 72);
+            this.btnEditMode.TabIndex = 0;
+            this.btnEditMode.Text = "Edit Mode";
+            this.btnEditMode.UseVisualStyleBackColor = true;
+            this.btnEditMode.Click += new System.EventHandler(this.btnEditMode_Click);
+            // 
             // ConnectForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(307, 293);
+            this.Controls.Add(this.grpEdit);
+            this.Controls.Add(this.radBtnEdit);
             this.Controls.Add(this.grpJoin);
             this.Controls.Add(this.grpHost);
             this.Controls.Add(this.radBtnJoin);
@@ -224,6 +263,7 @@
             this.grpHost.PerformLayout();
             this.grpJoin.ResumeLayout(false);
             this.grpJoin.PerformLayout();
+            this.grpEdit.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -247,5 +287,8 @@
         private System.Windows.Forms.TextBox txtJoinPassword;
         private System.Windows.Forms.TextBox txtJoinPort;
         private System.Windows.Forms.Button btnJoin;
+        private System.Windows.Forms.RadioButton radBtnEdit;
+        private System.Windows.Forms.GroupBox grpEdit;
+        private System.Windows.Forms.Button btnEditMode;
     }
 }

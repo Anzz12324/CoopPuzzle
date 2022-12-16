@@ -36,7 +36,7 @@ namespace CoopPuzzle
 
         public string ip, password; 
         public int port;
-
+        public bool editmode = false;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -85,6 +85,8 @@ namespace CoopPuzzle
                 Exit();
             }
 
+            if (editmode)
+                player.Update(gameTime, objects, this);
 
             if (active)
             {
@@ -129,7 +131,7 @@ namespace CoopPuzzle
             spriteBatch.Begin(samplerState: SamplerState.PointWrap);
             spriteBatch.Draw(renderTarget, Vector2.Zero, Color.White);
 
-            if (!connected)
+            if (!connected && !editmode)
                 spriteBatch.DrawString(bigFont, "Waiting on your friend to join!", new Vector2(100,360), Color.Black);
             if (active)
                 spriteBatch.DrawString(font, (host) ? "Server   P1" : "Client   P2", new Vector2(100,0), Color.Black);

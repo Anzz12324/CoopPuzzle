@@ -21,14 +21,22 @@ namespace CoopPuzzle
 
         private void radHost_CheckedChanged(object sender, EventArgs e)
         {
+            grpEdit.Visible = false;
             grpJoin.Visible = false;
             grpHost.Visible = true;
         }
 
         private void radJoin_CheckedChanged(object sender, EventArgs e)
         {
+            grpEdit.Visible = false;
             grpHost.Visible = false;
             grpJoin.Visible = true;
+        }
+        private void radBtnEdit_CheckedChanged(object sender, EventArgs e)
+        {
+            grpHost.Visible = false;
+            grpJoin.Visible = false;
+            grpEdit.Visible = true;
         }
 
         private void btnHost_Click(object sender, EventArgs e)
@@ -45,6 +53,12 @@ namespace CoopPuzzle
             gameEntry.password = txtJoinPassword.Text.ToString();
             gameEntry.ip = txtJoinIp.Text.ToString();
             gameEntry.Join();
+            Close();
+        }
+
+        private void btnEditMode_Click(object sender, EventArgs e)
+        {
+            gameEntry.editmode= true;
             Close();
         }
     }
