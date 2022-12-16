@@ -6,22 +6,24 @@ namespace CoopPuzzle
     internal class Player : GameObject
     {
         AnimatedSprite sprite;
+        ParticleSystem particles;
         float speed = 100;
 
-        Vector2 velocity;
-        public Vector2 Vel { get { return velocity; } set { velocity = value; } }
+        Vector2 start, oldPos, velocity;
 
-        Vector2 oldPos;
         Vector2 spritePos { get { return new Vector2(Pos.X + 16, Pos.Y - 8); } }
+        Vector2 emitterPos { get { return new Vector2(Pos.X + 16, Pos.Y + 16); } }
         
         public Vector2 Pos { get { return position; } set { position = value; } }
-        private Vector2 start;
+        public Vector2 Vel { get { return velocity; } set { velocity = value; } }
+
         public Player(Vector2 position, Color color, AnimatedSprite sprite)
         {
             this.color = color;
             this.position = position;
             this.start = position;
             this.sprite = sprite;
+            particles = new ParticleSystem(position);
         }
 
         public override void Update(GameTime gt, List<GameObject> objects)
@@ -61,7 +63,7 @@ namespace CoopPuzzle
                 if (this.hitbox.Intersects(objects[i].hitbox))
                 {
                     if (objects[i] is WeighedSwitch)
-                        return;
+                        break;
 
                     if (objects[i] is Door)
                     {
@@ -76,6 +78,8 @@ namespace CoopPuzzle
             }
 
             sprite.Play(animation);
+            particles.EmitterLocation = emitterPos;
+            particles.Update(dt, Vel);
             sprite.Update(dt);
         }
 
@@ -103,7 +107,7 @@ namespace CoopPuzzle
                 if (this.hitbox.Intersects(objects[i].hitbox))
                 {
                     if (objects[i] is WeighedSwitch)
-                        return;
+                        break;
 
                     if (objects[i] is Door)
                     {
@@ -118,12 +122,15 @@ namespace CoopPuzzle
             }
 
             sprite.Play(animation);
+            particles.EmitterLocation = emitterPos;
+            particles.Update(dt, Vel);
             sprite.Update(dt);
         }
 
         public override void Draw(SpriteBatch sb)
         {
-            base.Draw(sb);
+            //base.Draw(sb);
+            particles.Draw(sb);
             sb.Draw(sprite, spritePos, 0f, Vector2.One * 2f);
         }
 

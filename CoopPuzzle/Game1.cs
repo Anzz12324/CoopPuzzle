@@ -108,6 +108,7 @@ namespace CoopPuzzle
                 writer.PutArray(new float[] { player.Vel.X, player.Vel.Y });
                 netManager.SendToAll(writer, DeliveryMethod.ReliableOrdered);
             }
+
             base.Update(gameTime);
         }
 
