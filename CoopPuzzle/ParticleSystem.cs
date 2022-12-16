@@ -79,7 +79,7 @@ namespace CoopPuzzle
 
             for (int particle = 0; particle < particles.Count; particle++)
             {
-                particles[particle].Update();
+                particles[particle].Update(dt);
                 if (particles[particle].TTL <= 0)
                 {
                     particles.RemoveAt(particle);

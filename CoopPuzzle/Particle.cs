@@ -29,13 +29,14 @@ namespace CoopPuzzle
             TTL = ttl;
         }
 
-        public void Update()
+        public void Update(float dt)
         {
             TTL--;
-            if(Size > 0)
-                Size-= Size/50f;
+            if (Size > 0)
+                Size -= Size / 50f;
             Position += Velocity;
             Angle += AngularVelocity;
+            Velocity += new Vector2(0, 1) * dt;
         }
 
         public void Draw(SpriteBatch sb)
