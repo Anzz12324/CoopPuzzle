@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConnectForm));
             this.radBtnHost = new System.Windows.Forms.RadioButton();
             this.radBtnJoin = new System.Windows.Forms.RadioButton();
             this.grpHost = new System.Windows.Forms.GroupBox();
@@ -143,7 +144,7 @@
             this.grpJoin.Controls.Add(this.label5);
             this.grpJoin.Controls.Add(this.label4);
             this.grpJoin.Controls.Add(this.label3);
-            this.grpJoin.Location = new System.Drawing.Point(12, 94);
+            this.grpJoin.Location = new System.Drawing.Point(298, 94);
             this.grpJoin.Name = "grpJoin";
             this.grpJoin.Size = new System.Drawing.Size(280, 187);
             this.grpJoin.TabIndex = 3;
@@ -226,7 +227,7 @@
             // grpEdit
             // 
             this.grpEdit.Controls.Add(this.btnEditMode);
-            this.grpEdit.Location = new System.Drawing.Point(12, 94);
+            this.grpEdit.Location = new System.Drawing.Point(584, 94);
             this.grpEdit.Name = "grpEdit";
             this.grpEdit.Size = new System.Drawing.Size(280, 187);
             this.grpEdit.TabIndex = 5;
@@ -248,13 +249,16 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(307, 293);
+            this.BackColor = System.Drawing.SystemColors.Control;
+            this.ClientSize = new System.Drawing.Size(878, 293);
             this.Controls.Add(this.grpEdit);
             this.Controls.Add(this.radBtnEdit);
             this.Controls.Add(this.grpJoin);
             this.Controls.Add(this.grpHost);
             this.Controls.Add(this.radBtnJoin);
             this.Controls.Add(this.radBtnHost);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ConnectForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ConnectForm";
