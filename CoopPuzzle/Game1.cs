@@ -28,7 +28,8 @@ namespace CoopPuzzle
 
         RenderTarget2D renderTarget;
 
-        
+        KeyboardState kbState, kbPreviousState;
+
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
 
@@ -74,19 +75,22 @@ namespace CoopPuzzle
             {
                 new WeighedSwitch(new Vector2(200, 100), Color.Green),
                 new Door(new Vector2(300, 100), Color.Green),
-                new Block(new Vector2(500), Color.Red)
+                new Block(new Vector2(500), Color.Red),
+                new Trap(new Vector2(550,500))
             };
         }
 
 
         protected override void Update(GameTime gameTime)
         {
+            kbPreviousState = kbState;
+            kbState = Keyboard.GetState();
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
                 netManager?.Stop();
                 Exit();
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.L))
+            if (kbState.IsKeyDown(Keys.L) && kbPreviousState.IsKeyUp(Keys.L))
                 editmodePlayer = !editmodePlayer;
 
             if (editmode)
@@ -136,16 +140,18 @@ namespace CoopPuzzle
             spriteBatch.Draw(renderTarget, Vector2.Zero, Color.White);
 
             if (!connected && !editmode)
-                spriteBatch.DrawString(bigFont, "Waiting on your friend to join!", new Vector2(100,360), Color.Black);
+                spriteBatch.DrawString(bigFont, "Waiting on your friend to join!", new Vector2(100,360), Color.Black);                
             if (active)
                 spriteBatch.DrawString(font, (host) ? "Server   P1" : "Client   P2", new Vector2(100,0), Color.Black);
+            if (editmode)
+                spriteBatch.DrawString(font, "Switch between player : L", new Vector2(0, 40), Color.Black);
 
             spriteBatch.DrawString(font, "Server: J \nClient: K", new Vector2(), Color.Black);
             spriteBatch.DrawString(font, "P1", new Vector2(player.Pos.X, player.Pos.Y - 20), Color.Black);
             spriteBatch.DrawString(font, "P2", new Vector2(otherPlayer.Pos.X, otherPlayer.Pos.Y - 20), Color.Black);
             spriteBatch.DrawString(font, $"FPS:{(int)(1 / gameTime.ElapsedGameTime.TotalSeconds)}", new Vector2(500, 0), Color.Black);
             spriteBatch.DrawString(font, $"Pos:{player.Pos}  CheckPos:{otherPlayer.CheckPos}", new Vector2(600,0), Color.Black);
-
+            spriteBatch.DrawString(font, $"PlayerEdit: {editmodePlayer}", new Vector2(300,0), Color.Black);
             player.Draw(spriteBatch);
             otherPlayer.Draw(spriteBatch);
 

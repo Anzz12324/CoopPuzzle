@@ -66,7 +66,8 @@ namespace CoopPuzzle
                 {
                     if (objects[i] is WeighedSwitch)
                         break;
-
+                    if (objects[i] is Trap)
+                        TrapCollision();
                     if (objects[i] is Door)
                     {
                         Door door = (Door)objects[i];
@@ -75,6 +76,7 @@ namespace CoopPuzzle
                         else
                             return;
                     }
+                    if (objects[i] is Block)
                         HandleCollision();
                 }
             }
@@ -145,6 +147,10 @@ namespace CoopPuzzle
         private void HandleCollision()
         {
             Pos = oldPos;
+        }
+        private void TrapCollision()
+        {
+            Pos = start;
         }
     }
 }
