@@ -7,6 +7,7 @@ namespace CoopPuzzle
     public static class Assets
     {
         public static Texture2D white;
+        public static Texture2D ;
         
         public static void LoadTextures(ContentManager gd)
         {

@@ -24,5 +24,10 @@ namespace CoopPuzzle
                 Weight = players[i].hitbox.Intersects(this.hitbox) ? true : Weight;
             }
         }
+
+        public override void Draw(SpriteBatch sb)
+        {
+            sb.Draw(Assets);
+        }
     }
 }
