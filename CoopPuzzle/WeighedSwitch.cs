@@ -27,7 +27,15 @@ namespace CoopPuzzle
 
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(Assets);
+            if (Weight)
+            {
+                sb.Draw(Assets.undertaleRuins, hitbox, new Rectangle(23, 837, 20, 20), Color.White);
+            }
+            else
+            {
+                sb.Draw(Assets.undertaleRuins, hitbox, new Rectangle(1, 837, 20, 20), Color.White);
+
+            }
         }
     }
 }

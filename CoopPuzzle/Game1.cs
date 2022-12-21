@@ -11,13 +11,14 @@ global using LiteNetLib.Utils;
 global using MonoGame.Extended.Sprites;
 global using MonoGame.Extended.Content;
 using MonoGame.Extended.Serialization;
+using MonoGame.Extended.Timers;
 
 namespace CoopPuzzle
 {
 
     public class Game1 : Game
     {
-        bool active = false, host = false, connected = false;
+        bool active = false, host = false, connected = false, editmodePlayer = false;
         NetManager netManager;
 
         Player player, otherPlayer;
@@ -64,9 +65,10 @@ namespace CoopPuzzle
             font = Content.Load<SpriteFont>("font");
             bigFont = Content.Load<SpriteFont>("bigFont");
             var spriteSheet = Content.Load<SpriteSheet>("frisk.sf", new JsonContentLoader());
+            var spriteSheet2 = Content.Load<SpriteSheet>("frisk2.sf", new JsonContentLoader());
 
             player = new Player(new Vector2(100, 200), Color.White, new AnimatedSprite(spriteSheet));
-            otherPlayer = new Player(new Vector2(100, 300), Color.Black, new AnimatedSprite(spriteSheet));
+            otherPlayer = new Player(new Vector2(100, 300), Color.Black, new AnimatedSprite(spriteSheet2));
 
             objects = new List<GameObject>()
             {
@@ -84,9 +86,18 @@ namespace CoopPuzzle
                 netManager?.Stop();
                 Exit();
             }
+            if (Keyboard.GetState().IsKeyDown(Keys.L))
+                editmodePlayer = !editmodePlayer;
 
             if (editmode)
-                player.Update(gameTime, objects, this);
+            {
+                if (editmodePlayer)
+                    otherPlayer.Update(gameTime, objects, this);
+                else
+                    player.Update(gameTime, objects, this);
+
+                UpdateObjects(gameTime);
+            }
 
             if (active)
             {
@@ -95,16 +106,8 @@ namespace CoopPuzzle
                     player.Update(gameTime, objects, this);
                     otherPlayer.UpdateOther(gameTime, objects, this);
                 }
-                
-                Player[] players = new Player[] { player, otherPlayer };
-                for (int i = 0; i < objects.Count; i++)
-                {
-                    if (objects[i] is WeighedSwitch)
-                        objects[i].Update(gameTime, players);
 
-                    else
-                        objects[i].Update(gameTime, objects);
-                }
+                UpdateObjects(gameTime);
 
                 NetDataWriter writer = new NetDataWriter();
                 netManager.PollEvents();
@@ -148,6 +151,19 @@ namespace CoopPuzzle
 
             spriteBatch.End();
             base.Draw(gameTime);
+        }
+
+        public void UpdateObjects(GameTime gameTime)
+        {
+            Player[] players = new Player[] { player, otherPlayer };
+            for (int i = 0; i < objects.Count; i++)
+            {
+                if (objects[i] is WeighedSwitch)
+                    objects[i].Update(gameTime, players);
+
+                else
+                    objects[i].Update(gameTime, objects);
+            }
         }
 
         public void ConnectionSetup(out EventBasedNetListener listener)
