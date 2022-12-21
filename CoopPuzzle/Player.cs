@@ -9,14 +9,14 @@ namespace CoopPuzzle
         ParticleSystem particles;
         float speed = 100;
 
-        Vector2 start, oldPos, velocity;
+        Vector2 start, oldPos, velocity, checkPos;
 
         Vector2 spritePos { get { return new Vector2(Pos.X + 16, Pos.Y - 8); } }
         Vector2 emitterPos { get { return new Vector2(Pos.X + 16, Pos.Y + 16); } }
         
         public Vector2 Pos { get { return position; } set { position = value; } }
         public Vector2 Vel { get { return velocity; } set { velocity = value; } }
-        public Vector2 CheckPos { get; set; }
+        public Vector2 CheckPos { get { return checkPos; } set { checkPos = value; } }
 
         public Player(Vector2 position, Color color, AnimatedSprite sprite)
         {
@@ -25,6 +25,7 @@ namespace CoopPuzzle
             this.start = position;
             this.sprite = sprite;
             particles = new ParticleSystem(position);
+            this.checkPos = Vector2.Zero;
         }
 
         public override void Update(GameTime gt, List<GameObject> objects, Game1 game1)

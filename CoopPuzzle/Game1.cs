@@ -141,7 +141,7 @@ namespace CoopPuzzle
             spriteBatch.DrawString(font, "P1", new Vector2(player.Pos.X, player.Pos.Y - 20), Color.Black);
             spriteBatch.DrawString(font, "P2", new Vector2(otherPlayer.Pos.X, otherPlayer.Pos.Y - 20), Color.Black);
             spriteBatch.DrawString(font, $"FPS:{(int)(1 / gameTime.ElapsedGameTime.TotalSeconds)}", new Vector2(500, 0), Color.Black);
-            spriteBatch.DrawString(font, $"Pos:{player.Pos}  CheckPos:{player.CheckPos}", new Vector2(600,0), Color.Black);
+            spriteBatch.DrawString(font, $"Pos:{player.Pos}  CheckPos:{otherPlayer.CheckPos}", new Vector2(600,0), Color.Black);
 
             player.Draw(spriteBatch);
             otherPlayer.Draw(spriteBatch);
