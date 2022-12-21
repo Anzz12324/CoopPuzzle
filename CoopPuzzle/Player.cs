@@ -16,6 +16,7 @@ namespace CoopPuzzle
         
         public Vector2 Pos { get { return position; } set { position = value; } }
         public Vector2 Vel { get { return velocity; } set { velocity = value; } }
+        public Vector2 CheckPos { get; set; }
 
         public Player(Vector2 position, Color color, AnimatedSprite sprite)
         {
