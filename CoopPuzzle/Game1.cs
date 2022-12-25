@@ -61,7 +61,7 @@ namespace CoopPuzzle
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            DebugDraw.Init(GraphicsDevice);
             Assets.LoadTextures(Content);
             font = Content.Load<SpriteFont>("font");
             bigFont = Content.Load<SpriteFont>("bigFont");
@@ -166,7 +166,8 @@ namespace CoopPuzzle
             {
                 if (objects[i] is WeighedSwitch)
                     objects[i].Update(gameTime, players);
-
+                else if (objects[i] is Trap)
+                    objects[i].Update(gameTime);
                 else
                     objects[i].Update(gameTime, objects);
             }

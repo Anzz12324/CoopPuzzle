@@ -139,6 +139,7 @@ namespace CoopPuzzle
 
         public override void Draw(SpriteBatch sb)
         {
+            sb.DrawRectangle(TextBox,Color.Black);
             //base.Draw(sb);
             particles.Draw(sb);
             sb.Draw(sprite, spritePos, 0f, Vector2.One * 2f);
