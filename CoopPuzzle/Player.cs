@@ -8,6 +8,7 @@ namespace CoopPuzzle
         AnimatedSprite sprite;
         ParticleSystem particles;
         float speed = 100;
+        string animation;
 
         Vector2 start, oldPos, velocity, checkPos;
 
@@ -26,14 +27,13 @@ namespace CoopPuzzle
             this.sprite = sprite;
             particles = new ParticleSystem(position);
             this.checkPos = Vector2.Zero;
+            animation = "idleDown";
         }
 
         public override void Update(GameTime gt, List<GameObject> objects, Game1 game1)
         {
             velocity = Vector2.Zero;
-            oldPos = Pos;
             float dt = (float)gt.ElapsedGameTime.TotalSeconds;
-            var animation = "idleDown";
             
             if (Keyboard.GetState().IsKeyDown(Keys.Left))
                 velocity.X -= dt * speed;
@@ -47,16 +47,30 @@ namespace CoopPuzzle
             if (Keyboard.GetState().IsKeyDown(Keys.Down))
                 velocity.Y += dt * speed;
 
-            if (Vel.X > 0)
-                animation = "walkRight";
-            if (Vel.X < 0)
-                animation = "walkLeft";
+            UpdateOther(gt, objects, game1);
+        }
+
+        public void UpdateOther(GameTime gt, List<GameObject> objects, Game1 game1)
+        {
+            oldPos = Pos;
+            float dt = (float)gt.ElapsedGameTime.TotalSeconds;
+
             if (Vel.Y > 0)
                 animation = "walkDown";
-            if (Vel.Y < 0)
+            else if (Vel.Y < 0)
                 animation = "walkUp";
-            if (Vel == Vector2.Zero)
+            else if (Vel.X > 0)
+                animation = "walkRight";
+            else if (Vel.X < 0)
+                animation = "walkLeft";
+            else if (animation == "walkDown")
                 animation = "idleDown";
+            else if (animation == "walkUp")
+                animation = "idleUp";
+            else if (animation == "walkRight")
+                animation = "idleRight";
+            else if (animation == "walkLeft")
+                animation = "idleLeft";
 
             position += Vel;
 
@@ -80,61 +94,10 @@ namespace CoopPuzzle
                         HandleCollision();
                 }
             }
-
             sprite.Play(animation);
-
-            particles.EmitterLocation = emitterPos;
-            Color groundColor = game1.GetColorOfPixel(emitterPos);
-            particles.Update(dt, Vel, groundColor);
-
             sprite.Update(dt);
-        }
-
-        public void UpdateOther(GameTime gt, List<GameObject> objects, Game1 game1)
-        {
-            oldPos = Pos;
-            float dt = (float)gt.ElapsedGameTime.TotalSeconds;
-            var animation = "idleDown";
-
-            if (Vel.X > 0)
-                animation = "walkRight";
-            if (Vel.X < 0)
-                animation = "walkLeft";
-            if (Vel.Y > 0)
-                animation = "walkDown";
-            if (Vel.Y < 0)
-                animation = "walkUp";
-            if (Vel == Vector2.Zero)
-                animation = "idleDown";
-
-            position += Vel;
-
-            for (int i = 0; i < objects.Count; i++)
-            {
-                if (this.hitbox.Intersects(objects[i].hitbox))
-                {
-                    if (objects[i] is WeighedSwitch)
-                        break;
-
-                    if (objects[i] is Door)
-                    {
-                        Door door = (Door)objects[i];
-                        if (!door.Open)
-                            HandleCollision();
-                        else
-                            return;
-                    }
-                    HandleCollision();
-                }
-            }
-
-            sprite.Play(animation);
-
             particles.EmitterLocation = emitterPos;
-            Color groundColor = game1.GetColorOfPixel(emitterPos);
-            particles.Update(dt, Vel, groundColor);
-
-            sprite.Update(dt);
+            particles.Update(dt, Vel, game1.GetColorOfPixel(emitterPos));
         }
 
         public override void Draw(SpriteBatch sb)

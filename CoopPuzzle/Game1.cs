@@ -33,6 +33,7 @@ namespace CoopPuzzle
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
 
+        Color[] colorData;
         public int ScreenWidth { get { return 1280; } }
         public int ScreenHeight { get { return 720; } }
 
@@ -54,6 +55,7 @@ namespace CoopPuzzle
         {
             TargetElapsedTime = TimeSpan.FromSeconds(1f / 144f);
             renderTarget = new RenderTarget2D(graphics.GraphicsDevice, ScreenWidth, ScreenHeight);
+            colorData = new Color[ScreenWidth * ScreenHeight];
 
             base.Initialize();
         }
@@ -96,9 +98,15 @@ namespace CoopPuzzle
             if (editmode)
             {
                 if (editmodePlayer)
+                {
                     otherPlayer.Update(gameTime, objects, this);
+                    player.UpdateOther(gameTime, objects, this);
+                }
                 else
+                {
                     player.Update(gameTime, objects, this);
+                    otherPlayer.UpdateOther(gameTime, objects, this);
+                }
 
                 UpdateObjects(gameTime);
             }
@@ -120,6 +128,7 @@ namespace CoopPuzzle
                 netManager.SendToAll(writer, DeliveryMethod.ReliableOrdered);
             }
 
+            renderTarget.GetData(colorData);
             base.Update(gameTime);
         }
 
@@ -239,9 +248,7 @@ namespace CoopPuzzle
 
         public Color GetColorOfPixel(Vector2 position)
         {
-            Color[] data = new Color[ScreenWidth * ScreenHeight];
-            renderTarget.GetData(data);
-            return data[(int)position.X + (int)position.Y * ScreenWidth];
+            return colorData[(int)position.X + (int)position.Y * ScreenWidth];
         }
     }
 }
