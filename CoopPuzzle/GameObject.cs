@@ -5,7 +5,7 @@
         protected Texture2D tex;
         protected Color color;
         protected Vector2 position;
-        public Rectangle hitbox { get { return new Rectangle((int)position.X, (int)position.Y, 32, 32); } }
+        public virtual Rectangle hitbox { get { return new Rectangle((int)position.X, (int)position.Y, 32, 32); } }
 
 
         public virtual void Update(GameTime gT) { }

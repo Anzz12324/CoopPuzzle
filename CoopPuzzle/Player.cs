@@ -16,6 +16,8 @@ namespace CoopPuzzle
         
         public Vector2 Pos { get { return position; } set { position = value; } }
         public Vector2 Vel { get { return velocity; } set { velocity = value; } }
+        
+        public override Rectangle hitbox { get { return new Rectangle((int)position.X, (int)position.Y, 32, 32); } }
 
         public Player(Vector2 position, Color color, AnimatedSprite sprite)
         {
@@ -135,7 +137,7 @@ namespace CoopPuzzle
 
         public override void Draw(SpriteBatch sb)
         {
-            //base.Draw(sb);
+            base.Draw(sb);
             particles.Draw(sb);
             sb.Draw(sprite, spritePos, 0f, Vector2.One * 2f);
         }
