@@ -156,8 +156,8 @@ namespace CoopPuzzle
                 spriteBatch.DrawString(font, "Switch between player : L", new Vector2(0, 40), Color.Black);
 
             spriteBatch.DrawString(font, "Server: J \nClient: K", new Vector2(), Color.Black);
-            spriteBatch.DrawString(font, "P1", new Vector2(player.Pos.X, player.Pos.Y - 20), Color.Black);
-            spriteBatch.DrawString(font, "P2", new Vector2(otherPlayer.Pos.X, otherPlayer.Pos.Y - 20), Color.Black);
+            spriteBatch.DrawString(font, "P1", new Vector2(player.Pos.X, player.Pos.Y - 64), Color.Black);
+            spriteBatch.DrawString(font, "P2", new Vector2(otherPlayer.Pos.X, otherPlayer.Pos.Y - 64), Color.Black);
             spriteBatch.DrawString(font, $"FPS:{(int)(1 / gameTime.ElapsedGameTime.TotalSeconds)}", new Vector2(500, 0), Color.Black);
             spriteBatch.DrawString(font, $"Pos:{player.Pos}  CheckPos:{otherPlayer.CheckPos}", new Vector2(600,0), Color.Black);
             spriteBatch.DrawString(font, $"PlayerEdit: {editmodePlayer}", new Vector2(300,0), Color.Black);

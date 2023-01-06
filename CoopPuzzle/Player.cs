@@ -12,14 +12,14 @@ namespace CoopPuzzle
 
         Vector2 start, oldPos, velocity, checkPos;
 
-        Vector2 spritePos { get { return new Vector2(Pos.X + 16, Pos.Y - 8); } }
-        Vector2 emitterPos { get { return new Vector2(Pos.X + 16, Pos.Y + 16); } }
+        Vector2 spritePos { get { return new Vector2(Pos.X + 12, Pos.Y - 16); } }
+        Vector2 emitterPos { get { return new Vector2(Pos.X + 12, Pos.Y + 8); } }
 
         public Vector2 CheckPos { get { return checkPos; } set { checkPos = value; } }
         public Vector2 Pos { get { return position; } set { position = value; } }
         public Vector2 Vel { get { return velocity; } set { velocity = value; } }
         
-        public override Rectangle hitbox { get { return new Rectangle((int)position.X, (int)position.Y, 32, 32); } }
+        public override Rectangle hitbox { get { return new Rectangle((int)position.X, (int)position.Y, 24, 16); } }
 
         public Player(Vector2 position, Color color, AnimatedSprite sprite)
         {
