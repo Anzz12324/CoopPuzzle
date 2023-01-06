@@ -11,6 +11,8 @@ namespace CoopPuzzle
     {
         private int frame = 0;
         private double frameTimer, frameInterval;
+        Rectangle[] srcRecArray;
+
         public Trap(Vector2 position)
         {
             this.position = position;
