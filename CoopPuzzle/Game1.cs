@@ -11,13 +11,14 @@ global using LiteNetLib.Utils;
 global using MonoGame.Extended.Sprites;
 global using MonoGame.Extended.Content;
 using MonoGame.Extended.Serialization;
+using MonoGame.Extended.Timers;
 
 namespace CoopPuzzle
 {
 
     public class Game1 : Game
     {
-        bool active = false, host = false, connected = false;
+        bool active = false, host = false, connected = false, editmodePlayer = false;
         NetManager netManager;
 
         Player player, otherPlayer;
@@ -27,10 +28,12 @@ namespace CoopPuzzle
 
         RenderTarget2D renderTarget;
 
-        
+        KeyboardState kbState, kbPreviousState;
+
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
 
+        Color[] colorData;
         public int ScreenWidth { get { return 1280; } }
         public int ScreenHeight { get { return 720; } }
 
@@ -52,6 +55,7 @@ namespace CoopPuzzle
         {
             TargetElapsedTime = TimeSpan.FromSeconds(1f / 144f);
             renderTarget = new RenderTarget2D(graphics.GraphicsDevice, ScreenWidth, ScreenHeight);
+            colorData = new Color[ScreenWidth * ScreenHeight];
 
             base.Initialize();
         }
@@ -59,34 +63,53 @@ namespace CoopPuzzle
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            DebugDraw.Init(GraphicsDevice);
             Assets.LoadTextures(Content);
             font = Content.Load<SpriteFont>("font");
             bigFont = Content.Load<SpriteFont>("bigFont");
             var spriteSheet = Content.Load<SpriteSheet>("frisk.sf", new JsonContentLoader());
+            var spriteSheet2 = Content.Load<SpriteSheet>("frisk2.sf", new JsonContentLoader());
 
             player = new Player(new Vector2(100, 200), Color.White, new AnimatedSprite(spriteSheet));
-            otherPlayer = new Player(new Vector2(100, 300), Color.Black, new AnimatedSprite(spriteSheet));
+            otherPlayer = new Player(new Vector2(100, 300), Color.Black, new AnimatedSprite(spriteSheet2));
 
             objects = new List<GameObject>()
             {
                 new WeighedSwitch(new Vector2(200, 100), Color.Green),
                 new Door(new Vector2(300, 100), Color.Green),
-                new Block(new Vector2(500), Color.Red)
+                new Block(new Vector2(500), Color.Red),
+                new Trap(new Vector2(550,500))
             };
         }
 
 
         protected override void Update(GameTime gameTime)
         {
+            kbPreviousState = kbState;
+            kbState = Keyboard.GetState();
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
                 netManager?.Stop();
                 Exit();
             }
+            if (kbState.IsKeyDown(Keys.L) && kbPreviousState.IsKeyUp(Keys.L))
+                editmodePlayer = !editmodePlayer;
 
             if (editmode)
-                player.Update(gameTime, objects, this);
+            {
+                if (editmodePlayer)
+                {
+                    otherPlayer.Update(gameTime, objects, this);
+                    player.UpdateOther(gameTime, objects, this);
+                }
+                else
+                {
+                    player.Update(gameTime, objects, this);
+                    otherPlayer.UpdateOther(gameTime, objects, this);
+                }
+
+                UpdateObjects(gameTime);
+            }
 
             if (active)
             {
@@ -95,23 +118,17 @@ namespace CoopPuzzle
                     player.Update(gameTime, objects, this);
                     otherPlayer.UpdateOther(gameTime, objects, this);
                 }
-                
-                Player[] players = new Player[] { player, otherPlayer };
-                for (int i = 0; i < objects.Count; i++)
-                {
-                    if (objects[i] is WeighedSwitch)
-                        objects[i].Update(gameTime, players);
 
-                    else
-                        objects[i].Update(gameTime, objects);
-                }
+                UpdateObjects(gameTime);
 
                 NetDataWriter writer = new NetDataWriter();
                 netManager.PollEvents();
                 writer.PutArray(new float[] { player.Vel.X, player.Vel.Y });
+                writer.PutArray(new float[] { player.Pos.X, player.Pos.Y });
                 netManager.SendToAll(writer, DeliveryMethod.ReliableOrdered);
             }
 
+            renderTarget.GetData(colorData);
             base.Update(gameTime);
         }
 
@@ -132,20 +149,37 @@ namespace CoopPuzzle
             spriteBatch.Draw(renderTarget, Vector2.Zero, Color.White);
 
             if (!connected && !editmode)
-                spriteBatch.DrawString(bigFont, "Waiting on your friend to join!", new Vector2(100,360), Color.Black);
+                spriteBatch.DrawString(bigFont, "Waiting on your friend to join!", new Vector2(100,360), Color.Black);                
             if (active)
                 spriteBatch.DrawString(font, (host) ? "Server   P1" : "Client   P2", new Vector2(100,0), Color.Black);
+            if (editmode)
+                spriteBatch.DrawString(font, "Switch between player : L", new Vector2(0, 40), Color.Black);
 
             spriteBatch.DrawString(font, "Server: J \nClient: K", new Vector2(), Color.Black);
             spriteBatch.DrawString(font, "P1", new Vector2(player.Pos.X, player.Pos.Y - 20), Color.Black);
             spriteBatch.DrawString(font, "P2", new Vector2(otherPlayer.Pos.X, otherPlayer.Pos.Y - 20), Color.Black);
             spriteBatch.DrawString(font, $"FPS:{(int)(1 / gameTime.ElapsedGameTime.TotalSeconds)}", new Vector2(500, 0), Color.Black);
-
+            spriteBatch.DrawString(font, $"Pos:{player.Pos}  CheckPos:{otherPlayer.CheckPos}", new Vector2(600,0), Color.Black);
+            spriteBatch.DrawString(font, $"PlayerEdit: {editmodePlayer}", new Vector2(300,0), Color.Black);
             player.Draw(spriteBatch);
             otherPlayer.Draw(spriteBatch);
 
             spriteBatch.End();
             base.Draw(gameTime);
+        }
+
+        public void UpdateObjects(GameTime gameTime)
+        {
+            Player[] players = new Player[] { player, otherPlayer };
+            for (int i = 0; i < objects.Count; i++)
+            {
+                if (objects[i] is WeighedSwitch)
+                    objects[i].Update(gameTime, players);
+                else if (objects[i] is Trap)
+                    objects[i].Update(gameTime);
+                else
+                    objects[i].Update(gameTime, objects);
+            }
         }
 
         public void ConnectionSetup(out EventBasedNetListener listener)
@@ -157,7 +191,8 @@ namespace CoopPuzzle
             {
                 float[] array = dataReader.GetFloatArray();
                 otherPlayer.Vel = new Vector2(array[0], array[1]);
-
+                float[] array2 = dataReader.GetFloatArray();
+                otherPlayer.CheckPos = new Vector2(array2[0], array2[1]);
                 dataReader.Recycle();
             };
             active = true;
@@ -213,9 +248,7 @@ namespace CoopPuzzle
 
         public Color GetColorOfPixel(Vector2 position)
         {
-            Color[] data = new Color[ScreenWidth * ScreenHeight];
-            renderTarget.GetData(data);
-            return data[(int)position.X + (int)position.Y * ScreenWidth];
+            return colorData[(int)position.X + (int)position.Y * ScreenWidth];
         }
     }
 }
