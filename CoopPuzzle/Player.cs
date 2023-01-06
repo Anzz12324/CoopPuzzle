@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using MonoGame.Extended.Sprites;
+using MonoGame.Extended.VectorDraw;
 
 namespace CoopPuzzle
 {
@@ -104,9 +105,13 @@ namespace CoopPuzzle
 
         public override void Draw(SpriteBatch sb)
         {
-            base.Draw(sb);
+            //base.Draw(sb);
             particles.Draw(sb);
             sb.Draw(sprite, spritePos, 0f, Vector2.One * 2f);
+            sb.DrawLine(new Vector2(hitbox.Left, hitbox.Top), new Vector2(hitbox.Right, hitbox.Top), 1, Color.White);
+            sb.DrawLine(new Vector2(hitbox.Left, hitbox.Top), new Vector2(hitbox.Left, hitbox.Bottom), 1, Color.White);
+            sb.DrawLine(new Vector2(hitbox.Left, hitbox.Bottom), new Vector2(hitbox.Right, hitbox.Bottom), 1, Color.White);
+            sb.DrawLine(new Vector2(hitbox.Right, hitbox.Bottom), new Vector2(hitbox.Right, hitbox.Top), 1, Color.White);
         }
 
         private void HandleCollision()
