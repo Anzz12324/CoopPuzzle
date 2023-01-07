@@ -11,12 +11,11 @@ namespace CoopPuzzle
         float speed = 100;
         string animation;
 
-        Vector2 start, oldPos, velocity, checkPos;
+        Vector2 start, oldPos, velocity;
 
         Vector2 spritePos { get { return new Vector2(Pos.X + 12, Pos.Y - 16); } }
         Vector2 emitterPos { get { return new Vector2(Pos.X + 12, Pos.Y + 8); } }
 
-        public Vector2 CheckPos { get { return checkPos; } set { checkPos = value; } }
         public Vector2 Pos { get { return position; } set { position = value; } }
         public Vector2 Vel { get { return velocity; } set { velocity = value; } }
         
@@ -29,7 +28,6 @@ namespace CoopPuzzle
             this.start = position;
             this.sprite = sprite;
             particles = new ParticleSystem(position);
-            this.checkPos = Vector2.Zero;
             animation = "idleDown";
         }
 
