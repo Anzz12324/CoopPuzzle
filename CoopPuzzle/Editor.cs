@@ -13,6 +13,17 @@ namespace CoopPuzzle
 
         Rectangle ghostRectangle = new Rectangle(0,0,32,32);
 
+        List<GameObject> HUDobjects = new List<GameObject>()
+        {
+            new Block(new Vector2(128, 640), Vector2.One * 32, Color.White),
+            new Door(new Vector2(256, 640), Color.Green),
+            new MovableBlock(new Vector2(384, 640), Color.SaddleBrown),
+            new Trap(new Vector2(512, 640), Color.White),
+            new WeighedSwitch(new Vector2(640, 640), Color.White)
+        };
+
+        string placeType = "Block";
+
         public Editor()
         {
 
@@ -27,7 +38,6 @@ namespace CoopPuzzle
 
             int extraX = (mouse.X < -camera.X) ? 1 : 0;
             int extraY = (mouse.Y < -camera.Y) ? 1 : 0;
-            Debug.WriteLine(extraX);
 
             ghostRectangle.X = ((mouse.X + (int)camera.X) / 32 - extraX) * 32;
             ghostRectangle.Y = ((mouse.Y + (int)camera.Y) / 32 - extraY) * 32;
@@ -44,12 +54,58 @@ namespace CoopPuzzle
                 ghostRectangle.Width = 32;
 
             if (mouse.LeftButton == ButtonState.Pressed && prevMouse.LeftButton == ButtonState.Released)
-                objects.Add(new Block(new Vector2(ghostRectangle.X, ghostRectangle.Y), new Vector2(ghostRectangle.Width, ghostRectangle.Height), Color.White));
+            {
+                for (int i = 0; i < HUDobjects.Count; i++)
+                {
+                    if (HUDobjects[i].hitbox.Contains(mouse.Position))
+                    {
+                        placeType = HUDobjects[i].GetType().Name;
+                        return;
+                    }
+                }
+                switch (placeType)
+                {
+                    case "Block":
+                        objects.Add(new Block(new Vector2(ghostRectangle.X, ghostRectangle.Y), new Vector2(ghostRectangle.Width, ghostRectangle.Height), Color.White));
+                        break;
+                    case "Door":
+                        objects.Add(new Door(new Vector2(ghostRectangle.X, ghostRectangle.Y), Color.Green));
+                        break;
+                    case "MovableBlock":
+                        objects.Add(new MovableBlock(new Vector2(ghostRectangle.X, ghostRectangle.Y), Color.SaddleBrown));
+                        break;
+                    case "Trap":
+                        objects.Add(new Trap(new Vector2(ghostRectangle.X, ghostRectangle.Y), Color.White));
+                        break;
+                    case "WeighedSwitch":
+                        objects.Add(new WeighedSwitch(new Vector2(ghostRectangle.X, ghostRectangle.Y), Color.White));
+                        break;
+
+                }
+            }
         }
 
-        public void Draw(SpriteBatch sb)
+        public void Draw(SpriteBatch sb, Matrix transformMatrix)
         {
-            sb.Draw(Assets.white, ghostRectangle, Color.White * 0.5f);
+            //sb.Draw(Assets.white, ghostRectangle, Color.White * 0.5f);
+            sb.DrawLine(new Vector2(ghostRectangle.Left, ghostRectangle.Top), new Vector2(ghostRectangle.Right, ghostRectangle.Top), 1, Color.Black);
+            sb.DrawLine(new Vector2(ghostRectangle.Left, ghostRectangle.Top), new Vector2(ghostRectangle.Left, ghostRectangle.Bottom), 1, Color.Black);
+            sb.DrawLine(new Vector2(ghostRectangle.Left, ghostRectangle.Bottom), new Vector2(ghostRectangle.Right, ghostRectangle.Bottom), 1, Color.Black);
+            sb.DrawLine(new Vector2(ghostRectangle.Right, ghostRectangle.Bottom), new Vector2(ghostRectangle.Right, ghostRectangle.Top), 1, Color.Black);
+            sb.End();
+
+            sb.Begin(samplerState: SamplerState.PointWrap);
+            for (int i = 0; i < HUDobjects.Count; i++)
+            {
+                HUDobjects[i].Draw(sb);
+                sb.DrawLine(new Vector2(HUDobjects[i].hitbox.Left, HUDobjects[i].hitbox.Top), new Vector2(HUDobjects[i].hitbox.Right, HUDobjects[i].hitbox.Top), 1, Color.Black);
+                sb.DrawLine(new Vector2(HUDobjects[i].hitbox.Left, HUDobjects[i].hitbox.Top), new Vector2(HUDobjects[i].hitbox.Left, HUDobjects[i].hitbox.Bottom), 1, Color.Black);
+                sb.DrawLine(new Vector2(HUDobjects[i].hitbox.Left, HUDobjects[i].hitbox.Bottom), new Vector2(HUDobjects[i].hitbox.Right, HUDobjects[i].hitbox.Bottom), 1, Color.Black);
+                sb.DrawLine(new Vector2(HUDobjects[i].hitbox.Right, HUDobjects[i].hitbox.Bottom), new Vector2(HUDobjects[i].hitbox.Right, HUDobjects[i].hitbox.Top), 1, Color.Black);
+            }
+            sb.End();
+
+            sb.Begin(sortMode: SpriteSortMode.FrontToBack, samplerState: SamplerState.PointWrap, transformMatrix: transformMatrix);
         }
     }
 
