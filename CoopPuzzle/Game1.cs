@@ -331,11 +331,11 @@ namespace CoopPuzzle
         {
             var movementDirection = Vector2.Zero;
             var state = Keyboard.GetState();
-            if (state.IsKeyDown(Keys.U))
+            if (state.IsKeyDown(Keys.J))
             {
                 movementDirection += Vector2.UnitY;
             }
-            if (state.IsKeyDown(Keys.J))
+            if (state.IsKeyDown(Keys.U))
             {
                 movementDirection -= Vector2.UnitY;
             }
