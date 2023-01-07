@@ -22,7 +22,7 @@ namespace CoopPuzzle
     {
         bool active = false, host = false, connected = false, editmodePlayer = false;
         NetManager netManager;
-        enum DiffCam { SnapMove, FollowPlayer, KeyInput }
+        enum DiffCam { SnapMove, FollowPlayer, KeyInput, FullScreenMove }
         DiffCam diffCam = DiffCam.SnapMove;
 
         Player player, otherPlayer;
@@ -114,6 +114,8 @@ namespace CoopPuzzle
                 diffCam = DiffCam.FollowPlayer;
             if (kbState.IsKeyDown(Keys.P) && kbPreviousState.IsKeyUp(Keys.P))
                 diffCam = DiffCam.KeyInput;
+            if (kbState.IsKeyDown(Keys.OemCloseBrackets) && kbPreviousState.IsKeyUp(Keys.OemCloseBrackets))
+                diffCam = DiffCam.FullScreenMove;
         }
         protected override void Update(GameTime gameTime)
         {
@@ -122,7 +124,7 @@ namespace CoopPuzzle
             if (editmode)
             {
                 editor.Update(ref objects, camera.Position);
-
+                
                 if (editmodePlayer)
                 {
                     otherPlayer.Update(gameTime, objects, this);
@@ -190,8 +192,8 @@ namespace CoopPuzzle
             spriteBatch.DrawString(font, $"latency: {latency}", new Vector2(300, 50), Color.Black);
             spriteBatch.DrawString(font, $"Camera Pos; {camera.Position}", new Vector2(camera.Position.X, camera.Position.Y + 60), Color.Yellow);
             spriteBatch.DrawString(font, $"Camera Move; {diffCam}", new Vector2(camera.Position.X, camera.Position.Y + 80), Color.Yellow);
-            spriteBatch.DrawString(font, $"Switch Camera; I, O, P", new Vector2(camera.Position.X, camera.Position.Y + 100), Color.Yellow);
-            if (diffCam == DiffCam.KeyInput)
+            spriteBatch.DrawString(font, "Switch Camera; I, O, P, {", new Vector2(camera.Position.X, camera.Position.Y + 100), Color.Yellow);
+            if (diffCam == DiffCam.KeyInput || diffCam == DiffCam.FullScreenMove)
                 spriteBatch.DrawString(font, "Move Camera in KeyInput\nUp: U\nDown: J\nLeft: H\nRight: K", new Vector2(camera.Position.X, camera.Position.Y + 120), Color.Yellow);
 
             otherPlayer.Draw(spriteBatch);
@@ -302,21 +304,13 @@ namespace CoopPuzzle
             {
                 case DiffCam.SnapMove:
                     if (player.Pos.X < camera.Position.X)
-                    {
                         camera.Move(new Vector2(-ScreenWidth, 0));
-                    }
                     if (player.Pos.X > camera.Position.X + ScreenWidth)
-                    {
                         camera.Move(new Vector2(ScreenWidth, 0));
-                    }
                     if (player.Pos.Y < camera.Position.Y)
-                    {
                         camera.Move(new Vector2(0, -ScreenHeight));
-                    }
                     if (player.Pos.Y > camera.Position.Y + ScreenHeight)
-                    {
                         camera.Move(new Vector2(0, ScreenHeight));
-                    }
                     break;
                 case DiffCam.FollowPlayer:
                     camera.LookAt(player.Pos);
@@ -324,6 +318,16 @@ namespace CoopPuzzle
                 case DiffCam.KeyInput:
                     const float movementSpeed = 200;
                     camera.Move(GetMovementDirection() * movementSpeed * gameTime.GetElapsedSeconds());
+                    break;
+                case DiffCam.FullScreenMove:
+                    if (kbState.IsKeyDown(Keys.H) && kbPreviousState.IsKeyUp(Keys.H))
+                        camera.Move(new Vector2(-ScreenWidth, 0));
+                    if (kbState.IsKeyDown(Keys.K) && kbPreviousState.IsKeyUp(Keys.K))
+                        camera.Move(new Vector2(ScreenWidth, 0));
+                    if (kbState.IsKeyDown(Keys.U) && kbPreviousState.IsKeyUp(Keys.U))
+                        camera.Move(new Vector2(0, -ScreenHeight));
+                    if (kbState.IsKeyDown(Keys.J) && kbPreviousState.IsKeyUp(Keys.J))
+                        camera.Move(new Vector2(0, ScreenHeight));
                     break;
             }
         }
