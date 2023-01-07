@@ -125,7 +125,7 @@ namespace CoopPuzzle
             sprite.Update(dt);
             sprite.Depth = Pos.Y / game1.ScreenHeight;
             particles.EmitterLocation = emitterPos;
-            particles.Update(dt, Vel, game1.GetColorOfPixel(emitterPos));
+            particles.Update(dt, Vel, game1.GetColorOfPixel(emitterPos - game1.camera.Position));
         }
 
         public override void Draw(SpriteBatch sb)

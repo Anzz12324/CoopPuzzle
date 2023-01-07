@@ -36,7 +36,7 @@ namespace CoopPuzzle
 
         KeyboardState kbState, kbPreviousState;
 
-        private OrthographicCamera camera;
+        public OrthographicCamera camera { get; private set; }
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
 
@@ -163,16 +163,16 @@ namespace CoopPuzzle
         }
         protected override void Draw(GameTime gameTime)
         {
+            var transformMatrix = camera.GetViewMatrix();
             GraphicsDevice.SetRenderTarget(renderTarget);
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            spriteBatch.Begin(samplerState: SamplerState.PointWrap);
+            spriteBatch.Begin(samplerState: SamplerState.PointWrap, transformMatrix: transformMatrix);
             spriteBatch.Draw(Content.Load<Texture2D>("ExamplePNG"), new Vector2(400, 100), Color.White);
             for (int i = 0; i < objects.Count; i++)
             {
                 objects[i].Draw(spriteBatch);
             }
             spriteBatch.End();
-            var transformMatrix = camera.GetViewMatrix();
             GraphicsDevice.SetRenderTarget(null);
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin(sortMode: SpriteSortMode.FrontToBack, samplerState: SamplerState.PointWrap, transformMatrix: transformMatrix);
