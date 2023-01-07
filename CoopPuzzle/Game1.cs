@@ -121,7 +121,7 @@ namespace CoopPuzzle
 
             if (editmode)
             {
-                editor.Update(ref objects);
+                editor.Update(ref objects, camera.Position);
 
                 if (editmodePlayer)
                 {
@@ -154,6 +154,7 @@ namespace CoopPuzzle
                 netManager.SendToAll(writer, DeliveryMethod.ReliableOrdered);
             }
 
+            Debug.WriteLine(camera.Position);
             CameraMove(gameTime);
 
             renderTarget.GetData(colorData);

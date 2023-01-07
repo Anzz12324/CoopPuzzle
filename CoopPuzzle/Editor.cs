@@ -18,15 +18,19 @@ namespace CoopPuzzle
 
         }
 
-        public void Update(ref List<GameObject> objects)
+        public void Update(ref List<GameObject> objects, Vector2 camera)
         {
             prevMouse = mouse;
             mouse = Mouse.GetState();
             prevBoard = board;
             board = Keyboard.GetState();
 
-            ghostRectangle.X = mouse.X / 32 * 32;
-            ghostRectangle.Y = mouse.Y / 32 * 32;
+            int extraX = (mouse.X < -camera.X) ? 1 : 0;
+            int extraY = (mouse.Y < -camera.Y) ? 1 : 0;
+            Debug.WriteLine(extraX);
+
+            ghostRectangle.X = ((mouse.X + (int)camera.X) / 32 - extraX) * 32;
+            ghostRectangle.Y = ((mouse.Y + (int)camera.Y) / 32 - extraY) * 32;
 
             int scroll = mouse.ScrollWheelValue - prevMouse.ScrollWheelValue;
             if (board.IsKeyDown(Keys.LeftControl))
