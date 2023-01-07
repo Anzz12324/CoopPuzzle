@@ -12,6 +12,8 @@ global using MonoGame.Extended.Sprites;
 global using MonoGame.Extended.Content;
 using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Timers;
+using MonoGame.Extended;
+using MonoGame.Extended.ViewportAdapters;
 
 namespace CoopPuzzle
 {
@@ -20,6 +22,8 @@ namespace CoopPuzzle
     {
         bool active = false, host = false, connected = false, editmodePlayer = false;
         NetManager netManager;
+        enum DiffCam { SnapMove, FollowPlayer, KeyInput }
+        DiffCam diffCam = DiffCam.SnapMove;
 
         Player player, otherPlayer;
 
@@ -30,6 +34,7 @@ namespace CoopPuzzle
 
         KeyboardState kbState, kbPreviousState;
 
+        private OrthographicCamera camera;
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
 
@@ -49,7 +54,6 @@ namespace CoopPuzzle
             graphics.PreferredBackBufferWidth = ScreenWidth;
             graphics.PreferredBackBufferHeight = ScreenHeight;
             graphics.ApplyChanges();
-
         }
 
         protected override void Initialize()
@@ -57,6 +61,9 @@ namespace CoopPuzzle
             TargetElapsedTime = TimeSpan.FromSeconds(1f / 144f);
             renderTarget = new RenderTarget2D(graphics.GraphicsDevice, ScreenWidth, ScreenHeight);
             colorData = new Color[ScreenWidth * ScreenHeight];
+
+            var viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, ScreenWidth, ScreenHeight);
+            camera = new OrthographicCamera(viewportAdapter);
 
             base.Initialize();
         }
@@ -83,11 +90,8 @@ namespace CoopPuzzle
             };
         }
 
-
-        protected override void Update(GameTime gameTime)
+        private void Shotcuts()
         {
-
-
             kbPreviousState = kbState;
             kbState = Keyboard.GetState();
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -97,6 +101,19 @@ namespace CoopPuzzle
             }
             if (kbState.IsKeyDown(Keys.L) && kbPreviousState.IsKeyUp(Keys.L))
                 editmodePlayer = !editmodePlayer;
+            if (kbState.IsKeyDown(Keys.I) && kbPreviousState.IsKeyUp(Keys.I))
+            {
+                camera.Position = Vector2.Zero;
+                diffCam = DiffCam.SnapMove;
+            }
+            if (kbState.IsKeyDown(Keys.O) && kbPreviousState.IsKeyUp(Keys.O))
+                diffCam = DiffCam.FollowPlayer;
+            if (kbState.IsKeyDown(Keys.P) && kbPreviousState.IsKeyUp(Keys.P))
+                diffCam = DiffCam.KeyInput;
+        }
+        protected override void Update(GameTime gameTime)
+        {
+            Shotcuts();
 
             if (editmode)
             {
@@ -131,10 +148,11 @@ namespace CoopPuzzle
                 netManager.SendToAll(writer, DeliveryMethod.ReliableOrdered);
             }
 
+            CameraMove(gameTime);
+
             renderTarget.GetData(colorData);
             base.Update(gameTime);
         }
-
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.SetRenderTarget(renderTarget);
@@ -146,9 +164,9 @@ namespace CoopPuzzle
                 objects[i].Draw(spriteBatch);
             }
             spriteBatch.End();
-
+            var transformMatrix = camera.GetViewMatrix();
             GraphicsDevice.SetRenderTarget(null);
-            spriteBatch.Begin(samplerState: SamplerState.PointWrap);
+            spriteBatch.Begin(samplerState: SamplerState.PointWrap, transformMatrix: transformMatrix);
             spriteBatch.Draw(renderTarget, Vector2.Zero, Color.White);
 
             if (!connected && !editmode)
@@ -162,10 +180,11 @@ namespace CoopPuzzle
             spriteBatch.DrawString(font, "P1", new Vector2(player.Pos.X, player.Pos.Y - 64), Color.Black);
             spriteBatch.DrawString(font, "P2", new Vector2(otherPlayer.Pos.X, otherPlayer.Pos.Y - 64), Color.Black);
             spriteBatch.DrawString(font, $"FPS:{(int)(1 / gameTime.ElapsedGameTime.TotalSeconds)}", new Vector2(500, 0), Color.Black);
-            spriteBatch.DrawString(font, $"Pos:{player.Pos}  otherPos:{otherPlayer.Pos}", new Vector2(600,0), Color.Black);
+            spriteBatch.DrawString(font, $"Pos:{player.Pos}  otherPos:{otherPlayer.Pos}", new Vector2(camera.Position.X + 600,camera.Position.Y), Color.Yellow);
             spriteBatch.DrawString(font, $"PlayerEdit: {editmodePlayer}", new Vector2(300,0), Color.Black);
             spriteBatch.DrawString(font, $"latency: {latency}", new Vector2(300, 50), Color.Black);
-
+            spriteBatch.DrawString(font, $"Camera Pos; {camera.Position}", new Vector2(camera.Position.X, camera.Position.Y + 60), Color.Yellow);
+            spriteBatch.DrawString(font, $"Camera Move; {diffCam}", new Vector2(camera.Position.X, camera.Position.Y + 80), Color.Yellow);
             otherPlayer.Draw(spriteBatch);
             player.Draw(spriteBatch);
 
@@ -257,7 +276,61 @@ namespace CoopPuzzle
 
         public Color GetColorOfPixel(Vector2 position)
         {
-            return colorData[(int)position.X + (int)position.Y * ScreenWidth];
+            return colorData[(int)position.X + (int)position.Y];
+        }
+        private void CameraMove(GameTime gameTime)
+        {
+            switch (diffCam)
+            {
+                case DiffCam.SnapMove:
+                    if (player.Pos.X < camera.Position.X)
+                    {
+                        camera.Move(new Vector2(-ScreenWidth, 0));
+                    }
+                    if (player.Pos.X > camera.Position.X + ScreenWidth)
+                    {
+                        camera.Move(new Vector2(ScreenWidth, 0));
+                    }
+                    if (player.Pos.Y < camera.Position.Y)
+                    {
+                        camera.Move(new Vector2(0, -ScreenHeight));
+                    }
+                    if (player.Pos.Y > camera.Position.Y + ScreenHeight)
+                    {
+                        camera.Move(new Vector2(0, ScreenHeight));
+                    }
+                    break;
+                case DiffCam.FollowPlayer:
+                    camera.LookAt(player.Pos);
+                    break;
+                case DiffCam.KeyInput:
+                    const float movementSpeed = 200;
+                    camera.Move(GetMovementDirection() * movementSpeed * gameTime.GetElapsedSeconds());
+                    break;
+            }
+        }
+
+        private Vector2 GetMovementDirection()
+        {
+            var movementDirection = Vector2.Zero;
+            var state = Keyboard.GetState();
+            if (state.IsKeyDown(Keys.Down))
+            {
+                movementDirection += Vector2.UnitY;
+            }
+            if (state.IsKeyDown(Keys.Up))
+            {
+                movementDirection -= Vector2.UnitY;
+            }
+            if (state.IsKeyDown(Keys.Left))
+            {
+                movementDirection -= Vector2.UnitX;
+            }
+            if (state.IsKeyDown(Keys.Right))
+            {
+                movementDirection += Vector2.UnitX;
+            }
+            return movementDirection;
         }
     }
 }

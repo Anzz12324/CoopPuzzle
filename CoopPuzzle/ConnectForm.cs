@@ -16,7 +16,8 @@ namespace CoopPuzzle
         public ConnectForm()
         {
             InitializeComponent();
-            radBtnHost.Select();
+            //radBtnHost.Select();
+            radBtnEdit.Select();
         }
 
         private void radHost_CheckedChanged(object sender, EventArgs e)
