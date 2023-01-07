@@ -83,6 +83,17 @@ namespace CoopPuzzle
 
                 }
             }
+
+            if (mouse.RightButton == ButtonState.Pressed && prevMouse.RightButton == ButtonState.Released)
+            {
+                for (int i = 0; i < objects.Count; i++)
+                {
+                    if (objects[i].hitbox.Contains(new Vector2(mouse.Position.X, mouse.Position.Y) + camera))
+                    {
+                        objects.RemoveAt(i);
+                    }
+                }
+            }
         }
 
         public void Draw(SpriteBatch sb, Matrix transformMatrix)
