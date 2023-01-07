@@ -8,12 +8,10 @@ namespace CoopPuzzle
 {
     internal class WeighedSwitch : GameObject
     {
-        public bool Weight { get; private set; }
+        public bool Weight { get; set; }
 
-        public WeighedSwitch(Vector2 position, Color color)
+        public WeighedSwitch(Vector2 position, Color color) : base(position, color)
         {
-            this.position = position;
-            this.color = color;
         }
 
         public override void Update(GameTime gT, Player[] players)

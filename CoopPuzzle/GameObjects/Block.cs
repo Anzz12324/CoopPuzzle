@@ -9,10 +9,9 @@ namespace CoopPuzzle
     internal class Block : GameObject
     {
 
-        public Block(Vector2 position, Color color)
+        public Block(Vector2 position, Vector2 size, Color color) : base(position, color)
         {
-            this.position= position;
-            this.color= color;
+            this.size = size;
             tex = Assets.white;
         }
 

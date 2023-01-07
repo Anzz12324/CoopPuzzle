@@ -10,10 +10,8 @@ namespace CoopPuzzle
     {
         public bool Open { get; private set; }
 
-        public Door(Vector2 position, Color color)
+        public Door(Vector2 position, Color color) : base(position, color)
         {
-            this.position = position;
-            this.color = color;
         }
 
         public override void Update(GameTime gT, List<GameObject> objects)
