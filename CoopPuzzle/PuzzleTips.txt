@@ -1,0 +1,25 @@
+﻿Weighted Switch Puzzle. Switch A is a Pressure Plate which opens Door B. 
+However, Switch A will only keep Door B open if weight is continuously put on it. 
+This sometimes involves pushing a block or other convenient heavy object on top of the switch. 
+Sometimes you need to use an item—for example, an ice-based power to freeze a local puddle of water or enemy; 
+then you push the resulting ice block over to the switch. 
+Sometimes a party member or NPC ally must stand on the switch.
+
+Tile Flipping Puzzle. Or a "switch light puzzle," on occasion. 
+Hitting a switch or Ground Pounding a tile causes it and two close (or related) tiles to turn over. 
+You must flip them all over, sometimes within a time limit. 
+This also covers all variations where you must set all members of object X to state Y, 
+when action Z causes nearby members of object X to switch states.
+
+Hamiltonian Path Puzzle. In short: a puzzle where you have to step upon all of the unlit tiles in a particular grid, 
+but you can only step on each tile exactly once. 
+This usually results in you spending a ridiculous amount of time experimenting or just going and looking up the answer.
+
+Spelling Bee Puzzle. You have to spell out something, usually the name of an important character, with unconventional means. 
+Usually you have to trigger switches with letters written on them to spell out the name, often in a time limit. 
+Sometimes part of the puzzle is realizing what it is you need to spell.
+
+
+
+Här finns fler
+https://tvtropes.org/pmwiki/pmwiki.php/Main/StockVideoGamePuzzle
