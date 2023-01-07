@@ -296,7 +296,7 @@ namespace CoopPuzzle
 
         public Color GetColorOfPixel(Vector2 position)
         {
-            return colorData[(int)position.X + (int)position.Y];
+            return colorData[(int)position.X + (int)position.Y * ScreenWidth];
         }
         private void CameraMove(GameTime gameTime)
         {
