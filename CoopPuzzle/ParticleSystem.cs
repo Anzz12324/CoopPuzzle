@@ -40,8 +40,11 @@ namespace CoopPuzzle
         //    return new Particle(position, velocity, angle, angularVelocity, color, size, ttl);
         //}
 
-        public void Update(float dt, Vector2 playerVel, Color color)
+        public void Update(float dt, Vector2 playerVel, Game1 game1, Vector2 emitterPos)
         {
+            Color color = Color.Black;
+            if (game1.camera.BoundingRectangle.Contains(emitterPos))
+             color = game1.GetColorOfPixel(emitterPos - game1.camera.Position);
             timeElapsed += dt;
 
             if(playerVel != Vector2.Zero && timeElapsed > 0.05f)
@@ -71,6 +74,8 @@ namespace CoopPuzzle
                         if (color.B < 20) color.B = 0;
                         else color.B -= 20;
                     }
+
+                    if(game1.camera.BoundingRectangle.Contains(emitterPos))
                     particles.Add(new Particle(EmitterLocation, velocity, 0, 0, color, 4, 50)); //position, velocity, angle, angularVelocity, color, size, ttl
                 }
 

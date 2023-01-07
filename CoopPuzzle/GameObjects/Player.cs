@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using MonoGame.Extended;
 using MonoGame.Extended.Sprites;
 using MonoGame.Extended.VectorDraw;
 using System.Linq;
@@ -121,11 +122,12 @@ namespace CoopPuzzle
                     }
                 }
             }
+
             sprite.Play(animation);
             sprite.Update(dt);
-            sprite.Depth = Pos.Y / game1.ScreenHeight;
+            sprite.Depth = (Pos.Y - game1.camera.Position.Y) / game1.ScreenHeight;
             particles.EmitterLocation = emitterPos;
-            particles.Update(dt, Vel, game1.GetColorOfPixel(emitterPos - game1.camera.Position));
+            particles.Update(dt, Vel, game1, emitterPos);
         }
 
         public override void Draw(SpriteBatch sb)

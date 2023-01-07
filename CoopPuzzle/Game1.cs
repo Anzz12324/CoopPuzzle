@@ -14,6 +14,7 @@ using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Timers;
 using MonoGame.Extended;
 using MonoGame.Extended.ViewportAdapters;
+using System.Runtime.CompilerServices;
 
 namespace CoopPuzzle
 {
@@ -296,7 +297,15 @@ namespace CoopPuzzle
 
         public Color GetColorOfPixel(Vector2 position)
         {
-            return colorData[(int)position.X + (int)position.Y * ScreenWidth];
+            Debug.WriteLine((int)position.X + (int)position.Y * ScreenWidth);
+            try
+            {
+                return colorData[(int)position.X + (int)position.Y * ScreenWidth];
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return Color.Black;
+            }
         }
         private void CameraMove(GameTime gameTime)
         {
