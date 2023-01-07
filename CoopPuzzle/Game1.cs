@@ -176,7 +176,7 @@ namespace CoopPuzzle
             GraphicsDevice.SetRenderTarget(null);
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin(sortMode: SpriteSortMode.FrontToBack, samplerState: SamplerState.PointWrap, transformMatrix: transformMatrix);
-            spriteBatch.Draw(renderTarget, Vector2.Zero, Color.White);
+            spriteBatch.Draw(renderTarget, camera.Position, Color.White);
 
             if (!connected && !editmode)
                 spriteBatch.DrawString(bigFont, "Waiting on your friend to join!", new Vector2(100,360), Color.Black);                
