@@ -188,7 +188,6 @@ namespace CoopPuzzle
                 spriteBatch.DrawString(font, "Place block: Left-Click\nChange size of block: Scroll (+ Ctrl)", new Vector2(0, 500), Color.Black);
             }
 
-            spriteBatch.DrawString(font, "Server: J \nClient: K", new Vector2(), Color.Black);
             spriteBatch.DrawString(font, "P1", new Vector2(player.Pos.X, player.Pos.Y - 64), Color.Black);
             spriteBatch.DrawString(font, "P2", new Vector2(otherPlayer.Pos.X, otherPlayer.Pos.Y - 64), Color.Black);
             spriteBatch.DrawString(font, $"FPS:{(int)(1 / gameTime.ElapsedGameTime.TotalSeconds)}", new Vector2(500, 0), Color.Black);
@@ -197,6 +196,10 @@ namespace CoopPuzzle
             spriteBatch.DrawString(font, $"latency: {latency}", new Vector2(300, 50), Color.Black);
             spriteBatch.DrawString(font, $"Camera Pos; {camera.Position}", new Vector2(camera.Position.X, camera.Position.Y + 60), Color.Yellow);
             spriteBatch.DrawString(font, $"Camera Move; {diffCam}", new Vector2(camera.Position.X, camera.Position.Y + 80), Color.Yellow);
+            spriteBatch.DrawString(font, $"Switch Camera; I, O, P", new Vector2(camera.Position.X, camera.Position.Y + 100), Color.Yellow);
+            if (diffCam == DiffCam.KeyInput)
+                spriteBatch.DrawString(font, "Move Camera in KeyInput\nUp: U\nDown: J\nLeft: H\nRight: K", new Vector2(camera.Position.X, camera.Position.Y + 120), Color.Yellow);
+
             otherPlayer.Draw(spriteBatch);
             player.Draw(spriteBatch);
 
@@ -326,19 +329,19 @@ namespace CoopPuzzle
         {
             var movementDirection = Vector2.Zero;
             var state = Keyboard.GetState();
-            if (state.IsKeyDown(Keys.Down))
+            if (state.IsKeyDown(Keys.U))
             {
                 movementDirection += Vector2.UnitY;
             }
-            if (state.IsKeyDown(Keys.Up))
+            if (state.IsKeyDown(Keys.J))
             {
                 movementDirection -= Vector2.UnitY;
             }
-            if (state.IsKeyDown(Keys.Left))
+            if (state.IsKeyDown(Keys.H))
             {
                 movementDirection -= Vector2.UnitX;
             }
-            if (state.IsKeyDown(Keys.Right))
+            if (state.IsKeyDown(Keys.K))
             {
                 movementDirection += Vector2.UnitX;
             }
