@@ -37,6 +37,7 @@ namespace CoopPuzzle
         public int ScreenWidth { get { return 1280; } }
         public int ScreenHeight { get { return 720; } }
 
+        private int latency;
         public string ip, password; 
         public int port;
         public bool editmode = false;
@@ -161,6 +162,7 @@ namespace CoopPuzzle
             spriteBatch.DrawString(font, $"FPS:{(int)(1 / gameTime.ElapsedGameTime.TotalSeconds)}", new Vector2(500, 0), Color.Black);
             spriteBatch.DrawString(font, $"Pos:{player.Pos}  CheckPos:{otherPlayer.CheckPos}", new Vector2(600,0), Color.Black);
             spriteBatch.DrawString(font, $"PlayerEdit: {editmodePlayer}", new Vector2(300,0), Color.Black);
+            spriteBatch.DrawString(font, $"latency: {latency}", new Vector2(300, 50), Color.Black);
             player.Draw(spriteBatch);
             otherPlayer.Draw(spriteBatch);
 
@@ -195,6 +197,10 @@ namespace CoopPuzzle
                 otherPlayer.CheckPos = new Vector2(array2[0], array2[1]);
                 dataReader.Recycle();
             };
+            listener.NetworkLatencyUpdateEvent += (fromPeer, latency) =>
+            {
+                this.latency = latency;
+            };
             active = true;
         }
 
@@ -208,7 +214,7 @@ namespace CoopPuzzle
 
                 listener.ConnectionRequestEvent += request =>
                 {
-                    if (netManager.ConnectedPeersCount < 2 /* max connections */)
+                    if (netManager.ConnectedPeersCount < 1 /* max connections */)
                         request.AcceptIfKey(password);
                     else
                         request.Reject();
