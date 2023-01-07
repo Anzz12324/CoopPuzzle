@@ -172,6 +172,7 @@ namespace CoopPuzzle
             spriteBatch.End();
             var transformMatrix = camera.GetViewMatrix();
             GraphicsDevice.SetRenderTarget(null);
+            GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin(sortMode: SpriteSortMode.FrontToBack, samplerState: SamplerState.PointWrap, transformMatrix: transformMatrix);
             spriteBatch.Draw(renderTarget, Vector2.Zero, Color.White);
 
