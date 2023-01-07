@@ -45,9 +45,9 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.radBtnEdit = new System.Windows.Forms.RadioButton();
             this.grpEdit = new System.Windows.Forms.GroupBox();
             this.btnEditMode = new System.Windows.Forms.Button();
+            this.radBtnEdit = new System.Windows.Forms.RadioButton();
             this.grpHost.SuspendLayout();
             this.grpJoin.SuspendLayout();
             this.grpEdit.SuspendLayout();
@@ -144,7 +144,7 @@
             this.grpJoin.Controls.Add(this.label5);
             this.grpJoin.Controls.Add(this.label4);
             this.grpJoin.Controls.Add(this.label3);
-            this.grpJoin.Location = new System.Drawing.Point(298, 94);
+            this.grpJoin.Location = new System.Drawing.Point(12, 94);
             this.grpJoin.Name = "grpJoin";
             this.grpJoin.Size = new System.Drawing.Size(280, 187);
             this.grpJoin.TabIndex = 3;
@@ -179,7 +179,7 @@
             // 
             // txtJoinIp
             // 
-            this.txtJoinIp.Location = new System.Drawing.Point(95, 22);
+            this.txtJoinIp.Location = new System.Drawing.Point(94, 22);
             this.txtJoinIp.Name = "txtJoinIp";
             this.txtJoinIp.Size = new System.Drawing.Size(125, 23);
             this.txtJoinIp.TabIndex = 3;
@@ -212,22 +212,10 @@
             this.label3.TabIndex = 0;
             this.label3.Text = "Port";
             // 
-            // radBtnEdit
-            // 
-            this.radBtnEdit.AutoSize = true;
-            this.radBtnEdit.Location = new System.Drawing.Point(203, 69);
-            this.radBtnEdit.Name = "radBtnEdit";
-            this.radBtnEdit.Size = new System.Drawing.Size(45, 19);
-            this.radBtnEdit.TabIndex = 4;
-            this.radBtnEdit.TabStop = true;
-            this.radBtnEdit.Text = "Edit";
-            this.radBtnEdit.UseVisualStyleBackColor = true;
-            this.radBtnEdit.CheckedChanged += new System.EventHandler(this.radBtnEdit_CheckedChanged);
-            // 
             // grpEdit
             // 
             this.grpEdit.Controls.Add(this.btnEditMode);
-            this.grpEdit.Location = new System.Drawing.Point(584, 94);
+            this.grpEdit.Location = new System.Drawing.Point(12, 94);
             this.grpEdit.Name = "grpEdit";
             this.grpEdit.Size = new System.Drawing.Size(280, 187);
             this.grpEdit.TabIndex = 5;
@@ -245,12 +233,24 @@
             this.btnEditMode.UseVisualStyleBackColor = true;
             this.btnEditMode.Click += new System.EventHandler(this.btnEditMode_Click);
             // 
+            // radBtnEdit
+            // 
+            this.radBtnEdit.AutoSize = true;
+            this.radBtnEdit.Location = new System.Drawing.Point(203, 69);
+            this.radBtnEdit.Name = "radBtnEdit";
+            this.radBtnEdit.Size = new System.Drawing.Size(45, 19);
+            this.radBtnEdit.TabIndex = 4;
+            this.radBtnEdit.TabStop = true;
+            this.radBtnEdit.Text = "Edit";
+            this.radBtnEdit.UseVisualStyleBackColor = true;
+            this.radBtnEdit.CheckedChanged += new System.EventHandler(this.radBtnEdit_CheckedChanged);
+            // 
             // ConnectForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(878, 293);
+            this.ClientSize = new System.Drawing.Size(305, 293);
             this.Controls.Add(this.grpEdit);
             this.Controls.Add(this.radBtnEdit);
             this.Controls.Add(this.grpJoin);
