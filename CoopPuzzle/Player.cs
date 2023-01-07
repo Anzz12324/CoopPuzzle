@@ -91,7 +91,7 @@ namespace CoopPuzzle
                         if (!door.Open)
                             HandleCollision();
                         else
-                            return;
+                            continue;
                     }
                     if (objects[i] is Block)
                         HandleCollision();

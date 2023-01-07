@@ -86,6 +86,8 @@ namespace CoopPuzzle
 
         protected override void Update(GameTime gameTime)
         {
+
+
             kbPreviousState = kbState;
             kbState = Keyboard.GetState();
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -195,7 +197,7 @@ namespace CoopPuzzle
                 float[] array = dataReader.GetFloatArray();
                 otherPlayer.Vel = new Vector2(array[0], array[1]);
                 float[] array2 = dataReader.GetFloatArray();
-                otherPlayer.CheckPos = new Vector2(array2[0], array2[1]);
+                otherPlayer.Pos = new Vector2(array2[0], array2[1]);
                 dataReader.Recycle();
             };
             listener.NetworkLatencyUpdateEvent += (fromPeer, latency) =>
