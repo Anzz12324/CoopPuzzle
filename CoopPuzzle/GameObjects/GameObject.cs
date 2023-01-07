@@ -5,8 +5,16 @@
         protected Texture2D tex;
         protected Color color;
         protected Vector2 position;
-        public virtual Rectangle hitbox { get { return new Rectangle((int)position.X, (int)position.Y, 32, 32); } }
+        protected Vector2 size = Vector2.One * 32;
 
+        public Vector2 Pos { get { return position; } set { position = value; } }
+        public virtual Rectangle hitbox { get { return new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y); } }
+
+        public GameObject(Vector2 position, Color color)
+        {
+            this.position = position;
+            this.color = color;
+        }
 
         public virtual void Update(GameTime gT) { }
         public virtual void Update(GameTime gT, Block b) { }

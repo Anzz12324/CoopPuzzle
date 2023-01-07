@@ -28,6 +28,8 @@ namespace CoopPuzzle
 
         RenderTarget2D renderTarget;
 
+        Editor editor;
+
         KeyboardState kbState, kbPreviousState;
 
         private GraphicsDeviceManager graphics;
@@ -57,6 +59,7 @@ namespace CoopPuzzle
             TargetElapsedTime = TimeSpan.FromSeconds(1f / 144f);
             renderTarget = new RenderTarget2D(graphics.GraphicsDevice, ScreenWidth, ScreenHeight);
             colorData = new Color[ScreenWidth * ScreenHeight];
+            editor = new Editor();
 
             base.Initialize();
         }
@@ -78,8 +81,9 @@ namespace CoopPuzzle
             {
                 new WeighedSwitch(new Vector2(200, 100), Color.Green),
                 new Door(new Vector2(300, 100), Color.Green),
-                new Block(new Vector2(500), Color.Red),
-                new Trap(new Vector2(550,500))
+                new Block(new Vector2(500), Vector2.One * 32, Color.Red),
+                new Trap(new Vector2(550,500), Color.White),
+                new MovableBlock(new Vector2(400, 500), Color.SaddleBrown)
             };
         }
 
@@ -100,6 +104,8 @@ namespace CoopPuzzle
 
             if (editmode)
             {
+                editor.Update(ref objects);
+
                 if (editmodePlayer)
                 {
                     otherPlayer.Update(gameTime, objects, this);
@@ -148,7 +154,7 @@ namespace CoopPuzzle
             spriteBatch.End();
 
             GraphicsDevice.SetRenderTarget(null);
-            spriteBatch.Begin(samplerState: SamplerState.PointWrap);
+            spriteBatch.Begin(sortMode: SpriteSortMode.FrontToBack, samplerState: SamplerState.PointWrap);
             spriteBatch.Draw(renderTarget, Vector2.Zero, Color.White);
 
             if (!connected && !editmode)
@@ -156,7 +162,13 @@ namespace CoopPuzzle
             if (active)
                 spriteBatch.DrawString(font, (host) ? "Server   P1" : "Client   P2", new Vector2(100,0), Color.Black);
             if (editmode)
+            {
+                editor.Draw(spriteBatch);
+
                 spriteBatch.DrawString(font, "Switch between player : L", new Vector2(0, 40), Color.Black);
+
+                spriteBatch.DrawString(font, "Place block: Left-Click\nChange size of block: Scroll (+ Ctrl)", new Vector2(0, 500), Color.Black);
+            }
 
             spriteBatch.DrawString(font, "Server: J \nClient: K", new Vector2(), Color.Black);
             spriteBatch.DrawString(font, "P1", new Vector2(player.Pos.X, player.Pos.Y - 64), Color.Black);
@@ -182,7 +194,7 @@ namespace CoopPuzzle
                     objects[i].Update(gameTime, players);
                 else if (objects[i] is Trap)
                     objects[i].Update(gameTime);
-                else
+                else if (objects[i] is Door)
                     objects[i].Update(gameTime, objects);
             }
         }

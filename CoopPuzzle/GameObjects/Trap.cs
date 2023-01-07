@@ -13,9 +13,8 @@ namespace CoopPuzzle
         private double frameTimer, frameInterval;
         Rectangle[] srcRecArray;
 
-        public Trap(Vector2 position)
+        public Trap(Vector2 position, Color color) : base(position, color)
         {
-            this.position = position;
             srcRecArray = new Rectangle[2];
             srcRecArray[0] = new Rectangle(1, 860, 20, 20);
             srcRecArray[1] = new Rectangle(23, 860, 20, 20);

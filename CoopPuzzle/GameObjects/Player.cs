@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using MonoGame.Extended.Sprites;
 using MonoGame.Extended.VectorDraw;
+using System.Linq;
 
 namespace CoopPuzzle
 {
@@ -16,15 +17,12 @@ namespace CoopPuzzle
         Vector2 spritePos { get { return new Vector2(Pos.X + 12, Pos.Y - 16); } }
         Vector2 emitterPos { get { return new Vector2(Pos.X + 12, Pos.Y + 8); } }
 
-        public Vector2 Pos { get { return position; } set { position = value; } }
         public Vector2 Vel { get { return velocity; } set { velocity = value; } }
         
         public override Rectangle hitbox { get { return new Rectangle((int)position.X, (int)position.Y, 24, 16); } }
 
-        public Player(Vector2 position, Color color, AnimatedSprite sprite)
+        public Player(Vector2 position, Color color, AnimatedSprite sprite) : base(position, color)
         {
-            this.color = color;
-            this.position = position;
             this.start = position;
             this.sprite = sprite;
             particles = new ParticleSystem(position);
@@ -80,9 +78,11 @@ namespace CoopPuzzle
                 if (this.hitbox.Intersects(objects[i].hitbox))
                 {
                     if (objects[i] is WeighedSwitch)
-                        break;
+                        continue;
+
                     if (objects[i] is Trap)
                         TrapCollision();
+
                     if (objects[i] is Door)
                     {
                         Door door = (Door)objects[i];
@@ -91,12 +91,39 @@ namespace CoopPuzzle
                         else
                             continue;
                     }
+
                     if (objects[i] is Block)
                         HandleCollision();
+
+                    if (objects[i] is MovableBlock)
+                    {
+                        Vector2 up = new Vector2(0, hitbox.Top - objects[i].hitbox.Bottom);
+                        Vector2 down = new Vector2(0, hitbox.Bottom - objects[i].hitbox.Top);
+                        Vector2 left = new Vector2(hitbox.Left - objects[i].hitbox.Right, 0);
+                        Vector2 right = new Vector2(hitbox.Right - objects[i].hitbox.Left, 0);
+                        Vector2[] vectors = new Vector2[] { up, down, left, right };
+                        IEnumerable<Vector2> sortedVectors = vectors.OrderBy(v => v.Length());
+                        vectors = sortedVectors.ToArray();
+
+                        objects[i].Pos += vectors[0] * 0.75f; //gå kortaste vägen ur objektet du kolliderade med
+
+                        for (int j = 0; j < objects.Count; j++)
+                        {
+                            if (objects[j] == objects[i])
+                                continue;
+
+                            if (objects[i].hitbox.Intersects(objects[j].hitbox))
+                            {
+                                HandleCollision();
+                                objects[i].Pos -= vectors[0] * 0.75f;
+                            }
+                        }
+                    }
                 }
             }
             sprite.Play(animation);
             sprite.Update(dt);
+            sprite.Depth = Pos.Y / game1.ScreenHeight;
             particles.EmitterLocation = emitterPos;
             particles.Update(dt, Vel, game1.GetColorOfPixel(emitterPos));
         }
