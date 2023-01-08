@@ -99,9 +99,12 @@ namespace CoopPuzzle
                     if (objects[i] is MovableBlock)
                     {
                         MovableBlock movable = (MovableBlock)objects[i];
-                        movable.Push(this, objects, out bool stuck);
-                        if (stuck)
-                            HandleCollision();
+                        if(Vel != Vector2.Zero)
+                        {
+                            movable.Push(this, objects, out bool stuck);
+                            if (stuck)
+                                HandleCollision();
+                        }
                     }
                 }
             }
