@@ -11,6 +11,7 @@ namespace CoopPuzzle
 
         public Vector2 Pos { get { return position; } set { position = value; } }
         public virtual Rectangle hitbox { get { return new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y); } }
+        public Color setColor { set { color = value; } }
 
         public GameObject(Vector2 position, Color color)
         {

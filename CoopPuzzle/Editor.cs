@@ -72,6 +72,7 @@ namespace CoopPuzzle
                         return;
                     }
                 }
+
                 switch (placeType)
                 {
                     case "Block":
@@ -103,10 +104,20 @@ namespace CoopPuzzle
                     }
                 }
             }
+
+            //for (int i = 0; i < objects.Count; i++)                                                           //<--Ta bort kommentar när vi lagt till texturer
+            //{
+            //    if (objects[i].hitbox.Contains(new Vector2(mouse.Position.X, mouse.Position.Y) + camera))
+            //        objects[i].setColor = Color.Red;
+            //    else
+            //        objects[i].setColor = Color.White;
+            //}
         }
 
         public void Draw(SpriteBatch sb, Matrix transformMatrix)
         {
+            sb.End();
+            sb.Begin(sortMode: SpriteSortMode.FrontToBack, samplerState: SamplerState.PointWrap, transformMatrix: transformMatrix);
             //sb.Draw(Assets.white, ghostRectangle, Color.White * 0.5f);
             sb.DrawLine(new Vector2(ghostRectangle.Left, ghostRectangle.Top), new Vector2(ghostRectangle.Right, ghostRectangle.Top), 1, Color.Black);
             sb.DrawLine(new Vector2(ghostRectangle.Left, ghostRectangle.Top), new Vector2(ghostRectangle.Left, ghostRectangle.Bottom), 1, Color.Black);
