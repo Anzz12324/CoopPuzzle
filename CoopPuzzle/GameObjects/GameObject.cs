@@ -1,6 +1,6 @@
 ﻿namespace CoopPuzzle
 {
-    internal class GameObject
+    abstract class GameObject
     {
         protected Texture2D tex;
         protected Color color;
