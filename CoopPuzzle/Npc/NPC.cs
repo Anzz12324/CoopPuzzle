@@ -12,7 +12,9 @@ namespace CoopPuzzle.Npc
         protected string text;
         protected Rectangle range;
         protected bool playerInRange;
-        Rectangle[] srcRecArray;
+        protected Rectangle[] srcRecArray;
+        protected int frame = 0;
+        protected double frameTimer, frameInterval;
 
         public NPC(Texture2D tex, Texture2D bubbleTex, Vector2 pos, Vector2 bubblePos)
         {
