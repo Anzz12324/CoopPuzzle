@@ -11,15 +11,15 @@ namespace CoopPuzzle
         MouseState mouse, prevMouse;
         KeyboardState board, prevBoard;
 
-        Rectangle ghostRectangle = new Rectangle(0,0,32,32);
+        Rectangle ghostRectangle = new Rectangle(0,0,40,40);
 
         List<GameObject> HUDobjects = new List<GameObject>()
         {
-            new Block(new Vector2(256, 640), Vector2.One * 32, Color.White),
-            new Door(new Vector2(256 + 35, 640), Color.Green, -1),
-            new MovableBlock(new Vector2(256 + 35 * 2, 640), Color.SaddleBrown),
-            new Trap(new Vector2(256 + 35 * 3, 640), Color.White),
-            new WeighedSwitch(new Vector2(256 + 35 * 4, 640), Color.White, -1)
+            new Block(new Vector2(256, 640), Vector2.One * 40, Color.White),
+            new Door(new Vector2(256 + 45, 640), Color.Green, -1),
+            new MovableBlock(new Vector2(256 + 45 * 2, 640), Color.SaddleBrown),
+            new Trap(new Vector2(256 + 45 * 3, 640), Color.White),
+            new WeighedSwitch(new Vector2(256 + 45 * 4, 640), Color.White, -1)
         };
 
         string placeType = "Block";
@@ -40,27 +40,27 @@ namespace CoopPuzzle
             int extraX = (mouse.X < -camera.X) ? 1 : 0;
             int extraY = (mouse.Y < -camera.Y) ? 1 : 0;
 
-            ghostRectangle.X = ((mouse.X + (int)camera.X) / 32 - extraX) * 32;
-            ghostRectangle.Y = ((mouse.Y + (int)camera.Y) / 32 - extraY) * 32;
+            ghostRectangle.X = ((mouse.X + (int)camera.X) / 40 - extraX) * 40;
+            ghostRectangle.Y = ((mouse.Y + (int)camera.Y) / 40 - extraY) * 40;
 
             int scroll = mouse.ScrollWheelValue - prevMouse.ScrollWheelValue;
             if (placeType == "Door" || placeType == "WeighedSwitch")
             {
-                ghostRectangle.Size = new Point(32, 32);
+                ghostRectangle.Size = new Point(40, 40);
                 id += Math.Clamp(scroll, -1, 1);
             }
             else
             {
                 if (board.IsKeyDown(Keys.LeftControl))
-                    ghostRectangle.Height += 32 * Math.Clamp(scroll, -1, 1);
+                    ghostRectangle.Height += 40 * Math.Clamp(scroll, -1, 1);
                 else
-                    ghostRectangle.Width += 32 * Math.Clamp(scroll, -1, 1);
+                    ghostRectangle.Width += 40 * Math.Clamp(scroll, -1, 1);
             }
 
-            if (ghostRectangle.Height < 32)
-                ghostRectangle.Height = 32;
-            if (ghostRectangle.Width < 32)
-                ghostRectangle.Width = 32;
+            if (ghostRectangle.Height < 40)
+                ghostRectangle.Height = 40;
+            if (ghostRectangle.Width < 40)
+                ghostRectangle.Width = 40;
 
             if (mouse.LeftButton == ButtonState.Pressed && prevMouse.LeftButton == ButtonState.Released)
             {

@@ -14,6 +14,7 @@ namespace CoopPuzzle
         public WeighedSwitch(Vector2 position, Color color, int id) : base(position, color)
         {
             this.id = id;
+            
         }
 
         public override void Update(GameTime gT, List<GameObject> objects, Player[] players)
@@ -32,13 +33,14 @@ namespace CoopPuzzle
 
         public override void Draw(SpriteBatch sb)
         {
+            sb.Draw(Assets.white, hitbox, Color.Red);
             if (Weight)
             {
-                sb.Draw(Assets.undertaleRuins, hitbox, new Rectangle(23, 837, 20, 20), Color.White);
+                sb.Draw(Assets.undertaleRuins, Pos, new Rectangle(23, 837, 20, 20), Color.White, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
             }
             else
             {
-                sb.Draw(Assets.undertaleRuins, hitbox, new Rectangle(1, 837, 20, 20), Color.White);
+                sb.Draw(Assets.undertaleRuins, Pos, new Rectangle(1, 837, 20, 20), Color.White, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
 
             }
         }

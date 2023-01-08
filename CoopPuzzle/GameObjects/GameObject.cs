@@ -7,7 +7,7 @@ namespace CoopPuzzle
         protected Texture2D tex;
         protected Color color;
         protected Vector2 position;
-        protected Vector2 size = Vector2.One * 32;
+        protected Vector2 size = Vector2.One * 40;
 
         public Vector2 Pos { get { return position; } set { position = value; } }
         public virtual Rectangle hitbox { get { return new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y); } }
