@@ -121,10 +121,10 @@ namespace CoopPuzzle
             {
                 HUDobjects[i].Draw(sb);
                 int lineWidth = (HUDobjects[i].GetType().Name == placeType) ? 3 : 1;
-                sb.DrawLine(new Vector2(HUDobjects[i].hitbox.Left, HUDobjects[i].hitbox.Top), new Vector2(HUDobjects[i].hitbox.Right, HUDobjects[i].hitbox.Top), lineWidth, Color.Black);
-                sb.DrawLine(new Vector2(HUDobjects[i].hitbox.Left, HUDobjects[i].hitbox.Top), new Vector2(HUDobjects[i].hitbox.Left, HUDobjects[i].hitbox.Bottom), lineWidth, Color.Black);
-                sb.DrawLine(new Vector2(HUDobjects[i].hitbox.Left, HUDobjects[i].hitbox.Bottom), new Vector2(HUDobjects[i].hitbox.Right, HUDobjects[i].hitbox.Bottom), lineWidth, Color.Black);
-                sb.DrawLine(new Vector2(HUDobjects[i].hitbox.Right, HUDobjects[i].hitbox.Bottom), new Vector2(HUDobjects[i].hitbox.Right, HUDobjects[i].hitbox.Top), lineWidth, Color.Black);
+                sb.DrawLine(HUDobjects[i].Pos, new Vector2(0, 1), 40, lineWidth, Color.Black);
+                sb.DrawLine(HUDobjects[i].Pos, new Vector2(1, 0), 40, lineWidth, Color.Black);
+                sb.DrawLine(new Vector2(HUDobjects[i].Pos.X + 40, HUDobjects[i].Pos.Y), new Vector2(0, 1), 40, lineWidth, Color.Black);
+                sb.DrawLine(new Vector2(HUDobjects[i].Pos.X, HUDobjects[i].Pos.Y + 40), new Vector2(1, 0), 40, lineWidth, Color.Black);
             }
             sb.End();
 

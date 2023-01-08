@@ -169,7 +169,14 @@ namespace CoopPuzzle
             for (int i = 0; i < objects.Count; i++)
             {
                 if (objects[i] is WeighedSwitch)
+                {
                     objects[i].Draw(spriteBatch);
+                    if (editmode)
+                    {
+                        WeighedSwitch ws = (WeighedSwitch)objects[i];
+                        spriteBatch.DrawString(Assets.font, ws.id.ToString(), new Vector2(ws.Pos.X, ws.Pos.Y - 16), Color.Black);
+                    }
+                }
             }
             spriteBatch.End();
             GraphicsDevice.SetRenderTarget(null);
@@ -180,6 +187,14 @@ namespace CoopPuzzle
             {
                 if (objects[i] is not WeighedSwitch)
                     objects[i].Draw(spriteBatch);
+                if (objects[i] is Door)
+                {
+                    if (editmode)
+                    {
+                        Door door = (Door)objects[i];
+                        spriteBatch.DrawString(Assets.font, door.id.ToString(), new Vector2(door.Pos.X, door.Pos.Y - 16), Color.Black);
+                    }
+                }
             }
 
             if (!connected && !editmode)

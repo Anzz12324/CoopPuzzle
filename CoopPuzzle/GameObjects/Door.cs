@@ -9,7 +9,7 @@ namespace CoopPuzzle
     internal class Door : GameObject
     {
         public bool Open { get; private set; }
-        int id;
+        public int id { get; private set; }
 
         public Door(Vector2 position, Color color, int id) : base(position, color)
         {
