@@ -21,7 +21,7 @@ namespace CoopPuzzle
 
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(tex, position, hitbox, color);
+            sb.Draw(tex, hitbox, null, color, 0f, Vector2.Zero, SpriteEffects.None, 1f);
         }
 
         public void Push(Player player, List<GameObject> objects, out bool stuck)

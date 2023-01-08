@@ -219,7 +219,7 @@ namespace CoopPuzzle
             for (int i = 0; i < objects.Count; i++)
             {
                 if (objects[i] is WeighedSwitch)
-                    objects[i].Update(gameTime, players);
+                    objects[i].Update(gameTime, objects, players);
                 else if (objects[i] is Trap)
                     objects[i].Update(gameTime);
                 else if (objects[i] is Door)

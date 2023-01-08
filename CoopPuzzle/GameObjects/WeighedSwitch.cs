@@ -14,12 +14,17 @@ namespace CoopPuzzle
         {
         }
 
-        public override void Update(GameTime gT, Player[] players)
+        public override void Update(GameTime gT, List<GameObject> objects, Player[] players)
         {
             Weight = false;
+            for (int i = 0; i < objects.Count; i++)
+            {
+                if (objects[i] is MovableBlock)
+                    Weight = objects[i].hitbox.Intersects(hitbox) ? true : Weight;
+            }
             for (int i = 0; i < players.Length; i++)
             {
-                Weight = players[i].hitbox.Intersects(this.hitbox) ? true : Weight;
+                Weight = players[i].hitbox.Intersects(hitbox) ? true : Weight;
             }
         }
 
