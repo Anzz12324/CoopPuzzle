@@ -8,18 +8,25 @@ namespace CoopPuzzle
 {
     internal class WeighedSwitch : GameObject
     {
-        public bool Weight { get; set; }
+        public bool Weight { get; private set; }
+        public int id { get; private set; }
 
-        public WeighedSwitch(Vector2 position, Color color) : base(position, color)
+        public WeighedSwitch(Vector2 position, Color color, int id) : base(position, color)
         {
+            this.id = id;
         }
 
-        public override void Update(GameTime gT, Player[] players)
+        public override void Update(GameTime gT, List<GameObject> objects, Player[] players)
         {
             Weight = false;
+            for (int i = 0; i < objects.Count; i++)
+            {
+                if (objects[i] is MovableBlock)
+                    Weight = objects[i].hitbox.Intersects(hitbox) ? true : Weight;
+            }
             for (int i = 0; i < players.Length; i++)
             {
-                Weight = players[i].hitbox.Intersects(this.hitbox) ? true : Weight;
+                Weight = players[i].hitbox.Intersects(hitbox) ? true : Weight;
             }
         }
 

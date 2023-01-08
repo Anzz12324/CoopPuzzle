@@ -98,27 +98,10 @@ namespace CoopPuzzle
 
                     if (objects[i] is MovableBlock)
                     {
-                        Vector2 up = new Vector2(0, hitbox.Top - objects[i].hitbox.Bottom);
-                        Vector2 down = new Vector2(0, hitbox.Bottom - objects[i].hitbox.Top);
-                        Vector2 left = new Vector2(hitbox.Left - objects[i].hitbox.Right, 0);
-                        Vector2 right = new Vector2(hitbox.Right - objects[i].hitbox.Left, 0);
-                        Vector2[] vectors = new Vector2[] { up, down, left, right };
-                        IEnumerable<Vector2> sortedVectors = vectors.OrderBy(v => v.Length());
-                        vectors = sortedVectors.ToArray();
-
-                        objects[i].Pos += vectors[0] * 0.75f; //gå kortaste vägen ur objektet du kolliderade med
-
-                        for (int j = 0; j < objects.Count; j++)
-                        {
-                            if (objects[j] == objects[i])
-                                continue;
-
-                            if (objects[i].hitbox.Intersects(objects[j].hitbox))
-                            {
-                                HandleCollision();
-                                objects[i].Pos -= vectors[0] * 0.75f;
-                            }
-                        }
+                        MovableBlock movable = (MovableBlock)objects[i];
+                        movable.Push(this, objects, out bool stuck);
+                        if (stuck)
+                            HandleCollision();
                     }
                 }
             }
