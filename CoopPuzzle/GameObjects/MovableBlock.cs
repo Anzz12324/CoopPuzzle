@@ -23,5 +23,32 @@ namespace CoopPuzzle
         {
             sb.Draw(tex, position, hitbox, color);
         }
+
+        public void Push(Player player, List<GameObject> objects, out bool stuck)
+        {
+            Vector2 up = new Vector2(0, player.hitbox.Top - hitbox.Bottom);
+            Vector2 down = new Vector2(0, player.hitbox.Bottom - hitbox.Top);
+            Vector2 left = new Vector2(player.hitbox.Left - hitbox.Right, 0);
+            Vector2 right = new Vector2(player.hitbox.Right - hitbox.Left, 0);
+            Vector2[] vectors = new Vector2[] { up, down, left, right };
+            IEnumerable<Vector2> sortedVectors = vectors.OrderBy(v => v.Length());
+            vectors = sortedVectors.ToArray();
+
+            Pos += vectors[0] * 0.75f; //gå kortaste vägen ur objektet du kolliderade med
+
+            for (int i = 0; i < objects.Count; i++)
+            {
+                if (objects[i] == this || objects[i] is WeighedSwitch)
+                    continue;
+
+                if (hitbox.Intersects(objects[i].hitbox))
+                {
+                    Pos -= vectors[0] * 0.75f;
+                    stuck = true;
+                    return;
+                }
+            }
+            stuck = false;
+        }
     }
 }
