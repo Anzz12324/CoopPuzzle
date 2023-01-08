@@ -76,11 +76,6 @@ namespace CoopPuzzle
             DebugDraw.Init(GraphicsDevice);
             Assets.LoadTextures(Content);
             editor = new Editor();
-            var spriteSheet = Content.Load<SpriteSheet>("frisk.sf", new JsonContentLoader());
-            var spriteSheet2 = Content.Load<SpriteSheet>("frisk2.sf", new JsonContentLoader());
-
-            player = new Player(new Vector2(100, 200), Color.White, new AnimatedSprite(spriteSheet));
-            otherPlayer = new Player(new Vector2(100, 300), Color.Black, new AnimatedSprite(spriteSheet2));
 
             objects = new List<GameObject>()
             {
@@ -90,6 +85,8 @@ namespace CoopPuzzle
                 new Trap(new Vector2(550,500), Color.White),
                 new MovableBlock(new Vector2(400, 500), Color.White)
             };
+
+            LoadLevel();
         }
 
         private void Shotcuts()
@@ -379,6 +376,22 @@ namespace CoopPuzzle
                 movementDirection += Vector2.UnitX;
             }
             return movementDirection;
+        }
+
+        void LoadLevel()
+        {
+            string level = "../../../Content/level.json";
+            JsonParser.GetJObjectFromFile(level);
+
+            player = new Player(JsonParser.GetPos("player"), Color.White, new AnimatedSprite(Assets.spriteSheet));
+            otherPlayer = new Player(JsonParser.GetPos("otherPlayer"), Color.White, new AnimatedSprite(Assets.spriteSheet2));
+
+            //objects = new List<GameObject>();
+            List<Rectangle> blockRects = JsonParser.GetRectangleList(level, "block");
+            for (int i = 0; i < blockRects.Count; i++)
+            {
+                objects.Add(new Block(new Vector2(blockRects[i].X, blockRects[i].Y), new Vector2(blockRects[i].Width, blockRects[i].Height), Color.White));
+            }
         }
     }
 }

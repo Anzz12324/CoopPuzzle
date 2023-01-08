@@ -56,6 +56,17 @@ namespace CoopPuzzle
             return rect;
         }
 
+        public static Vector2 GetPos(string propertyName)
+        {
+            JObject obj = new JObject();
+            JArray arrayObj = (JArray)wholeObj.GetValue(propertyName);
+            for (int i = 0; i < arrayObj.Count; i++)
+            {
+                obj = (JObject)arrayObj[i];
+            }
+            return new Vector2(Convert.ToInt32(obj.GetValue("positionX")), Convert.ToInt32(obj.GetValue("positionY")));
+        }
+
         public static int GetId(string fileName, string propertyName)
         {
             if (wholeObj == null || currentFileName == null || currentFileName != fileName)
@@ -88,7 +99,6 @@ namespace CoopPuzzle
             int id = Convert.ToInt32(obj.GetValue("Id"));
             return id;
         }
-
 
         public static List<string> GetTypeList(string fileName, string propertyName)
         {

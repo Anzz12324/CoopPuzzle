@@ -142,5 +142,4 @@ namespace CoopPuzzle
             sb.Begin(sortMode: SpriteSortMode.FrontToBack, samplerState: SamplerState.PointWrap, transformMatrix: transformMatrix);
         }
     }
-
 }
