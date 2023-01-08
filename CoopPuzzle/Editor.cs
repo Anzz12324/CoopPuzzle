@@ -17,7 +17,7 @@ namespace CoopPuzzle
         {
             new Block(new Vector2(256, 640), Vector2.One * 40, Color.White),
             new Door(new Vector2(256 + 45, 640), Color.Green, -1),
-            new MovableBlock(new Vector2(256 + 45 * 2, 640), Color.SaddleBrown),
+            new MovableBlock(new Vector2(256 + 45 * 2, 640), Color.White),
             new Trap(new Vector2(256 + 45 * 3, 640), Color.White),
             new WeighedSwitch(new Vector2(256 + 45 * 4, 640), Color.White, -1)
         };
@@ -82,7 +82,7 @@ namespace CoopPuzzle
                         objects.Add(new Door(new Vector2(ghostRectangle.X, ghostRectangle.Y), Color.Green, id));
                         break;
                     case "MovableBlock":
-                        objects.Add(new MovableBlock(new Vector2(ghostRectangle.X, ghostRectangle.Y), Color.SaddleBrown));
+                        objects.Add(new MovableBlock(new Vector2(ghostRectangle.X, ghostRectangle.Y), Color.White));
                         break;
                     case "Trap":
                         objects.Add(new Trap(new Vector2(ghostRectangle.X, ghostRectangle.Y), Color.White));

@@ -10,7 +10,7 @@ namespace CoopPuzzle
     {
         public bool Weight { get; private set; }
         public int id { get; private set; }
-        public override Rectangle hitbox { get { return new Rectangle((int)position.X + 4, (int)position.Y + 2, (int)size.X - 4 * 2, (int)size.Y - 12); } }
+        public override Rectangle hitbox { get { return new Rectangle((int)position.X + 4, (int)position.Y + 6, (int)size.X - 4 * 2, (int)size.Y - 8); } }
 
         public WeighedSwitch(Vector2 position, Color color, int id) : base(position, color)
         {

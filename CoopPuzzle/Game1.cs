@@ -88,7 +88,7 @@ namespace CoopPuzzle
                 new Door(new Vector2(300, 100), Color.Green, 0),
                 new Block(new Vector2(500), Vector2.One * 32, Color.Red),
                 new Trap(new Vector2(550,500), Color.White),
-                new MovableBlock(new Vector2(400, 500), Color.SaddleBrown)
+                new MovableBlock(new Vector2(400, 500), Color.White)
             };
         }
 

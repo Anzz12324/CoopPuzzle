@@ -13,7 +13,7 @@ namespace CoopPuzzle
 
         public MovableBlock(Vector2 position, Color color) : base(position, color)
         {
-            tex = Assets.white;
+            tex = Assets.box;
         }
 
         public override void Update(GameTime gT, Game1 game1)
