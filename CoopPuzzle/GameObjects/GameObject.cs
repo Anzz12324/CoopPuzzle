@@ -1,4 +1,6 @@
-﻿namespace CoopPuzzle
+﻿using MonoGame.Extended;
+
+namespace CoopPuzzle
 {
     internal class GameObject
     {
@@ -23,6 +25,7 @@
         public virtual void Update(GameTime gT, List<GameObject> objects) { }
         public virtual void Update(GameTime gT, List<GameObject> objects, Player[] players) { }
         public virtual void Update(GameTime gT, List<GameObject> objects, Game1 game1) { }
+        public virtual void Update(GameTime gT, Game1 game1) { }
         public virtual void Draw(SpriteBatch sb)
         {
             sb.Draw(Assets.white, hitbox, color);

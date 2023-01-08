@@ -171,13 +171,19 @@ namespace CoopPuzzle
             spriteBatch.Draw(Content.Load<Texture2D>("ExamplePNG"), new Vector2(400, 100), Color.White);
             for (int i = 0; i < objects.Count; i++)
             {
-                objects[i].Draw(spriteBatch);
+                if (objects[i] is WeighedSwitch)
+                    objects[i].Draw(spriteBatch);
             }
             spriteBatch.End();
             GraphicsDevice.SetRenderTarget(null);
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin(sortMode: SpriteSortMode.FrontToBack, samplerState: SamplerState.PointWrap, transformMatrix: transformMatrix);
             spriteBatch.Draw(renderTarget, camera.Position, Color.White);
+            for (int i = 0; i < objects.Count; i++)
+            {
+                if (objects[i] is not WeighedSwitch)
+                    objects[i].Draw(spriteBatch);
+            }
 
             if (!connected && !editmode)
                 spriteBatch.DrawString(bigFont, "Waiting on your friend to join!", new Vector2(100,360), Color.Black);                

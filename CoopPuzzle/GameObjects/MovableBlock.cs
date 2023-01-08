@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MonoGame.Extended;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,20 +9,23 @@ namespace CoopPuzzle
 {
     internal class MovableBlock : GameObject
     {
+        float depth;
 
         public MovableBlock(Vector2 position, Color color) : base(position, color)
         {
             tex = Assets.white;
         }
 
-        public override void Update(GameTime gT)
+        public override void Update(GameTime gT, Game1 game1)
         {
+            depth = (Pos.Y - game1.camera.Position.Y) / game1.ScreenHeight;
+
             base.Update(gT);
         }
 
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(tex, hitbox, null, color, 0f, Vector2.Zero, SpriteEffects.None, 1f);
+            sb.Draw(tex, hitbox, null, color, 0f, Vector2.Zero, SpriteEffects.None, depth);
         }
 
         public void Push(Player player, List<GameObject> objects, out bool stuck)
