@@ -28,7 +28,6 @@ namespace CoopPuzzle
 
         Player player, otherPlayer;
 
-        SpriteFont font, bigFont;
         List<GameObject> objects;
 
         RenderTarget2D renderTarget;
@@ -77,8 +76,6 @@ namespace CoopPuzzle
             DebugDraw.Init(GraphicsDevice);
             Assets.LoadTextures(Content);
             editor = new Editor();
-            font = Content.Load<SpriteFont>("font");
-            bigFont = Content.Load<SpriteFont>("bigFont");
             var spriteSheet = Content.Load<SpriteSheet>("frisk.sf", new JsonContentLoader());
             var spriteSheet2 = Content.Load<SpriteSheet>("frisk2.sf", new JsonContentLoader());
 
@@ -87,8 +84,8 @@ namespace CoopPuzzle
 
             objects = new List<GameObject>()
             {
-                new WeighedSwitch(new Vector2(200, 100), Color.Green),
-                new Door(new Vector2(300, 100), Color.Green),
+                new WeighedSwitch(new Vector2(200, 100), Color.Green, 0),
+                new Door(new Vector2(300, 100), Color.Green, 0),
                 new Block(new Vector2(500), Vector2.One * 32, Color.Red),
                 new Trap(new Vector2(550,500), Color.White),
                 new MovableBlock(new Vector2(400, 500), Color.SaddleBrown)
@@ -186,30 +183,30 @@ namespace CoopPuzzle
             }
 
             if (!connected && !editmode)
-                spriteBatch.DrawString(bigFont, "Waiting on your friend to join!", new Vector2(100,360), Color.Black);                
+                spriteBatch.DrawString(Assets.bigFont, "Waiting on your friend to join!", new Vector2(100,360), Color.Black);                
             if (active)
-                spriteBatch.DrawString(font, (host) ? "Server   P1" : "Client   P2", new Vector2(100,0), Color.Black);
+                spriteBatch.DrawString(Assets.font, (host) ? "Server   P1" : "Client   P2", new Vector2(100,0), Color.Black);
 
 
-            spriteBatch.DrawString(font, "P1", new Vector2(player.Pos.X, player.Pos.Y - 64), Color.Black);
-            spriteBatch.DrawString(font, "P2", new Vector2(otherPlayer.Pos.X, otherPlayer.Pos.Y - 64), Color.Black);
-            spriteBatch.DrawString(font, $"FPS:{(int)(1 / gameTime.ElapsedGameTime.TotalSeconds)}", new Vector2(500, 0), Color.Black);
-            spriteBatch.DrawString(font, $"Pos:{player.Pos}  otherPos:{otherPlayer.Pos}", new Vector2(camera.Position.X + 600,camera.Position.Y), Color.Yellow);
-            spriteBatch.DrawString(font, $"PlayerEdit: {editmodePlayer}", new Vector2(300,0), Color.Black);
-            spriteBatch.DrawString(font, $"latency: {latency}", new Vector2(300, 50), Color.Black);
-            spriteBatch.DrawString(font, $"Camera Pos; {camera.Position}", new Vector2(camera.Position.X, camera.Position.Y + 60), Color.Yellow);
-            spriteBatch.DrawString(font, $"Camera Move; {diffCam}", new Vector2(camera.Position.X, camera.Position.Y + 80), Color.Yellow);
-            spriteBatch.DrawString(font, "Switch Camera; I, O, P, {", new Vector2(camera.Position.X, camera.Position.Y + 100), Color.Yellow);
+            spriteBatch.DrawString(Assets.font, "P1", new Vector2(player.Pos.X, player.Pos.Y - 64), Color.Black);
+            spriteBatch.DrawString(Assets.font, "P2", new Vector2(otherPlayer.Pos.X, otherPlayer.Pos.Y - 64), Color.Black);
+            spriteBatch.DrawString(Assets.font, $"FPS:{(int)(1 / gameTime.ElapsedGameTime.TotalSeconds)}", new Vector2(500, 0), Color.Black);
+            spriteBatch.DrawString(Assets.font, $"Pos:{player.Pos}  otherPos:{otherPlayer.Pos}", new Vector2(camera.Position.X + 600,camera.Position.Y), Color.Yellow);
+            spriteBatch.DrawString(Assets.font, $"PlayerEdit: {editmodePlayer}", new Vector2(300,0), Color.Black);
+            spriteBatch.DrawString(Assets.font, $"latency: {latency}", new Vector2(300, 50), Color.Black);
+            spriteBatch.DrawString(Assets.font, $"Camera Pos; {camera.Position}", new Vector2(camera.Position.X, camera.Position.Y + 60), Color.Yellow);
+            spriteBatch.DrawString(Assets.font, $"Camera Move; {diffCam}", new Vector2(camera.Position.X, camera.Position.Y + 80), Color.Yellow);
+            spriteBatch.DrawString(Assets.font, "Switch Camera; I, O, P, {", new Vector2(camera.Position.X, camera.Position.Y + 100), Color.Yellow);
             if (diffCam == DiffCam.KeyInput || diffCam == DiffCam.FullScreenMove)
-                spriteBatch.DrawString(font, "Move Camera in KeyInput\nUp: U\nDown: J\nLeft: H\nRight: K", new Vector2(camera.Position.X, camera.Position.Y + 120), Color.Yellow);
+                spriteBatch.DrawString(Assets.font, "Move Camera in KeyInput\nUp: U\nDown: J\nLeft: H\nRight: K", new Vector2(camera.Position.X, camera.Position.Y + 120), Color.Yellow);
 
             otherPlayer.Draw(spriteBatch);
             player.Draw(spriteBatch);
 
             if (editmode)
             {
-                spriteBatch.DrawString(font, "Switch between player : L", new Vector2(0, 40), Color.Black);
-                spriteBatch.DrawString(font, "Place block: Left-Click\nChange size of block: Scroll (+ Ctrl)", new Vector2(0, 500), Color.Black);
+                spriteBatch.DrawString(Assets.font, "Switch between player : L", new Vector2(0, 40), Color.Black);
+                spriteBatch.DrawString(Assets.font, "Place block: Left-Click\nChange size of block: Scroll (+ Ctrl)", new Vector2(0, 500), Color.Black);
 
                 editor.Draw(spriteBatch, transformMatrix);
             }
@@ -303,7 +300,6 @@ namespace CoopPuzzle
 
         public Color GetColorOfPixel(Vector2 position)
         {
-            Debug.WriteLine((int)position.X + (int)position.Y * ScreenWidth);
             try
             {
                 return colorData[(int)position.X + (int)position.Y * ScreenWidth];
