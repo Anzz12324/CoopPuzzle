@@ -15,11 +15,11 @@ namespace CoopPuzzle
 
         List<GameObject> HUDobjects = new List<GameObject>()
         {
-            new Block(new Vector2(128, 640), Vector2.One * 32, Color.White),
-            new Door(new Vector2(256, 640), Color.Green, -1),
-            new MovableBlock(new Vector2(384, 640), Color.SaddleBrown),
-            new Trap(new Vector2(512, 640), Color.White),
-            new WeighedSwitch(new Vector2(640, 640), Color.White, -1)
+            new Block(new Vector2(256, 640), Vector2.One * 32, Color.White),
+            new Door(new Vector2(256 + 35, 640), Color.Green, -1),
+            new MovableBlock(new Vector2(256 + 35 * 2, 640), Color.SaddleBrown),
+            new Trap(new Vector2(256 + 35 * 3, 640), Color.White),
+            new WeighedSwitch(new Vector2(256 + 35 * 4, 640), Color.White, -1)
         };
 
         string placeType = "Block";
@@ -44,20 +44,23 @@ namespace CoopPuzzle
             ghostRectangle.Y = ((mouse.Y + (int)camera.Y) / 32 - extraY) * 32;
 
             int scroll = mouse.ScrollWheelValue - prevMouse.ScrollWheelValue;
-            if (board.IsKeyDown(Keys.LeftControl))
-                ghostRectangle.Height += 32 * Math.Clamp(scroll, -1, 1);
+            if (placeType == "Door" || placeType == "WeighedSwitch")
+            {
+                ghostRectangle.Size = new Point(32, 32);
+                id += Math.Clamp(scroll, -1, 1);
+            }
             else
-                ghostRectangle.Width += 32 * Math.Clamp(scroll, -1, 1);
+            {
+                if (board.IsKeyDown(Keys.LeftControl))
+                    ghostRectangle.Height += 32 * Math.Clamp(scroll, -1, 1);
+                else
+                    ghostRectangle.Width += 32 * Math.Clamp(scroll, -1, 1);
+            }
 
             if (ghostRectangle.Height < 32)
                 ghostRectangle.Height = 32;
             if (ghostRectangle.Width < 32)
                 ghostRectangle.Width = 32;
-
-            if (board.IsKeyDown(Keys.R) && prevBoard.IsKeyUp(Keys.R))
-                id++;
-            if (board.IsKeyDown(Keys.F) && prevBoard.IsKeyUp(Keys.F))
-                id--;
 
             if (mouse.LeftButton == ButtonState.Pressed && prevMouse.LeftButton == ButtonState.Released)
             {
@@ -117,10 +120,11 @@ namespace CoopPuzzle
             for (int i = 0; i < HUDobjects.Count; i++)
             {
                 HUDobjects[i].Draw(sb);
-                sb.DrawLine(new Vector2(HUDobjects[i].hitbox.Left, HUDobjects[i].hitbox.Top), new Vector2(HUDobjects[i].hitbox.Right, HUDobjects[i].hitbox.Top), 1, Color.Black);
-                sb.DrawLine(new Vector2(HUDobjects[i].hitbox.Left, HUDobjects[i].hitbox.Top), new Vector2(HUDobjects[i].hitbox.Left, HUDobjects[i].hitbox.Bottom), 1, Color.Black);
-                sb.DrawLine(new Vector2(HUDobjects[i].hitbox.Left, HUDobjects[i].hitbox.Bottom), new Vector2(HUDobjects[i].hitbox.Right, HUDobjects[i].hitbox.Bottom), 1, Color.Black);
-                sb.DrawLine(new Vector2(HUDobjects[i].hitbox.Right, HUDobjects[i].hitbox.Bottom), new Vector2(HUDobjects[i].hitbox.Right, HUDobjects[i].hitbox.Top), 1, Color.Black);
+                int lineWidth = (HUDobjects[i].GetType().Name == placeType) ? 3 : 1;
+                sb.DrawLine(new Vector2(HUDobjects[i].hitbox.Left, HUDobjects[i].hitbox.Top), new Vector2(HUDobjects[i].hitbox.Right, HUDobjects[i].hitbox.Top), lineWidth, Color.Black);
+                sb.DrawLine(new Vector2(HUDobjects[i].hitbox.Left, HUDobjects[i].hitbox.Top), new Vector2(HUDobjects[i].hitbox.Left, HUDobjects[i].hitbox.Bottom), lineWidth, Color.Black);
+                sb.DrawLine(new Vector2(HUDobjects[i].hitbox.Left, HUDobjects[i].hitbox.Bottom), new Vector2(HUDobjects[i].hitbox.Right, HUDobjects[i].hitbox.Bottom), lineWidth, Color.Black);
+                sb.DrawLine(new Vector2(HUDobjects[i].hitbox.Right, HUDobjects[i].hitbox.Bottom), new Vector2(HUDobjects[i].hitbox.Right, HUDobjects[i].hitbox.Top), lineWidth, Color.Black);
             }
             sb.End();
 

@@ -206,7 +206,7 @@ namespace CoopPuzzle
             if (editmode)
             {
                 spriteBatch.DrawString(Assets.font, "Switch between player : L", new Vector2(0, 40), Color.Black);
-                spriteBatch.DrawString(Assets.font, "Place block: Left-Click\nChange size of block: Scroll (+ Ctrl)", new Vector2(0, 500), Color.Black);
+                spriteBatch.DrawString(Assets.font, "Place block: Left-Click\nChange size of block: Scroll (+ Ctrl)\nChange door and switch id: Scroll", new Vector2(0, 500), Color.Black);
 
                 editor.Draw(spriteBatch, transformMatrix);
             }
