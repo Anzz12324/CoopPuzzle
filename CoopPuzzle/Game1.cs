@@ -205,7 +205,8 @@ namespace CoopPuzzle
             }
 
             if (!connected && !editmode)
-                spriteBatch.DrawString(Assets.bigFont, "Waiting on your friend to join!", new Vector2(100,360), Color.Black);                
+                spriteBatch.Draw(Assets.wait, new Vector2(ScreenWidth/2-Assets.wait.Width/2,ScreenHeight/2-Assets.wait.Height),
+                    new Rectangle(0,0, Assets.wait.Width, Assets.wait.Height) , Color.White, 0, Vector2.Zero, 1, SpriteEffects.None,1);                
             if (active)
                 spriteBatch.DrawString(Assets.font, (host) ? "Server   P1" : "Client   P2", new Vector2(100,0), Color.Black);
 

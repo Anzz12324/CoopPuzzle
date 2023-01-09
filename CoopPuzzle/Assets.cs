@@ -9,7 +9,7 @@ namespace CoopPuzzle
 {
     public static class Assets
     {
-        public static Texture2D white, undertaleRuins, box, brick, flowey, bubbleTex;
+        public static Texture2D white, undertaleRuins, box, brick, flowey, bubbleTex, wait;
         public static SpriteFont font, bigFont;
         public static SpriteSheet spriteSheet, spriteSheet2;
         public static Song song;
@@ -40,7 +40,7 @@ namespace CoopPuzzle
 
             bubbleTex = gd.Load<Texture2D>("UndertaleTextBubbles");
             flowey = gd.Load<Texture2D>("UndertaleFlowey");
-
+            wait = gd.Load<Texture2D>("Wait");
         }
 
         static Texture2D GetTextureFromTileset(Texture2D originalTexture, Rectangle srcRect)
