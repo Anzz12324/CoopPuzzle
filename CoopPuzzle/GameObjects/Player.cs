@@ -10,7 +10,7 @@ namespace CoopPuzzle
     {
         AnimatedSprite sprite;
         ParticleSystem particles;
-        float speed = 100;
+        float speed, speedValue = 100;
         string animation;
 
         Vector2 start, oldPos, velocity;
@@ -32,10 +32,7 @@ namespace CoopPuzzle
 
         public override void Update(GameTime gt, List<GameObject> objects, Game1 game1)
         {
-            if (game1.editmode)
-                speed = 500;
-            else
-                speed = 100;
+            //speedValue = (game1.editmode) ? 500 : speedValue;
             
             velocity = Vector2.Zero;
             float dt = (float)gt.ElapsedGameTime.TotalSeconds;
@@ -79,6 +76,7 @@ namespace CoopPuzzle
 
             position += Vel;
 
+            speed = speedValue;
             for (int i = 0; i < objects.Count; i++)
             {
                 if (this.hitbox.Intersects(objects[i].hitbox))
@@ -104,9 +102,11 @@ namespace CoopPuzzle
                     if (objects[i] is MovableBlock)
                     {
                         MovableBlock movable = (MovableBlock)objects[i];
-                        if(Vel != Vector2.Zero)
+                        if (Vel != Vector2.Zero)
                         {
-                            movable.Push(this, objects, out bool stuck);
+                            int movables = 0;
+                            movable.Push(this, objects, out bool stuck, out float divideSpeedBy, ref movables);
+                            speed = speed / divideSpeedBy;
                             if (stuck)
                                 HandleCollision();
                         }

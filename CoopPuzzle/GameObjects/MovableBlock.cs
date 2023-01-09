@@ -30,9 +30,12 @@ namespace CoopPuzzle
             sb.Draw(tex, hitbox, null, TempColor, 0f, Vector2.Zero, SpriteEffects.None, depth);
         }
 
-        public void Push(GameObject pusher, List<GameObject> objects, out bool stuck)
+        public void Push(GameObject pusher, List<GameObject> objects, out bool stuck, out float divideSpeedBy, ref int movables)
         {
-            stuck = false;
+            divideSpeedBy = (float)Math.Sqrt(Size.X * Size.Y) / 20;
+            movables++;
+            stuck = (movables > 3) ? true : false;
+
             Vector2 up = new Vector2(0, pusher.hitbox.Top - hitbox.Bottom);
             Vector2 down = new Vector2(0, pusher.hitbox.Bottom - hitbox.Top);
             Vector2 left = new Vector2(pusher.hitbox.Left - hitbox.Right, 0);
@@ -52,7 +55,8 @@ namespace CoopPuzzle
                     if (objects[i] is MovableBlock)
                     {
                         MovableBlock mb = (MovableBlock)objects[i];
-                        mb.Push(this, objects, out stuck);
+                        mb.Push(this, objects, out stuck, out float alsoDivideSpeedBy, ref movables);
+                        divideSpeedBy *= alsoDivideSpeedBy * alsoDivideSpeedBy;
                         if (stuck)
                             Pos -= vectors[0] * 0.75f;
                         return;
