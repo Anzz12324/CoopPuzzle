@@ -11,12 +11,14 @@ namespace CoopPuzzle
 
         public Vector2 Pos { get { return position; } set { position = value; } }
         public virtual Rectangle hitbox { get { return new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y); } }
-        public Color setColor { set { color = value; } }
+        public Color TempColor { set; get; }
+        public Color Color { set { color = value; } get { return color; } }
 
         public GameObject(Vector2 position, Color color)
         {
             this.position = position;
             this.color = color;
+            TempColor = color;
         }
 
         public virtual void Update(GameTime gT) { }
@@ -29,7 +31,7 @@ namespace CoopPuzzle
         public virtual void Update(GameTime gT, Game1 game1) { }
         public virtual void Draw(SpriteBatch sb)
         {
-            sb.Draw(Assets.white, hitbox, color);
+            sb.Draw(Assets.white, hitbox, TempColor);
         }
     }
 }

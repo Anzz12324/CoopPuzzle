@@ -36,11 +36,11 @@ namespace CoopPuzzle
             //sb.Draw(Assets.white, hitbox, Color.Red);
             if (Weight)
             {
-                sb.Draw(Assets.undertaleRuins, Pos, new Rectangle(23, 837, 20, 20), Color.White, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
+                sb.Draw(Assets.undertaleRuins, Pos, new Rectangle(23, 837, 20, 20), TempColor, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
             }
             else
             {
-                sb.Draw(Assets.undertaleRuins, Pos, new Rectangle(1, 837, 20, 20), Color.White, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
+                sb.Draw(Assets.undertaleRuins, Pos, new Rectangle(1, 837, 20, 20), TempColor, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
 
             }
         }

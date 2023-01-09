@@ -12,8 +12,9 @@ namespace CoopPuzzle
     {
         float depth;
 
-        public MovableBlock(Vector2 position, Color color) : base(position, color)
+        public MovableBlock(Vector2 position, Vector2 size, Color color) : base(position, color)
         {
+            this.size = size;
             tex = Assets.box;
         }
 
@@ -26,7 +27,7 @@ namespace CoopPuzzle
 
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(tex, hitbox, null, color, 0f, Vector2.Zero, SpriteEffects.None, depth);
+            sb.Draw(tex, hitbox, null, TempColor, 0f, Vector2.Zero, SpriteEffects.None, depth);
         }
 
         public void Push(GameObject pusher, List<GameObject> objects, out bool stuck)

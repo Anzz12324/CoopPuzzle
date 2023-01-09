@@ -17,7 +17,7 @@ namespace CoopPuzzle
         {
             new Block(new Vector2(256, 640), Vector2.One * 40, Color.White),
             new Door(new Vector2(256 + 45, 640), Color.Green, -1),
-            new MovableBlock(new Vector2(256 + 45 * 2, 640), Color.White),
+            new MovableBlock(new Vector2(256 + 45 * 2, 640), Vector2.One * 40, Color.White),
             new Trap(new Vector2(256 + 45 * 3, 640), Color.White),
             new WeighedSwitch(new Vector2(256 + 45 * 4, 640), Color.White, -1)
         };
@@ -82,7 +82,7 @@ namespace CoopPuzzle
                         objects.Add(new Door(new Vector2(ghostRectangle.X, ghostRectangle.Y), Color.Green, id));
                         break;
                     case "MovableBlock":
-                        objects.Add(new MovableBlock(new Vector2(ghostRectangle.X, ghostRectangle.Y), Color.White));
+                        objects.Add(new MovableBlock(new Vector2(ghostRectangle.X, ghostRectangle.Y), new Vector2(ghostRectangle.Width, ghostRectangle.Height), Color.White));
                         break;
                     case "Trap":
                         objects.Add(new Trap(new Vector2(ghostRectangle.X, ghostRectangle.Y), Color.White));
@@ -105,13 +105,15 @@ namespace CoopPuzzle
                 }
             }
 
-            //for (int i = 0; i < objects.Count; i++)                                                           //<--Ta bort kommentar när vi lagt till texturer
-            //{
-            //    if (objects[i].hitbox.Contains(new Vector2(mouse.Position.X, mouse.Position.Y) + camera))
-            //        objects[i].setColor = Color.Red;
-            //    else
-            //        objects[i].setColor = Color.White;
-            //}
+            for (int i = 0; i < objects.Count; i++)                                                           //<--Ta bort kommentar när vi lagt till texturer
+            {
+                if (objects[i].hitbox.Contains(new Vector2(mouse.Position.X, mouse.Position.Y) + camera))
+                {
+                    objects[i].TempColor = Color.Lerp(objects[i].Color, Color.Black, 0.5f);
+                }
+                else
+                    objects[i].TempColor = objects[i].Color;
+            }
         }
 
         public void Draw(SpriteBatch sb, Matrix transformMatrix)

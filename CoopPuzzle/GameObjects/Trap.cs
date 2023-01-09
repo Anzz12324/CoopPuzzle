@@ -41,7 +41,7 @@ namespace CoopPuzzle
         public override void Draw(SpriteBatch sb)
         {
 
-            sb.Draw(Assets.undertaleRuins, hitbox, srcRecArray[frame], Color.White);
+            sb.Draw(Assets.undertaleRuins, hitbox, srcRecArray[frame], TempColor);
         }
     }
 }

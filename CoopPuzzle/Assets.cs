@@ -9,7 +9,7 @@ namespace CoopPuzzle
 {
     public static class Assets
     {
-        public static Texture2D white, undertaleRuins, box;
+        public static Texture2D white, undertaleRuins, box, brick;
         public static SpriteFont font, bigFont;
         public static SpriteSheet spriteSheet, spriteSheet2;
         public static Song song;
@@ -26,6 +26,21 @@ namespace CoopPuzzle
             bigFont = gd.Load<SpriteFont>("bigFont");
 
             song = gd.Load<Song>("FrogShop");
+            brick = GetTextureFromTileset(undertaleRuins, new Rectangle(201, 685, 20, 20));
+        }
+
+        static Texture2D GetTextureFromTileset(Texture2D originalTexture, Rectangle srcRect)
+        {
+            // Create a new texture that is the same size as the original texture
+            Texture2D newTexture = new Texture2D(originalTexture.GraphicsDevice, srcRect.Width, srcRect.Height);
+
+            // Retrieve a portion of the pixel data from the original texture
+            Color[] pixelData = new Color[srcRect.Width * srcRect.Height];
+            originalTexture.GetData(0, srcRect, pixelData, 0, pixelData.Length);
+
+            // Set the pixel data for the new texture
+            newTexture.SetData(pixelData);
+            return newTexture;
         }
     }
 }
