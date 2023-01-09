@@ -111,7 +111,7 @@ namespace CoopPuzzle
 
             sprite.Play(animation);
             sprite.Update(dt);
-            sprite.Depth = (Pos.Y - game1.camera.Position.Y) / game1.ScreenHeight;
+            sprite.Depth = Math.Clamp((Pos.Y - game1.camera.Position.Y) / game1.ScreenHeight, 0, 1);
             particles.EmitterLocation = emitterPos;
             particles.Update(dt, Vel, game1, emitterPos);
         }
