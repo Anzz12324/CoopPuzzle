@@ -181,35 +181,49 @@ namespace CoopPuzzle
             Vector2 teleVec = new Vector2(x, y);
             return teleVec;
         }
-        public static void WriteJsonToFile(string fileName, List<GameObject> gList)
+        public static void WriteJsonToFile(string fileName, List<GameObject> objects, Player[] players)
         {
-            JArray enemyArray = new JArray();
-            JArray platformArray = new JArray();
+            JObject player = CreateObject(players[0].Pos);
+            JObject otherPlayer = CreateObject(players[1].Pos);
+
+            JArray blockArray = new JArray();
+            JArray checkPointArray = new JArray();
+            JArray doorArray = new JArray();
+            JArray switchArray = new JArray();
+            JArray movableArray = new JArray();
+            JArray trapArray = new JArray();
+
             JObject bigobj = new JObject();
 
-            JArray array = new JArray();
-            for (int i = 0; i < gList.Count; i++)
+            for (int i = 0; i < objects.Count; i++)
             {
-                //Ger bara rött för att vi inte har det än
-                //if (gList[i] is Enemy)
-                //{
-                //    JObject obj = CreateObject(gList[i].hitBox);
-                //    enemyArray.Add(obj);
-                //}
-                //else if (gList[i] is Platform)
-                //{
-                //    JObject obj = CreateObject(gList[i].hitBox);
-                //    platformArray.Add(obj);
-                //}
-                //else if (gList[i] is Player)
-                //{
-                //    JObject obj = CreateObject(gList[i].hitBox);
-                //    bigobj.Add("player", obj);
-                //}
+                if (objects[i] is Block)
+                    blockArray.Add(CreateObject((Block)objects[i]));
+
+                if (objects[i] is CheckPoint)
+                    checkPointArray.Add(CreateObject(objects[i].hitbox));
+                
+                if (objects[i] is MovableBlock)
+                    movableArray.Add(CreateObject(objects[i].hitbox));
+
+                if (objects[i] is Door)
+                    doorArray.Add(CreateObject((Door)objects[i]));
+
+                if (objects[i] is WeighedSwitch)
+                    switchArray.Add(CreateObject((WeighedSwitch)objects[i]));
+
+                if (objects[i] is Trap)
+                    trapArray.Add(CreateObject(objects[i].Pos));
             }
 
-            bigobj.Add("enemies", enemyArray);
-            bigobj.Add("platforms", platformArray);
+            bigobj.Add("player", player);
+            bigobj.Add("otherPlayer", otherPlayer);
+            bigobj.Add("block", blockArray);
+            bigobj.Add("checkpoint", checkPointArray);
+            bigobj.Add("door", doorArray);
+            bigobj.Add("switch", switchArray);
+            bigobj.Add("movable", movableArray);
+            bigobj.Add("trap", trapArray);
 
             File.WriteAllText(fileName, bigobj.ToString());
         }
@@ -221,12 +235,63 @@ namespace CoopPuzzle
             obj.Add("positionY", rect.Y);
             obj.Add("height", rect.Height);
             obj.Add("width", rect.Width);
-            obj.Add("Id", 1);
-            obj.Add("Type", "static");
+
+            return obj;
+        }
+
+        private static JObject CreateObject(Block block)
+        {
+            JObject obj = new JObject();
+            obj.Add("positionX", block.Pos.X);
+            obj.Add("positionY", block.Pos.Y);
+            obj.Add("height", block.Size.X);
+            obj.Add("width", block.Size.Y);
+
+            int id = 0;
+            for (int i = 0; i < Assets.colors.Length; i++)
+            {
+                if (block.Color == Assets.colors[i])
+                    id = i;
+            }
+            obj.Add("id", id);
+
+            return obj;
+        }
+        private static JObject CreateObject(WeighedSwitch block)
+        {
+            JObject obj = new JObject();
+            obj.Add("positionX", block.Pos.X);
+            obj.Add("positionY", block.Pos.Y);
+            obj.Add("height", block.Size.X);
+            obj.Add("width", block.Size.Y);
+
+            int id = 0;
+            for (int i = 0; i < Assets.colors.Length; i++)
+            {
+                if (block.Color == Assets.colors[i])
+                    id = i;
+            }
+            obj.Add("id", id);
+
+            return obj;
+        }
+
+        private static JObject CreateObject(Door door)
+        {
+            JObject obj = new JObject();
+            obj.Add("positionX", door.Pos.X);
+            obj.Add("positionY", door.Pos.Y);
+            obj.Add("id", door.id);
+
+            return obj;
+        }
+        private static JObject CreateObject(Vector2 pos)
+        {
+            JObject obj = new JObject();
+            obj.Add("positionX", pos.X);
+            obj.Add("positionY", pos.Y);
 
             return obj;
         }
     }
-
-
 }

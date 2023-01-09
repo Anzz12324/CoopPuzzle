@@ -14,6 +14,7 @@ namespace CoopPuzzle
         public Door(Vector2 position, Color color, int id) : base(position, color)
         {
             this.id = id;
+            Color = Color.Green;
         }
 
         public override void Update(GameTime gT, List<GameObject> objects)
