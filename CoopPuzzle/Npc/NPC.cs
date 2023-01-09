@@ -4,27 +4,30 @@ namespace CoopPuzzle.Npc
 {
     abstract class NPC
     {
-
-        protected Texture2D tex;
-        protected Texture2D bubbleTex;
-        protected Vector2 pos;
-        protected Vector2 bubblePos;
+        protected float depth;
+        protected Texture2D tex, bubbleTex;
+        protected Vector2 pos, bubblePos;
         protected string text;
-        protected Rectangle range;
         protected bool playerInRange;
         protected Rectangle[] srcRecArray;
-        protected int frame = 0;
-        protected double frameTimer, frameInterval;
+        protected Rectangle bubbleSrcRec, range;
+        protected int frame = 0, Npc, textNum;
+        protected double frameTimer, frameInterval = 500; 
+        public object Value { get; }
 
-        public NPC(Texture2D tex, Texture2D bubbleTex, Vector2 pos, Vector2 bubblePos)
+        public NPC(Texture2D tex, Vector2 pos, int Npc, int textNum)
         {
             this.tex = tex;
-            this.bubbleTex = bubbleTex;
             this.pos = pos;
-            this.bubblePos = bubblePos;
+            this.Npc = Npc;
+            this.textNum = textNum;
+            this.bubbleTex = Assets.bubbleTex;
+            
         }
 
-        public abstract void Update(GameTime gT, Player[] players);
+        public virtual void Update(GameTime gT, Player[] players) { }
+        public virtual void Update(GameTime gT, Player player, Player otherPlayer) { }
+        public virtual void Update(GameTime gT, Player player, Player otherPlayer, Game1 game1) { }
         public abstract void Draw(SpriteBatch sb);
     }
 }

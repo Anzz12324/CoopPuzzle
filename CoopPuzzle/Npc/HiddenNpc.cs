@@ -8,8 +8,7 @@ namespace CoopPuzzle.Npc
 {
     internal class HiddenNpc : NPC
     {
-        public HiddenNpc(Texture2D tex, Texture2D bubbleTex, Vector2 pos, Vector2 bubblePos) : base(tex, bubbleTex, pos, bubblePos)
-        {
+        public HiddenNpc(Texture2D tex, Vector2 pos, int Npc, int textNum) : base(tex, pos, Npc, textNum) {
         }
 
         public override void Update(GameTime gT, Player[] players)

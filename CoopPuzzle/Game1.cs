@@ -15,6 +15,7 @@ using MonoGame.Extended.Timers;
 using MonoGame.Extended;
 using MonoGame.Extended.ViewportAdapters;
 using System.Runtime.CompilerServices;
+using CoopPuzzle.Npc;
 
 namespace CoopPuzzle
 {
@@ -23,11 +24,11 @@ namespace CoopPuzzle
     {
         bool active = false, host = false, connected = false, editmodePlayer = false;
         NetManager netManager;
-        enum DiffCam { SnapMove, FollowPlayer, KeyInput, FullScreenMove }
+        enum DiffCam { SnapMove, FollowPlayer, FullScreenMove }
         DiffCam diffCam = DiffCam.SnapMove;
 
         Player player, otherPlayer;
-
+        StoryNpc storyNpc;
         List<GameObject> objects;
 
         RenderTarget2D renderTarget;
@@ -79,6 +80,8 @@ namespace CoopPuzzle
             editor = new Editor();
             sound = new SoundManager();
 
+            storyNpc = new StoryNpc(Assets.flowey, new Vector2(200,400), 1, 1);
+
             objects = new List<GameObject>()
             {
                 new WeighedSwitch(new Vector2(200, 100), Color.White, 0),
@@ -110,8 +113,6 @@ namespace CoopPuzzle
             if (kbState.IsKeyDown(Keys.O) && kbPreviousState.IsKeyUp(Keys.O))
                 diffCam = DiffCam.FollowPlayer;
             if (kbState.IsKeyDown(Keys.P) && kbPreviousState.IsKeyUp(Keys.P))
-                diffCam = DiffCam.KeyInput;
-            if (kbState.IsKeyDown(Keys.OemCloseBrackets) && kbPreviousState.IsKeyUp(Keys.OemCloseBrackets))
                 diffCam = DiffCam.FullScreenMove;
         }
         protected override void Update(GameTime gameTime)
@@ -132,7 +133,7 @@ namespace CoopPuzzle
                     player.Update(gameTime, objects, this);
                     otherPlayer.UpdateOther(gameTime, objects, this);
                 }
-
+                
                 UpdateObjects(gameTime);
             }
 
@@ -210,13 +211,13 @@ namespace CoopPuzzle
             spriteBatch.DrawString(Assets.font, $"latency: {latency}", new Vector2(300, 50), Color.Black);
             spriteBatch.DrawString(Assets.font, $"Camera Pos; {camera.Position}", new Vector2(camera.Position.X, camera.Position.Y + 60), Color.Yellow);
             spriteBatch.DrawString(Assets.font, $"Camera Move; {diffCam}", new Vector2(camera.Position.X, camera.Position.Y + 80), Color.Yellow);
-            spriteBatch.DrawString(Assets.font, "Switch Camera; I, O, P, {", new Vector2(camera.Position.X, camera.Position.Y + 100), Color.Yellow);
-            if (diffCam == DiffCam.KeyInput || diffCam == DiffCam.FullScreenMove)
+            spriteBatch.DrawString(Assets.font, "Switch Camera; I, O, P", new Vector2(camera.Position.X, camera.Position.Y + 100), Color.Yellow);
+            if (diffCam == DiffCam.FullScreenMove)
                 spriteBatch.DrawString(Assets.font, "Move Camera in KeyInput\nUp: U\nDown: J\nLeft: H\nRight: K", new Vector2(camera.Position.X, camera.Position.Y + 120), Color.Yellow);
 
             otherPlayer.Draw(spriteBatch);
             player.Draw(spriteBatch);
-
+            storyNpc.Draw(spriteBatch);
             if (editmode)
             {
                 spriteBatch.DrawString(Assets.font, "Switch between player : L", new Vector2(0, 40), Color.Black);
@@ -242,6 +243,7 @@ namespace CoopPuzzle
                 else if (objects[i] is Door)
                     objects[i].Update(gameTime, objects);
             }
+            storyNpc.Update(gameTime, player, otherPlayer, this);
         }
 
         public void ConnectionSetup(out EventBasedNetListener listener)
@@ -340,10 +342,6 @@ namespace CoopPuzzle
                 case DiffCam.FollowPlayer:
                     camera.LookAt(player.Pos);
                     break;
-                case DiffCam.KeyInput:
-                    const float movementSpeed = 200;
-                    camera.Move(GetMovementDirection() * movementSpeed * gameTime.GetElapsedSeconds());
-                    break;
                 case DiffCam.FullScreenMove:
                     if (kbState.IsKeyDown(Keys.H) && kbPreviousState.IsKeyUp(Keys.H))
                         camera.Move(new Vector2(-ScreenWidth, 0));
@@ -355,29 +353,6 @@ namespace CoopPuzzle
                         camera.Move(new Vector2(0, ScreenHeight));
                     break;
             }
-        }
-
-        private Vector2 GetMovementDirection()
-        {
-            var movementDirection = Vector2.Zero;
-            var state = Keyboard.GetState();
-            if (state.IsKeyDown(Keys.J))
-            {
-                movementDirection += Vector2.UnitY;
-            }
-            if (state.IsKeyDown(Keys.U))
-            {
-                movementDirection -= Vector2.UnitY;
-            }
-            if (state.IsKeyDown(Keys.H))
-            {
-                movementDirection -= Vector2.UnitX;
-            }
-            if (state.IsKeyDown(Keys.K))
-            {
-                movementDirection += Vector2.UnitX;
-            }
-            return movementDirection;
         }
 
         void LoadLevel()
