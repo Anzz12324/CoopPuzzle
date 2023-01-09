@@ -22,7 +22,7 @@ namespace CoopPuzzle
 
     public class Game1 : Game
     {
-        bool active = false, host = false, connected = false, editmodePlayer = false;
+        bool active = false, host = false, connected = false, editmodePlayer = false, netStats = false, fps = true;
         NetManager netManager;
         enum DiffCam { SnapMove, FollowPlayer, FullScreenMove }
         DiffCam diffCam = DiffCam.SnapMove;
@@ -46,7 +46,7 @@ namespace CoopPuzzle
         public int ScreenWidth { get { return 1280; } }
         public int ScreenHeight { get { return 720; } }
 
-        private int latency;
+        private int ping;
         public string ip, password; 
         public int port;
         public bool editmode = false;
@@ -99,7 +99,7 @@ namespace CoopPuzzle
         {
             kbPreviousState = kbState;
             kbState = Keyboard.GetState();
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (kbState.IsKeyDown(Keys.Escape))
             {
                 netManager?.Stop();
                 Exit();
@@ -115,6 +115,10 @@ namespace CoopPuzzle
                 diffCam = DiffCam.FollowPlayer;
             if (kbState.IsKeyDown(Keys.P) && kbPreviousState.IsKeyUp(Keys.P))
                 diffCam = DiffCam.FullScreenMove;
+            if (kbState.IsKeyDown(Keys.F2) && kbPreviousState.IsKeyUp(Keys.F2))
+                fps = !fps;
+            if (kbState.IsKeyDown(Keys.F3) && kbPreviousState.IsKeyUp(Keys.F3))
+                netStats = !netStats;
         }
         protected override void Update(GameTime gameTime)
         {
@@ -207,29 +211,43 @@ namespace CoopPuzzle
             if (!connected && !editmode)
                 spriteBatch.Draw(Assets.wait, new Vector2(ScreenWidth/2-Assets.wait.Width/2,ScreenHeight/2-Assets.wait.Height),
                     new Rectangle(0,0, Assets.wait.Width, Assets.wait.Height) , Color.White, 0, Vector2.Zero, 1, SpriteEffects.None,1);                
-            if (active)
-                spriteBatch.DrawString(Assets.font, (host) ? "Server   P1" : "Client   P2", new Vector2(100,0), Color.Black);
-
-
-            spriteBatch.DrawString(Assets.font, "P1", new Vector2(player.Pos.X, player.Pos.Y - 64), Color.Black);
-            spriteBatch.DrawString(Assets.font, "P2", new Vector2(otherPlayer.Pos.X, otherPlayer.Pos.Y - 64), Color.Black);
-            spriteBatch.DrawString(Assets.font, $"FPS:{(int)(1 / gameTime.ElapsedGameTime.TotalSeconds)}", new Vector2(500, 0), Color.Black);
-            spriteBatch.DrawString(Assets.font, $"Pos:{player.Pos}  otherPos:{otherPlayer.Pos}", new Vector2(camera.Position.X + 600,camera.Position.Y), Color.Yellow);
-            spriteBatch.DrawString(Assets.font, $"PlayerEdit: {editmodePlayer}", new Vector2(300,0), Color.Black);
-            spriteBatch.DrawString(Assets.font, $"latency: {latency}", new Vector2(300, 50), Color.Black);
-            spriteBatch.DrawString(Assets.font, $"Camera Pos; {camera.Position}", new Vector2(camera.Position.X, camera.Position.Y + 60), Color.Yellow);
-            spriteBatch.DrawString(Assets.font, $"Camera Move; {diffCam}", new Vector2(camera.Position.X, camera.Position.Y + 80), Color.Yellow);
-            spriteBatch.DrawString(Assets.font, "Switch Camera; I, O, P", new Vector2(camera.Position.X, camera.Position.Y + 100), Color.Yellow);
-            if (diffCam == DiffCam.FullScreenMove)
-                spriteBatch.DrawString(Assets.font, "Move Camera in KeyInput\nUp: U\nDown: J\nLeft: H\nRight: K", new Vector2(camera.Position.X, camera.Position.Y + 120), Color.Yellow);
-
+            
+            
             otherPlayer.Draw(spriteBatch);
             player.Draw(spriteBatch);
             storyNpc.Draw(spriteBatch);
+            if (fps)
+            {
+                spriteBatch.FillRectangle(new Rectangle((int)camera.Position.X, (int)camera.Position.Y,60,20),new Color(Color.Black, 0.5f),0.9f);
+                spriteBatch.DrawString(Assets.font, $"{(int)(1 / gameTime.ElapsedGameTime.TotalSeconds)} FPS", new Vector2(camera.Position.X+2, camera.Position.Y), Color.LightGreen, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
+                if (netStats)
+                {
+                    spriteBatch.FillRectangle(new Rectangle((int)camera.Position.X + 60, (int)camera.Position.Y, 140, 20), new Color(Color.Black, 0.5f), 0.9f);
+                    spriteBatch.DrawString(Assets.font, $"{ping} Ping", new Vector2(camera.Position.X + 67, camera.Position.Y), Color.LightGreen, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
+                    if (active)
+                        spriteBatch.DrawString(Assets.font, host ? "Server   P1" : "Client   P2", new Vector2(camera.Position.X + 120, camera.Position.Y), Color.LightGreen, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
+                }
+            }
+
             if (editmode)
             {
-                spriteBatch.DrawString(Assets.font, "Switch between player : L", new Vector2(0, 40), Color.Black);
-                spriteBatch.DrawString(Assets.font, "Place block: Left-Click\nRemove block: Right-Click\nChange size of block: Scroll (+ Ctrl)\nChange door and switch id: Scroll\nChange color: Shift + Scroll\nSave level: R", new Vector2(0, 500), Color.Black);
+                spriteBatch.DrawString(Assets.font, "P1", new Vector2(player.Pos.X, player.Pos.Y - 64), Color.Black);
+                spriteBatch.DrawString(Assets.font, "P2", new Vector2(otherPlayer.Pos.X, otherPlayer.Pos.Y - 64), Color.Black);
+
+                if (diffCam == DiffCam.FullScreenMove)
+                {
+                    spriteBatch.FillRectangle(new Rectangle((int)camera.Position.X, (int)camera.Position.Y + 290, 100, 90), new Color(Color.Gray, 0.5f), 0.9f);
+                    spriteBatch.DrawString(Assets.font, "Move Camera \nUp: U\nDown: J\nLeft: H\nRight: K", new Vector2(camera.Position.X + 2, camera.Position.Y + 290), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
+                }
+                
+                spriteBatch.FillRectangle(new Rectangle((int)camera.Position.X, (int)camera.Position.Y + 381, 250, 230), new Color(Color.Gray, 0.5f), 0.9f);
+                spriteBatch.DrawString(Assets.font, $"Camera Pos: X:{camera.Position.X.ToString("0.00")} Y:{camera.Position.Y.ToString("0.00")}", new Vector2(camera.Position.X + 2, camera.Position.Y + 381), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
+                spriteBatch.DrawString(Assets.font, $"Camera Move: {diffCam}", new Vector2(camera.Position.X + 2, camera.Position.Y + 398), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
+                spriteBatch.DrawString(Assets.font, "Switch Camera: I, O, P", new Vector2(camera.Position.X + 2, camera.Position.Y + 415), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
+                spriteBatch.DrawString(Assets.font, $"P1 Pos:X:{player.Pos.X.ToString("0.00")} Y:{player.Pos.Y.ToString("0.00")}\nP2 Pos:X:{otherPlayer.Pos.X.ToString("0.00")} Y:{otherPlayer.Pos.Y.ToString("0.00")}", new Vector2(camera.Position.X + 2, camera.Position.Y + 432), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
+                spriteBatch.DrawString(Assets.font, "Switch between player : L", new Vector2(camera.Position.X + 2, camera.Position.Y + 466), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
+                spriteBatch.DrawString(Assets.font, $"Player 2: {editmodePlayer}", new Vector2(camera.Position.X + 2, camera.Position.Y + 483), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
+                spriteBatch.DrawString(Assets.font, "Place block: Left-Click\nRemove block: Right-Click\nChange size of block: Scroll (+ Ctrl)\nChange door and switch id: Scroll\nChange color: Shift + Scroll\nSave level: R", new Vector2(camera.Position.X + 2, camera.Position.Y + 500), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
 
                 editor.Draw(spriteBatch, transformMatrix);
             }
@@ -268,7 +286,7 @@ namespace CoopPuzzle
             };
             listener.NetworkLatencyUpdateEvent += (fromPeer, latency) =>
             {
-                this.latency = latency;
+                this.ping = latency;
             };
             active = true;
         }
