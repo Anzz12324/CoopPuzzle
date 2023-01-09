@@ -34,7 +34,7 @@ namespace CoopPuzzle
 
         }
 
-        public void Update(ref List<GameObject> objects, Vector2 camera)
+        public void Update(ref List<GameObject> objects, Player[] players, Vector2 camera)
         {
             prevMouse = mouse;
             mouse = Mouse.GetState();
@@ -132,6 +132,9 @@ namespace CoopPuzzle
                 else
                     objects[i].TempColor = objects[i].Color;
             }
+
+            if (board.IsKeyDown(Keys.R) && prevBoard.IsKeyUp(Keys.R))
+                SaveLevel(objects, players);
         }
 
         public void Draw(SpriteBatch sb, Matrix transformMatrix)
@@ -182,6 +185,11 @@ namespace CoopPuzzle
             sb.End();
 
             sb.Begin(sortMode: SpriteSortMode.FrontToBack, samplerState: SamplerState.PointWrap, transformMatrix: transformMatrix);
+        }
+
+        public void SaveLevel(List<GameObject> objects, Player[] players)
+        {
+            JsonParser.WriteJsonToFile("../../../Content/level.json", objects, players);
         }
     }
 }

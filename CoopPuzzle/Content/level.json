@@ -1,56 +1,68 @@
 {
-  "player":
-    {
-      "positionX": 200,
-      "positionY": 200
-    },
-  "otherPlayer":
-    {
-      "positionX": 300,
-      "positionY": 300
-    },
+  "player": {
+    "positionX": 173.38889,
+    "positionY": 173.00183
+  },
+  "otherPlayer": {
+    "positionX": 300.0,
+    "positionY": 300.0
+  },
   "block": [
     {
-      "positionX": 0,
-      "positionY": 0,
-      "height": 40,
-      "width": 40,
+      "positionX": 0.0,
+      "positionY": 0.0,
+      "height": 40.0,
+      "width": 40.0,
       "id": 0
     },
     {
-      "positionX": 40,
-      "positionY": 0,
-      "height": 40,
-      "width": 40,
+      "positionX": 40.0,
+      "positionY": 0.0,
+      "height": 40.0,
+      "width": 40.0,
       "id": 1
     },
     {
-      "positionX": 80,
-      "positionY": 0,
-      "height": 40,
-      "width": 40,
+      "positionX": 80.0,
+      "positionY": 0.0,
+      "height": 40.0,
+      "width": 40.0,
       "id": 2
     },
     {
-      "positionX": 120,
-      "positionY": 0,
-      "height": 40,
-      "width": 40,
+      "positionX": 120.0,
+      "positionY": 0.0,
+      "height": 40.0,
+      "width": 40.0,
       "id": 3
     },
     {
-      "positionX": 160,
-      "positionY": 0,
-      "height": 40,
-      "width": 40,
+      "positionX": 160.0,
+      "positionY": 0.0,
+      "height": 40.0,
+      "width": 40.0,
       "id": 4
     },
     {
-      "positionX": 200,
-      "positionY": 0,
-      "height": 40,
-      "width": 40,
+      "positionX": 200.0,
+      "positionY": 0.0,
+      "height": 40.0,
+      "width": 40.0,
       "id": 5
+    },
+    {
+      "positionX": 40.0,
+      "positionY": 160.0,
+      "height": 0.0,
+      "width": 0.0,
+      "id": 0
+    },
+    {
+      "positionX": 520.0,
+      "positionY": 320.0,
+      "height": 40.0,
+      "width": 40.0,
+      "id": 0
     }
   ],
   "checkpoint": [
@@ -63,19 +75,17 @@
   ],
   "door": [
     {
-      "positionX": 40,
-      "positionY": 160,
-      "height": 40,
-      "width": 40,
+      "positionX": 40.0,
+      "positionY": 160.0,
       "id": 0
     }
   ],
   "switch": [
     {
-      "positionX": 120,
-      "positionY": 160,
-      "height": 40,
-      "width": 40,
+      "positionX": 120.0,
+      "positionY": 160.0,
+      "height": 40.0,
+      "width": 40.0,
       "id": 0
     }
   ],
@@ -89,8 +99,8 @@
   ],
   "trap": [
     {
-      "positionX": 40,
-      "positionY": 240
+      "positionX": 40.0,
+      "positionY": 240.0
     }
   ]
 }

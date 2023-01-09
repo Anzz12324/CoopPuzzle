@@ -118,11 +118,12 @@ namespace CoopPuzzle
         }
         protected override void Update(GameTime gameTime)
         {
+            Player[] players = new Player[] { player, otherPlayer };
             Shotcuts();
 
             if (editmode)
             {
-                editor.Update(ref objects, camera.Position);
+                editor.Update(ref objects, players, camera.Position);
                 
                 if (editmodePlayer)
                 {
@@ -135,7 +136,7 @@ namespace CoopPuzzle
                     otherPlayer.UpdateOther(gameTime, objects, this);
                 }
                 
-                UpdateObjects(gameTime);
+                UpdateObjects(gameTime, players);
             }
 
             if (active)
@@ -146,7 +147,7 @@ namespace CoopPuzzle
                     otherPlayer.UpdateOther(gameTime, objects, this);
                 }
 
-                UpdateObjects(gameTime);
+                UpdateObjects(gameTime, players);
 
                 NetDataWriter writer = new NetDataWriter();
                 netManager.PollEvents();
@@ -227,7 +228,7 @@ namespace CoopPuzzle
             if (editmode)
             {
                 spriteBatch.DrawString(Assets.font, "Switch between player : L", new Vector2(0, 40), Color.Black);
-                spriteBatch.DrawString(Assets.font, "Place block: Left-Click\nChange size of block: Scroll (+ Ctrl)\nChange door and switch id: Scroll", new Vector2(0, 500), Color.Black);
+                spriteBatch.DrawString(Assets.font, "Place block: Left-Click\nRemove block: Right-Click\nChange size of block: Scroll (+ Ctrl)\nChange door and switch id: Scroll\nChange color: Shift + Scroll\nSave level: R", new Vector2(0, 500), Color.Black);
 
                 editor.Draw(spriteBatch, transformMatrix);
             }
@@ -237,9 +238,8 @@ namespace CoopPuzzle
             base.Draw(gameTime);
         }
 
-        public void UpdateObjects(GameTime gameTime)
+        void UpdateObjects(GameTime gameTime, Player[] players)
         {
-            Player[] players = new Player[] { player, otherPlayer };
             for (int i = 0; i < objects.Count; i++)
             {
                 if (objects[i] is WeighedSwitch)
@@ -361,9 +361,9 @@ namespace CoopPuzzle
             }
         }
 
-        void LoadLevel()
+        public void LoadLevel()
         {
-            string level = "../../../Content/level.json";
+            string level = "Content/level.json";
             JsonParser.GetJObjectFromFile(level);
 
             player = new Player(JsonParser.GetPos(level, "player"), Color.White, new AnimatedSprite(Assets.spriteSheet));

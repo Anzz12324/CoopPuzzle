@@ -12,6 +12,8 @@ namespace CoopPuzzle
         public int id { get; private set; }
         public override Rectangle hitbox { get { return new Rectangle((int)position.X + 4, (int)position.Y + 6, (int)size.X - 4 * 2, (int)size.Y - 16); } }
 
+        public Player[] players { get; private set; }
+
         public WeighedSwitch(Vector2 position, Color color, int id) : base(position, color)
         {
             this.id = id;
@@ -19,6 +21,7 @@ namespace CoopPuzzle
 
         public override void Update(GameTime gT, List<GameObject> objects, Player[] players)
         {
+            this.players = players;
             Weight = false;
             for (int i = 0; i < objects.Count; i++)
             {
