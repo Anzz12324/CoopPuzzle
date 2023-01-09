@@ -68,22 +68,14 @@ namespace CoopPuzzle
 
         private void btnEditMode_Click(object sender, EventArgs e)
         {
-            gameEntry.editmode= true;
+            gameEntry.editmode = true;
             Close();
         }
 
         private void linkFlower_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            try
-            {
-                linkFlower.LinkVisited= true;
-                Process.Start(new ProcessStartInfo() { FileName = "https://somewhatgoodroyaltyfreemusic.bandcamp.com/track/frog-shop", UseShellExecute = true });
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-                
-            }
+            linkFlower.LinkVisited = true;
+            Process.Start(new ProcessStartInfo() { FileName = "https://somewhatgoodroyaltyfreemusic.bandcamp.com/track/frog-shop", UseShellExecute = true });
         }
     }
 }

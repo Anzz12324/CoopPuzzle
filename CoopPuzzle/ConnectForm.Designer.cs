@@ -53,11 +53,13 @@
             this.grpTex = new System.Windows.Forms.GroupBox();
             this.grpMusic = new System.Windows.Forms.GroupBox();
             this.linkFlower = new System.Windows.Forms.LinkLabel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.grpHost.SuspendLayout();
             this.grpJoin.SuspendLayout();
             this.grpEdit.SuspendLayout();
             this.grpCredits.SuspendLayout();
             this.grpMusic.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // radBtnHost
@@ -305,12 +307,23 @@
             this.linkFlower.Text = "Frog Shop by flowerhead";
             this.linkFlower.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkFlower_LinkClicked);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::CoopPuzzle.Properties.Resources.Logo;
+            this.pictureBox1.ImageLocation = "";
+            this.pictureBox1.Location = new System.Drawing.Point(12, 12);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(280, 50);
+            this.pictureBox1.TabIndex = 8;
+            this.pictureBox1.TabStop = false;
+            // 
             // ConnectForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(304, 292);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.grpCredits);
             this.Controls.Add(this.radBtnCredits);
             this.Controls.Add(this.grpEdit);
@@ -333,6 +346,7 @@
             this.grpCredits.ResumeLayout(false);
             this.grpMusic.ResumeLayout(false);
             this.grpMusic.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -364,5 +378,6 @@
         private System.Windows.Forms.GroupBox grpMusic;
         private System.Windows.Forms.GroupBox grpTex;
         private System.Windows.Forms.LinkLabel linkFlower;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
