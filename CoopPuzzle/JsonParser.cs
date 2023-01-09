@@ -257,21 +257,14 @@ namespace CoopPuzzle
 
             return obj;
         }
-        private static JObject CreateObject(WeighedSwitch block)
+        private static JObject CreateObject(WeighedSwitch ws)
         {
             JObject obj = new JObject();
-            obj.Add("positionX", block.Pos.X);
-            obj.Add("positionY", block.Pos.Y);
-            obj.Add("height", block.Size.Y);
-            obj.Add("width", block.Size.X);
-
-            int id = 0;
-            for (int i = 0; i < Assets.colors.Length; i++)
-            {
-                if (block.Color == Assets.colors[i])
-                    id = i;
-            }
-            obj.Add("id", id);
+            obj.Add("positionX", ws.Pos.X);
+            obj.Add("positionY", ws.Pos.Y);
+            obj.Add("height", ws.Size.Y);
+            obj.Add("width", ws.Size.X);
+            obj.Add("id", ws.id);
 
             return obj;
         }
