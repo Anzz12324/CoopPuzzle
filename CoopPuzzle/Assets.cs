@@ -14,6 +14,16 @@ namespace CoopPuzzle
         public static SpriteSheet spriteSheet, spriteSheet2;
         public static Song song;
 
+        public static Color[] colors = new Color[]
+        {
+            Color.White,
+            Color.Tomato,
+            Color.PaleGreen,
+            Color.DodgerBlue,
+            Color.Khaki,
+            Color.Orchid
+        };
+
         public static void LoadTextures(ContentManager gd)
         {
             white = gd.Load<Texture2D>("white");

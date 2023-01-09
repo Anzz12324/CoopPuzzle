@@ -56,15 +56,38 @@ namespace CoopPuzzle
             return rect;
         }
 
-        public static Vector2 GetPos(string propertyName)
+        public static Vector2 GetPos(string fileName, string propertyName)
         {
-            JObject obj = new JObject();
+            if (wholeObj == null || currentFileName == null || currentFileName != fileName)
+            {
+                GetJObjectFromFile(fileName);
+            }
+            JObject obj = (JObject)wholeObj.GetValue(propertyName);
+            return GetPos(obj);
+        }
+
+        public static List<Vector2> GetPosList(string fileName, string propertyName)
+        {
+            if (wholeObj == null || currentFileName == null || currentFileName != fileName)
+            {
+                GetJObjectFromFile(fileName);
+            }
+            List<Vector2> posList = new List<Vector2>();
             JArray arrayObj = (JArray)wholeObj.GetValue(propertyName);
             for (int i = 0; i < arrayObj.Count; i++)
             {
-                obj = (JObject)arrayObj[i];
+                JObject obj = (JObject)arrayObj[i];
+                Vector2 pos = GetPos(obj);
+                posList.Add(pos);
             }
-            return new Vector2(Convert.ToInt32(obj.GetValue("positionX")), Convert.ToInt32(obj.GetValue("positionY")));
+
+            return posList;
+        }
+
+        private static Vector2 GetPos(JObject obj)
+        {
+            Vector2 pos = new Vector2(Convert.ToInt32(obj.GetValue("positionX")), Convert.ToInt32(obj.GetValue("positionY")));
+            return pos;
         }
 
         public static int GetId(string fileName, string propertyName)
@@ -96,7 +119,7 @@ namespace CoopPuzzle
         }
         private static int GetId(JObject obj)
         {
-            int id = Convert.ToInt32(obj.GetValue("Id"));
+            int id = Convert.ToInt32(obj.GetValue("id"));
             return id;
         }
 

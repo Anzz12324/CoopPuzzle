@@ -83,13 +83,14 @@ namespace CoopPuzzle
             storyNpc = new StoryNpc(Assets.flowey, new Vector2(200,400), 1, 1);
 
             objects = new List<GameObject>()
-            {
-                new WeighedSwitch(new Vector2(200, 100), Color.White, 0),
-                new Door(new Vector2(300, 100), Color.Green, 0),
-                new Block(new Vector2(500), Vector2.One * 32, Color.Red),
-                new Trap(new Vector2(550,500), Color.White),
-                new MovableBlock(new Vector2(400, 500), new Vector2(40, 80), Color.White)
-            };
+            //{
+            //    new WeighedSwitch(new Vector2(200, 100), Color.White, 0),
+            //    new Door(new Vector2(300, 100), Color.Green, 0),
+            //    new Block(new Vector2(500), Vector2.One * 32, Color.Red),
+            //    new Trap(new Vector2(550, 500), Color.White),
+            //    new MovableBlock(new Vector2(400, 500), new Vector2(40, 80), Color.White)
+            //}
+            ;
 
             LoadLevel();
         }
@@ -365,14 +366,47 @@ namespace CoopPuzzle
             string level = "../../../Content/level.json";
             JsonParser.GetJObjectFromFile(level);
 
-            player = new Player(JsonParser.GetPos("player"), Color.White, new AnimatedSprite(Assets.spriteSheet));
-            otherPlayer = new Player(JsonParser.GetPos("otherPlayer"), Color.White, new AnimatedSprite(Assets.spriteSheet2));
+            player = new Player(JsonParser.GetPos(level, "player"), Color.White, new AnimatedSprite(Assets.spriteSheet));
+            otherPlayer = new Player(JsonParser.GetPos(level, "otherPlayer"), Color.White, new AnimatedSprite(Assets.spriteSheet2));
 
             //objects = new List<GameObject>();
             List<Rectangle> blockRects = JsonParser.GetRectangleList(level, "block");
+            List<int> blockColors = JsonParser.GetIdList(level, "block");
             for (int i = 0; i < blockRects.Count; i++)
             {
-                objects.Add(new Block(new Vector2(blockRects[i].X, blockRects[i].Y), new Vector2(blockRects[i].Width, blockRects[i].Height), Color.White));
+                objects.Add(new Block(new Vector2(blockRects[i].X, blockRects[i].Y), new Vector2(blockRects[i].Width, blockRects[i].Height), Assets.colors[blockColors[i]]));
+            }
+
+            List<Rectangle> checkPointRects = JsonParser.GetRectangleList(level, "checkpoint");
+            for (int i = 0; i < checkPointRects.Count; i++)
+            {
+                objects.Add(new CheckPoint(new Vector2(checkPointRects[i].X, checkPointRects[i].Y), new Vector2(checkPointRects[i].Width, checkPointRects[i].Height), Color.White));
+            }
+
+            List<Vector2> doorPosList = JsonParser.GetPosList(level, "door");
+            List<int> doorIdList = JsonParser.GetIdList(level, "door");
+            for (int i = 0; i < doorPosList.Count; i++)
+            {
+                objects.Add(new Door(doorPosList[i], Color.Green, doorIdList[i]));
+            }
+
+            List<Vector2> switchPosList = JsonParser.GetPosList(level, "switch");
+            List<int> switchIdList = JsonParser.GetIdList(level, "switch");
+            for (int i = 0; i < switchPosList.Count; i++)
+            {
+                objects.Add(new WeighedSwitch(switchPosList[i], Color.White, switchIdList[i]));
+            }
+
+            List<Rectangle> movableRects = JsonParser.GetRectangleList(level, "movable");
+            for (int i = 0; i < movableRects.Count; i++)
+            {
+                objects.Add(new MovableBlock(new Vector2(movableRects[i].X, movableRects[i].Y), new Vector2(movableRects[i].Width, movableRects[i].Height), Color.White));
+            }
+
+            List<Vector2> trapPosList = JsonParser.GetPosList(level, "trap");
+            for (int i = 0; i < trapPosList.Count; i++)
+            {
+                objects.Add(new Trap(trapPosList[i], Color.White));
             }
         }
     }
