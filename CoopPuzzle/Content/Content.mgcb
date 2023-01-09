@@ -75,6 +75,12 @@
 /processorParam:TextureFormat=Color
 /build:frisk2.png
 
+#begin FrogShop.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:FrogShop.mp3
+
 #begin UndertaleAsgoreDreemurr.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -90,7 +96,7 @@
 #begin UndertaleFlowey.png
 /importer:TextureImporter
 /processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyColor=241,95,241,255
 /processorParam:ColorKeyEnabled=True
 /processorParam:GenerateMipmaps=False
 /processorParam:PremultiplyAlpha=True
@@ -135,12 +141,6 @@
 /processorParam:TextureFormat=Color
 /build:UndertaleNiceCreamGuy.png
 
-#begin FrogShop.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:FrogShop.mp3
-
 #begin UndertaleRuins.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -156,7 +156,7 @@
 #begin UndertaleTextBubbles.png
 /importer:TextureImporter
 /processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyColor=255,102,255,255
 /processorParam:ColorKeyEnabled=True
 /processorParam:GenerateMipmaps=False
 /processorParam:PremultiplyAlpha=True

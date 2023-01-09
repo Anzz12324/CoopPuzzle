@@ -23,7 +23,7 @@ namespace CoopPuzzle.Npc
 
         public override void Update(GameTime gT, Player player, Player otherPlayer, Game1 game1)
         {
-            depth = (pos.Y - game1.camera.Position.Y) / game1.ScreenHeight;
+            depth = Math.Clamp((pos.Y + 32 - game1.camera.Position.Y) / game1.ScreenHeight, 0, 1);
             if (range.Intersects(player.hitbox) || range.Intersects(otherPlayer.hitbox))
             {
                 if (!playerInRange)
