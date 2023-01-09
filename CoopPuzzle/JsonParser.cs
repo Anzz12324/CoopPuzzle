@@ -244,8 +244,8 @@ namespace CoopPuzzle
             JObject obj = new JObject();
             obj.Add("positionX", block.Pos.X);
             obj.Add("positionY", block.Pos.Y);
-            obj.Add("height", block.Size.X);
-            obj.Add("width", block.Size.Y);
+            obj.Add("height", block.Size.Y);
+            obj.Add("width", block.Size.X);
 
             int id = 0;
             for (int i = 0; i < Assets.colors.Length; i++)
@@ -262,8 +262,8 @@ namespace CoopPuzzle
             JObject obj = new JObject();
             obj.Add("positionX", block.Pos.X);
             obj.Add("positionY", block.Pos.Y);
-            obj.Add("height", block.Size.X);
-            obj.Add("width", block.Size.Y);
+            obj.Add("height", block.Size.Y);
+            obj.Add("width", block.Size.X);
 
             int id = 0;
             for (int i = 0; i < Assets.colors.Length; i++)
