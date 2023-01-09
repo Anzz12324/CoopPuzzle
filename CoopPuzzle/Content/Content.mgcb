@@ -135,6 +135,12 @@
 /processorParam:TextureFormat=Color
 /build:UndertaleNiceCreamGuy.png
 
+#begin FrogShop.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:FrogShop.mp3
+
 #begin UndertaleRuins.png
 /importer:TextureImporter
 /processor:TextureProcessor

@@ -33,6 +33,7 @@ namespace CoopPuzzle
         RenderTarget2D renderTarget;
 
         Editor editor;
+        SoundManager sound;
 
         KeyboardState kbState, kbPreviousState;
 
@@ -76,6 +77,7 @@ namespace CoopPuzzle
             DebugDraw.Init(GraphicsDevice);
             Assets.LoadTextures(Content);
             editor = new Editor();
+            sound = new SoundManager();
 
             objects = new List<GameObject>()
             {

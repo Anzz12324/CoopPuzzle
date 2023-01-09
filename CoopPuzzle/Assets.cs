@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using MonoGame.Extended.Serialization;
 
 namespace CoopPuzzle
@@ -10,6 +12,8 @@ namespace CoopPuzzle
         public static Texture2D white, undertaleRuins, box;
         public static SpriteFont font, bigFont;
         public static SpriteSheet spriteSheet, spriteSheet2;
+        public static Song song;
+        public static SoundEffect step;
 
         public static void LoadTextures(ContentManager gd)
         {
@@ -21,6 +25,10 @@ namespace CoopPuzzle
 
             font = gd.Load<SpriteFont>("font");
             bigFont = gd.Load<SpriteFont>("bigFont");
+
+            song = gd.Load<Song>("FrogShop");
+
+            step = gd.Load<SoundEffect>("Step");
         }
     }
 }
