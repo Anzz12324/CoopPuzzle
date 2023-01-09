@@ -191,7 +191,7 @@ namespace CoopPuzzle
             spriteBatch.Draw(renderTarget, camera.Position, Color.White);
             for (int i = 0; i < objects.Count; i++)
             {
-                if (objects[i] is not WeighedSwitch or CheckPoint)
+                if (objects[i] is not WeighedSwitch and not CheckPoint)
                     objects[i].Draw(spriteBatch);
                 if (editmode)
                 {
