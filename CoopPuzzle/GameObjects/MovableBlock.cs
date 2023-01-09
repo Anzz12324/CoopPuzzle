@@ -63,6 +63,8 @@ namespace CoopPuzzle
                         if (door.Open)
                             continue;
                     }
+                    else if (objects[i] is CheckPoint)
+                        continue;
                     Pos -= vectors[0] * 0.75f;
                     stuck = true;
                     return;
