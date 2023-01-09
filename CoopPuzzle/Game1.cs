@@ -168,7 +168,7 @@ namespace CoopPuzzle
             spriteBatch.Draw(Content.Load<Texture2D>("ExamplePNG"), new Vector2(400, 100), Color.White);
             for (int i = 0; i < objects.Count; i++)
             {
-                if (objects[i] is WeighedSwitch)
+                if (objects[i] is WeighedSwitch CheckPoint)
                 {
                     objects[i].Draw(spriteBatch);
                     if (editmode)
@@ -185,8 +185,13 @@ namespace CoopPuzzle
             spriteBatch.Draw(renderTarget, camera.Position, Color.White);
             for (int i = 0; i < objects.Count; i++)
             {
-                if (objects[i] is not WeighedSwitch)
+                if (objects[i] is not WeighedSwitch or CheckPoint)
                     objects[i].Draw(spriteBatch);
+                if (editmode)
+                {
+                    if (objects[i] is CheckPoint)
+                        objects[i].Draw(spriteBatch);
+                }
                 if (objects[i] is Door)
                 {
                     if (editmode)

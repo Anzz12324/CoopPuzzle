@@ -106,6 +106,9 @@ namespace CoopPuzzle
                                 HandleCollision();
                         }
                     }
+
+                    if (objects[i] is CheckPoint)
+                        start = Pos;
                 }
             }
 

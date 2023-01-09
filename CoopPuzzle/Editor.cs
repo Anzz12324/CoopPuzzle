@@ -19,7 +19,8 @@ namespace CoopPuzzle
             new Door(new Vector2(256 + 45, 640), Color.Green, -1),
             new MovableBlock(new Vector2(256 + 45 * 2, 640), Vector2.One * 40, Color.White),
             new Trap(new Vector2(256 + 45 * 3, 640), Color.White),
-            new WeighedSwitch(new Vector2(256 + 45 * 4, 640), Color.White, -1)
+            new WeighedSwitch(new Vector2(256 + 45 * 4, 640), Color.White, -1),
+            new CheckPoint(new Vector2(256 + 45 * 5, 640), Vector2.One * 40, Color.White)
         };
 
         string placeType = "Block";
@@ -60,7 +61,7 @@ namespace CoopPuzzle
                 ghostRectangle.Size = new Point(40, 40);
                 id += Math.Clamp(scroll, -1, 1);
             }
-            else if(placeType == "Block" || placeType == "MovableBlock")
+            else if(placeType == "Block" || placeType == "MovableBlock" || placeType == "CheckPoint")
             {
                 if (board.IsKeyDown(Keys.LeftShift))
                     currentColor += Math.Clamp(scroll, -1, 1);
@@ -110,6 +111,9 @@ namespace CoopPuzzle
                         break;
                     case "WeighedSwitch":
                         objects.Add(new WeighedSwitch(new Vector2(ghostRectangle.X, ghostRectangle.Y), colors[currentColor], id));
+                        break;
+                    case "CheckPoint":
+                        objects.Add(new CheckPoint(new Vector2(ghostRectangle.X, ghostRectangle.Y), new Vector2(ghostRectangle.Width, ghostRectangle.Height), colors[currentColor]));
                         break;
                 }
             }
