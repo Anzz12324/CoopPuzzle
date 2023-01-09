@@ -32,6 +32,11 @@ namespace CoopPuzzle
 
         public override void Update(GameTime gt, List<GameObject> objects, Game1 game1)
         {
+            if (game1.editmode)
+                speed = 500;
+            else
+                speed = 100;
+            
             velocity = Vector2.Zero;
             float dt = (float)gt.ElapsedGameTime.TotalSeconds;
             
