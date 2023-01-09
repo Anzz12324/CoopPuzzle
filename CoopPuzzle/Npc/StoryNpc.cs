@@ -57,7 +57,7 @@ namespace CoopPuzzle.Npc
             if (playerInRange)
             {
                 sb.Draw(bubbleTex, bubblePos, bubbleSrcRec, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, depth);
-                sb.DrawString(Assets.font, "Hello my travelers!", new Vector2(bubblePos.X+10, bubblePos.Y+5), color, 0, Vector2.Zero, 1, SpriteEffects.None, depth);
+                sb.DrawString(Assets.font, "Hello my travelers!", new Vector2(bubblePos.X+10, bubblePos.Y+5), color, 0, Vector2.Zero, 1, SpriteEffects.None, depth+0.01f);
             }
             sb.DrawLine(new Vector2(range.Left, range.Top), new Vector2(range.Right, range.Top), 1, Color.White);
             sb.DrawLine(new Vector2(range.Left, range.Top), new Vector2(range.Left, range.Bottom), 1, Color.White);
