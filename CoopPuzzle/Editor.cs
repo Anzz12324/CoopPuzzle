@@ -25,6 +25,17 @@ namespace CoopPuzzle
         string placeType = "Block";
         int id = 0;
 
+        Color[] colors = new Color[]
+        {
+            Color.White,
+            Color.Firebrick,
+            Color.PaleGreen,
+            Color.DodgerBlue,
+            Color.Khaki,
+            Color.Orchid
+        };
+        int currentColor;
+
         public Editor()
         {
 
@@ -49,18 +60,28 @@ namespace CoopPuzzle
                 ghostRectangle.Size = new Point(40, 40);
                 id += Math.Clamp(scroll, -1, 1);
             }
-            else
+            else if(placeType == "Block" || placeType == "MovableBlock")
             {
-                if (board.IsKeyDown(Keys.LeftControl))
-                    ghostRectangle.Height += 40 * Math.Clamp(scroll, -1, 1);
+                if (board.IsKeyDown(Keys.LeftShift))
+                    currentColor += Math.Clamp(scroll, -1, 1);
                 else
-                    ghostRectangle.Width += 40 * Math.Clamp(scroll, -1, 1);
-            }
+                {
+                    if (board.IsKeyDown(Keys.LeftControl))
+                        ghostRectangle.Height += 40 * Math.Clamp(scroll, -1, 1);
+                    else
+                        ghostRectangle.Width += 40 * Math.Clamp(scroll, -1, 1);
+                }
 
-            if (ghostRectangle.Height < 40)
-                ghostRectangle.Height = 40;
-            if (ghostRectangle.Width < 40)
-                ghostRectangle.Width = 40;
+                if (currentColor >= colors.Length)
+                    currentColor = 0;
+                if (currentColor < 0)
+                    currentColor = colors.Length - 1;
+
+                if (ghostRectangle.Height < 40)
+                    ghostRectangle.Height = 40;
+                if (ghostRectangle.Width < 40)
+                    ghostRectangle.Width = 40;
+            }
 
             if (mouse.LeftButton == ButtonState.Pressed && prevMouse.LeftButton == ButtonState.Released)
             {
@@ -76,21 +97,20 @@ namespace CoopPuzzle
                 switch (placeType)
                 {
                     case "Block":
-                        objects.Add(new Block(new Vector2(ghostRectangle.X, ghostRectangle.Y), new Vector2(ghostRectangle.Width, ghostRectangle.Height), Color.White));
+                        objects.Add(new Block(new Vector2(ghostRectangle.X, ghostRectangle.Y), new Vector2(ghostRectangle.Width, ghostRectangle.Height), colors[currentColor]));
                         break;
                     case "Door":
-                        objects.Add(new Door(new Vector2(ghostRectangle.X, ghostRectangle.Y), Color.Green, id));
+                        objects.Add(new Door(new Vector2(ghostRectangle.X, ghostRectangle.Y), colors[currentColor], id));
                         break;
                     case "MovableBlock":
-                        objects.Add(new MovableBlock(new Vector2(ghostRectangle.X, ghostRectangle.Y), new Vector2(ghostRectangle.Width, ghostRectangle.Height), Color.White));
+                        objects.Add(new MovableBlock(new Vector2(ghostRectangle.X, ghostRectangle.Y), new Vector2(ghostRectangle.Width, ghostRectangle.Height), colors[currentColor]));
                         break;
                     case "Trap":
-                        objects.Add(new Trap(new Vector2(ghostRectangle.X, ghostRectangle.Y), Color.White));
+                        objects.Add(new Trap(new Vector2(ghostRectangle.X, ghostRectangle.Y), colors[currentColor]));
                         break;
                     case "WeighedSwitch":
-                        objects.Add(new WeighedSwitch(new Vector2(ghostRectangle.X, ghostRectangle.Y), Color.White, id));
+                        objects.Add(new WeighedSwitch(new Vector2(ghostRectangle.X, ghostRectangle.Y), colors[currentColor], id));
                         break;
-
                 }
             }
 
@@ -119,8 +139,30 @@ namespace CoopPuzzle
         public void Draw(SpriteBatch sb, Matrix transformMatrix)
         {
             sb.End();
+
             sb.Begin(sortMode: SpriteSortMode.FrontToBack, samplerState: SamplerState.PointWrap, transformMatrix: transformMatrix);
-            //sb.Draw(Assets.white, ghostRectangle, Color.White * 0.5f);
+
+            //sb.Draw(Assets.white, ghostRectangle, colors[currentColor] * 0.5f);
+
+            switch (placeType)
+            {
+                case "Block":
+                    new Block(new Vector2(ghostRectangle.X, ghostRectangle.Y), new Vector2(ghostRectangle.Width, ghostRectangle.Height), colors[currentColor] * 0.5f).Draw(sb);
+                    break;
+                case "Door":
+                    new Door(new Vector2(ghostRectangle.X, ghostRectangle.Y), colors[currentColor] * 0.5f, id).Draw(sb);
+                    break;
+                case "MovableBlock":
+                    new MovableBlock(new Vector2(ghostRectangle.X, ghostRectangle.Y), new Vector2(ghostRectangle.Width, ghostRectangle.Height), colors[currentColor] * 0.5f).Draw(sb);
+                    break;
+                case "Trap":
+                    new Trap(new Vector2(ghostRectangle.X, ghostRectangle.Y), colors[currentColor] * 0.5f).Draw(sb);
+                    break;
+                case "WeighedSwitch":
+                    new WeighedSwitch(new Vector2(ghostRectangle.X, ghostRectangle.Y), Color.White, id).Draw(sb);
+                    break;
+            }
+
             sb.DrawLine(new Vector2(ghostRectangle.Left, ghostRectangle.Top), new Vector2(ghostRectangle.Right, ghostRectangle.Top), 1, Color.Black);
             sb.DrawLine(new Vector2(ghostRectangle.Left, ghostRectangle.Top), new Vector2(ghostRectangle.Left, ghostRectangle.Bottom), 1, Color.Black);
             sb.DrawLine(new Vector2(ghostRectangle.Left, ghostRectangle.Bottom), new Vector2(ghostRectangle.Right, ghostRectangle.Bottom), 1, Color.Black);
