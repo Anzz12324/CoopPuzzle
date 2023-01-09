@@ -48,15 +48,22 @@
             this.grpEdit = new System.Windows.Forms.GroupBox();
             this.btnEditMode = new System.Windows.Forms.Button();
             this.radBtnEdit = new System.Windows.Forms.RadioButton();
+            this.radBtnCredits = new System.Windows.Forms.RadioButton();
+            this.grpCredits = new System.Windows.Forms.GroupBox();
+            this.grpTex = new System.Windows.Forms.GroupBox();
+            this.grpMusic = new System.Windows.Forms.GroupBox();
+            this.linkFlower = new System.Windows.Forms.LinkLabel();
             this.grpHost.SuspendLayout();
             this.grpJoin.SuspendLayout();
             this.grpEdit.SuspendLayout();
+            this.grpCredits.SuspendLayout();
+            this.grpMusic.SuspendLayout();
             this.SuspendLayout();
             // 
             // radBtnHost
             // 
             this.radBtnHost.AutoSize = true;
-            this.radBtnHost.Location = new System.Drawing.Point(61, 69);
+            this.radBtnHost.Location = new System.Drawing.Point(18, 69);
             this.radBtnHost.Name = "radBtnHost";
             this.radBtnHost.Size = new System.Drawing.Size(67, 19);
             this.radBtnHost.TabIndex = 0;
@@ -68,7 +75,7 @@
             // radBtnJoin
             // 
             this.radBtnJoin.AutoSize = true;
-            this.radBtnJoin.Location = new System.Drawing.Point(134, 69);
+            this.radBtnJoin.Location = new System.Drawing.Point(91, 69);
             this.radBtnJoin.Name = "radBtnJoin";
             this.radBtnJoin.Size = new System.Drawing.Size(63, 19);
             this.radBtnJoin.TabIndex = 1;
@@ -236,7 +243,7 @@
             // radBtnEdit
             // 
             this.radBtnEdit.AutoSize = true;
-            this.radBtnEdit.Location = new System.Drawing.Point(203, 69);
+            this.radBtnEdit.Location = new System.Drawing.Point(160, 69);
             this.radBtnEdit.Name = "radBtnEdit";
             this.radBtnEdit.Size = new System.Drawing.Size(45, 19);
             this.radBtnEdit.TabIndex = 4;
@@ -245,12 +252,67 @@
             this.radBtnEdit.UseVisualStyleBackColor = true;
             this.radBtnEdit.CheckedChanged += new System.EventHandler(this.radBtnEdit_CheckedChanged);
             // 
+            // radBtnCredits
+            // 
+            this.radBtnCredits.AutoSize = true;
+            this.radBtnCredits.Location = new System.Drawing.Point(211, 69);
+            this.radBtnCredits.Name = "radBtnCredits";
+            this.radBtnCredits.Size = new System.Drawing.Size(62, 19);
+            this.radBtnCredits.TabIndex = 6;
+            this.radBtnCredits.TabStop = true;
+            this.radBtnCredits.Text = "Credits";
+            this.radBtnCredits.UseVisualStyleBackColor = true;
+            this.radBtnCredits.CheckedChanged += new System.EventHandler(this.radBtnCredits_CheckedChanged);
+            // 
+            // grpCredits
+            // 
+            this.grpCredits.Controls.Add(this.grpTex);
+            this.grpCredits.Controls.Add(this.grpMusic);
+            this.grpCredits.Location = new System.Drawing.Point(12, 94);
+            this.grpCredits.Name = "grpCredits";
+            this.grpCredits.Size = new System.Drawing.Size(280, 187);
+            this.grpCredits.TabIndex = 7;
+            this.grpCredits.TabStop = false;
+            this.grpCredits.Text = "Credits";
+            // 
+            // grpTex
+            // 
+            this.grpTex.Location = new System.Drawing.Point(6, 106);
+            this.grpTex.Name = "grpTex";
+            this.grpTex.Size = new System.Drawing.Size(268, 75);
+            this.grpTex.TabIndex = 1;
+            this.grpTex.TabStop = false;
+            this.grpTex.Text = "Textures";
+            // 
+            // grpMusic
+            // 
+            this.grpMusic.Controls.Add(this.linkFlower);
+            this.grpMusic.Location = new System.Drawing.Point(6, 16);
+            this.grpMusic.Name = "grpMusic";
+            this.grpMusic.Size = new System.Drawing.Size(268, 78);
+            this.grpMusic.TabIndex = 0;
+            this.grpMusic.TabStop = false;
+            this.grpMusic.Text = "Music";
+            // 
+            // linkFlower
+            // 
+            this.linkFlower.AutoSize = true;
+            this.linkFlower.Location = new System.Drawing.Point(6, 19);
+            this.linkFlower.Name = "linkFlower";
+            this.linkFlower.Size = new System.Drawing.Size(139, 15);
+            this.linkFlower.TabIndex = 0;
+            this.linkFlower.TabStop = true;
+            this.linkFlower.Text = "Frog Shop by flowerhead";
+            this.linkFlower.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkFlower_LinkClicked);
+            // 
             // ConnectForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(305, 293);
+            this.ClientSize = new System.Drawing.Size(304, 292);
+            this.Controls.Add(this.grpCredits);
+            this.Controls.Add(this.radBtnCredits);
             this.Controls.Add(this.grpEdit);
             this.Controls.Add(this.radBtnEdit);
             this.Controls.Add(this.grpJoin);
@@ -268,6 +330,9 @@
             this.grpJoin.ResumeLayout(false);
             this.grpJoin.PerformLayout();
             this.grpEdit.ResumeLayout(false);
+            this.grpCredits.ResumeLayout(false);
+            this.grpMusic.ResumeLayout(false);
+            this.grpMusic.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -294,5 +359,10 @@
         private System.Windows.Forms.RadioButton radBtnEdit;
         private System.Windows.Forms.GroupBox grpEdit;
         private System.Windows.Forms.Button btnEditMode;
+        private System.Windows.Forms.RadioButton radBtnCredits;
+        private System.Windows.Forms.GroupBox grpCredits;
+        private System.Windows.Forms.GroupBox grpMusic;
+        private System.Windows.Forms.GroupBox grpTex;
+        private System.Windows.Forms.LinkLabel linkFlower;
     }
 }

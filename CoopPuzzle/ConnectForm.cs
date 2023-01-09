@@ -24,6 +24,7 @@ namespace CoopPuzzle
         {
             grpEdit.Visible = false;
             grpJoin.Visible = false;
+            grpCredits.Visible = false;
             grpHost.Visible = true;
         }
 
@@ -31,15 +32,23 @@ namespace CoopPuzzle
         {
             grpEdit.Visible = false;
             grpHost.Visible = false;
+            grpCredits.Visible = false;
             grpJoin.Visible = true;
         }
         private void radBtnEdit_CheckedChanged(object sender, EventArgs e)
         {
             grpHost.Visible = false;
             grpJoin.Visible = false;
+            grpCredits.Visible = false;
             grpEdit.Visible = true;
         }
-
+        private void radBtnCredits_CheckedChanged(object sender, EventArgs e)
+        {
+            grpHost.Visible = false;
+            grpJoin.Visible = false;
+            grpEdit.Visible = false;
+            grpCredits.Visible = true;
+        }
         private void btnHost_Click(object sender, EventArgs e)
         {
             gameEntry.port = Convert.ToInt32(txtHostPort.Text);
@@ -61,6 +70,20 @@ namespace CoopPuzzle
         {
             gameEntry.editmode= true;
             Close();
+        }
+
+        private void linkFlower_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                linkFlower.LinkVisited= true;
+                Process.Start(new ProcessStartInfo() { FileName = "https://somewhatgoodroyaltyfreemusic.bandcamp.com/track/frog-shop", UseShellExecute = true });
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                
+            }
         }
     }
 }
