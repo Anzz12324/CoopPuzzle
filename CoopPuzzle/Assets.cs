@@ -13,7 +13,6 @@ namespace CoopPuzzle
         public static SpriteFont font, bigFont;
         public static SpriteSheet spriteSheet, spriteSheet2;
         public static Song song;
-        public static SoundEffect step;
 
         public static void LoadTextures(ContentManager gd)
         {
@@ -27,8 +26,6 @@ namespace CoopPuzzle
             bigFont = gd.Load<SpriteFont>("bigFont");
 
             song = gd.Load<Song>("FrogShop");
-
-            step = gd.Load<SoundEffect>("Step");
         }
     }
 }
