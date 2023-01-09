@@ -19,6 +19,7 @@ namespace CoopPuzzle.Npc
             range = new Rectangle((int)pos.X-30, (int)pos.Y-30, 100, 100);
             bubblePos = new Vector2(pos.X - (bubbleSrcRec.Width / 2) + srcRecArray[0].Width, pos.Y - bubbleSrcRec.Height);
             color = Color.Transparent;
+            text = "Hello my travelers!";
         }
 
         public override void Update(GameTime gT, Player player, Player otherPlayer, Game1 game1)
@@ -57,7 +58,7 @@ namespace CoopPuzzle.Npc
             if (playerInRange)
             {
                 sb.Draw(bubbleTex, bubblePos, bubbleSrcRec, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, depth);
-                sb.DrawString(Assets.font, "Hello my travelers!", new Vector2(bubblePos.X+10, bubblePos.Y+5), color, 0, Vector2.Zero, 1, SpriteEffects.None, depth+0.01f);
+                sb.DrawString(Assets.font, text, new Vector2(bubblePos.X+10, bubblePos.Y+5), color, 0, Vector2.Zero, 1, SpriteEffects.None, depth+0.01f);
             }
             sb.DrawLine(new Vector2(range.Left, range.Top), new Vector2(range.Right, range.Top), 1, Color.White);
             sb.DrawLine(new Vector2(range.Left, range.Top), new Vector2(range.Left, range.Bottom), 1, Color.White);
