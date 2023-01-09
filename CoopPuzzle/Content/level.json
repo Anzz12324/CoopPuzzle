@@ -1,7 +1,7 @@
 {
   "player": {
-    "positionX": 607.0,
-    "positionY": -99.16681
+    "positionX": 641.7222,
+    "positionY": -213.58255
   },
   "otherPlayer": {
     "positionX": 300.0,
@@ -58,25 +58,67 @@
       "id": 0
     },
     {
-      "positionX": 160.0,
-      "positionY": -360.0,
+      "positionX": 600.0,
+      "positionY": -560.0,
       "height": 200.0,
-      "width": 320.0,
-      "id": 0
-    },
-    {
-      "positionX": 440.0,
-      "positionY": -520.0,
-      "height": 40.0,
-      "width": 520.0,
-      "id": 0
-    },
-    {
-      "positionX": 1000.0,
-      "positionY": -600.0,
-      "height": 520.0,
       "width": 40.0,
-      "id": 0
+      "id": 2
+    },
+    {
+      "positionX": 320.0,
+      "positionY": -560.0,
+      "height": 200.0,
+      "width": 40.0,
+      "id": 2
+    },
+    {
+      "positionX": 360.0,
+      "positionY": -400.0,
+      "height": 40.0,
+      "width": 80.0,
+      "id": 2
+    },
+    {
+      "positionX": 520.0,
+      "positionY": -400.0,
+      "height": 40.0,
+      "width": 80.0,
+      "id": 2
+    },
+    {
+      "positionX": 360.0,
+      "positionY": -560.0,
+      "height": 40.0,
+      "width": 80.0,
+      "id": 2
+    },
+    {
+      "positionX": 520.0,
+      "positionY": -560.0,
+      "height": 40.0,
+      "width": 80.0,
+      "id": 2
+    },
+    {
+      "positionX": 320.0,
+      "positionY": -720.0,
+      "height": 40.0,
+      "width": 320.0,
+      "id": 2
+    },
+    {
+      "positionX": 320.0,
+      "positionY": -680.0,
+      "height": 120.0,
+      "width": 40.0,
+      "id": 2
+    },
+    {
+      "positionX": 600.0,
+      "positionY": -680.0,
+      "height": 120.0,
+      "width": 40.0,
+      "id": 2
     }
   ],
   "checkpoint": [
@@ -92,6 +134,26 @@
       "positionX": 40.0,
       "positionY": 160.0,
       "id": 0
+    },
+    {
+      "positionX": 440.0,
+      "positionY": -400.0,
+      "id": 1
+    },
+    {
+      "positionX": 480.0,
+      "positionY": -400.0,
+      "id": 1
+    },
+    {
+      "positionX": 440.0,
+      "positionY": -560.0,
+      "id": 2
+    },
+    {
+      "positionX": 480.0,
+      "positionY": -560.0,
+      "id": 2
     }
   ],
   "switch": [
@@ -101,12 +163,32 @@
       "height": 40.0,
       "width": 40.0,
       "id": 0
+    },
+    {
+      "positionX": 720.0,
+      "positionY": -440.0,
+      "height": 40.0,
+      "width": 40.0,
+      "id": 0
+    },
+    {
+      "positionX": 560.0,
+      "positionY": -480.0,
+      "height": 40.0,
+      "width": 40.0,
+      "id": 0
     }
   ],
   "movable": [
     {
-      "positionX": 120,
-      "positionY": 240,
+      "positionX": 133,
+      "positionY": 98,
+      "height": 40,
+      "width": 40
+    },
+    {
+      "positionX": 709,
+      "positionY": -347,
       "height": 40,
       "width": 40
     }
