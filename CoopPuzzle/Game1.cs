@@ -312,14 +312,14 @@ namespace CoopPuzzle
 
         public Color GetColorOfPixel(Vector2 position)
         {
-            try
-            {
+            //try
+            //{
                 return colorData[(int)position.X + (int)position.Y * ScreenWidth];
-            }
-            catch (IndexOutOfRangeException)
-            {
-                return Color.Black;
-            }
+            //}
+            //catch (IndexOutOfRangeException)
+            //{
+            //    return Color.Black;
+            //}
         }
         private void CameraMove(GameTime gameTime)
         {

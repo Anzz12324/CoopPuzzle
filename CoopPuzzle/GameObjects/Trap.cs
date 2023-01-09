@@ -18,8 +18,8 @@ namespace CoopPuzzle
             srcRecArray = new Rectangle[2];
             srcRecArray[0] = new Rectangle(1, 860, 20, 20);
             srcRecArray[1] = new Rectangle(23, 860, 20, 20);
-            frameTimer = 100;
-            frameInterval = 100;
+            frameTimer = 500;
+            frameInterval = 500;
         }
         public override void Update(GameTime gT)
         {
