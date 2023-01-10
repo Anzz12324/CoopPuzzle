@@ -36,7 +36,7 @@ namespace CoopPuzzle.Npc
         {
             Collision(player, otherPlayer);
 
-            depth = Math.Clamp((pos.Y + 32 - game1.camera.Position.Y) / Assets.ScreenHeight, 0, 1);
+            depth = Math.Clamp((hitbox.Top - 5 - game1.camera.Position.Y) / Assets.ScreenHeight, 0, 1);
             if (range.Intersects(player.hitbox) || range.Intersects(otherPlayer.hitbox))
             {
                 if (!playerInRange)
