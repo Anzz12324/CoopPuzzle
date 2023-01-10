@@ -28,7 +28,7 @@ namespace CoopPuzzle.Npc
         {
             if (game1.editmode)
                 editmode = true;
-            depth = Math.Clamp((pos.Y + 32 - game1.camera.Position.Y) / game1.ScreenHeight, 0, 1);
+            depth = Math.Clamp((pos.Y + 32 - game1.camera.Position.Y) / Assets.ScreenHeight, 0, 1);
             if (range.Intersects(player.hitbox) || range.Intersects(otherPlayer.hitbox))
             {
                 if (!playerInRange)
