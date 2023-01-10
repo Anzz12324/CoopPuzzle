@@ -15,6 +15,7 @@ namespace CoopPuzzle.Npc
         protected int frame = 0, textNum, frameCount;
         protected double frameTimer, frameInterval = 500; 
         public object Value { get; }
+        public Rectangle Range { get { return range; } }
 
         public NPC(Vector2 pos, int textNum)
         {

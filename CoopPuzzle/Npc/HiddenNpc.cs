@@ -4,7 +4,7 @@ namespace CoopPuzzle.Npc
 {
     internal class HiddenNpc : NPC
     {
-        private int Npc;
+        public int Npc { get; private set; }
         private Rectangle grillbyTable;
         public HiddenNpc(Vector2 pos, int Npc, int textNum) : base(pos, textNum)
         {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CoopPuzzle.Npc;
 
 namespace CoopPuzzle
 {
@@ -35,7 +36,7 @@ namespace CoopPuzzle
             };
         }
 
-        public void Update(ref List<GameObject> objects, Player[] players, Vector2 camera)
+        public void Update(ref List<GameObject> objects, ref List<NPC> npcs, Player[] players, Vector2 camera)
         {
             prevMouse = mouse;
             mouse = Mouse.GetState();
@@ -84,6 +85,19 @@ namespace CoopPuzzle
                     if (HUDobjects[i].HUDhitbox.Contains(mouse.Position))
                     {
                         placeType = HUDobjects[i].GetType().Name;
+                        return;
+                    }
+                }
+                for (int i = 0; i < npcs.Count; i++)
+                {
+                    if (npcs[i].Range.Contains(mouse.Position))
+                    {
+                        placeType = npcs[i].GetType().Name;
+                        if (placeType == "HiddenNpc")
+                        {
+                            HiddenNpc hidden = (HiddenNpc)npcs[i];
+                            placeType = "HiddenNpc " + hidden.Npc;
+                        }
                         return;
                     }
                 }
@@ -183,6 +197,7 @@ namespace CoopPuzzle
                 sb.DrawLine(new Vector2(HUDobjects[i].Pos.X + Assets.tileSize, HUDobjects[i].Pos.Y), new Vector2(0, 1), Assets.tileSize, lineWidth, Color.Black);
                 sb.DrawLine(new Vector2(HUDobjects[i].Pos.X, HUDobjects[i].Pos.Y + Assets.tileSize), new Vector2(1, 0), Assets.tileSize, lineWidth, Color.Black);
             }
+            sb.DrawString(Assets.font, placeType, new Vector2(Assets.tileSize * 1, HUDHeight + Assets.tileSize), Color.Black);
             sb.End();
 
             sb.Begin(sortMode: SpriteSortMode.FrontToBack, samplerState: SamplerState.PointWrap, transformMatrix: transformMatrix);
