@@ -135,7 +135,7 @@ namespace CoopPuzzle
             sb.DrawLine(new Vector2(hitbox.Right, hitbox.Bottom), new Vector2(hitbox.Right, hitbox.Top), 1, Color.White);
         }
 
-        private void HandleCollision()
+        public void HandleCollision()
         {
             Pos = oldPos;
         }

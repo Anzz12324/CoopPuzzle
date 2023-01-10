@@ -4,8 +4,8 @@ namespace CoopPuzzle.Npc
 {
     internal class HiddenNpc : NPC
     {
-        private int Npc;
         private Rectangle grillbyTable;
+        private Vector2 grillbyTablePos;
         public HiddenNpc(Vector2 pos, int Npc, int textNum) : base(pos, textNum)
         {
             this.Npc = Npc;
@@ -16,29 +16,17 @@ namespace CoopPuzzle.Npc
         public override void Update(GameTime gT, Player player, Player otherPlayer, Game1 game1)
         {
             if (Npc == 3)
-            {
                 Animation(gT);
-                if (range.Intersects(player.hitbox) || range.Intersects(otherPlayer.hitbox))
-                {
-                    if (!playerInRange)
-                        playerInRange = true;
-                }
-                else
-                {
-                    playerInRange = false;
-                }
-            }
-            else
-            {
-                base.Update(gT, player, otherPlayer, game1);
-            }
+            
+            base.Update(gT, player, otherPlayer, game1);
+            
         }
 
         public override void Draw(SpriteBatch sb)
         {
             if (Npc == 3)
             {
-                sb.Draw(tex, new Vector2(pos.X-70, pos.Y + 80), grillbyTable, Color.White, 0, Vector2.Zero, 2, SpriteEffects.None, depth+0.01f);
+                sb.Draw(tex, grillbyTablePos, grillbyTable, Color.White, 0, Vector2.Zero, 2, SpriteEffects.None, depth+0.01f);
                 sb.DrawRectangle(range, Color.White);
             }
             sb.Draw(tex, pos, srcRecArray[frame], Color.White, 0, Vector2.Zero, 2, SpriteEffects.None, depth + 0.02f);
@@ -71,7 +59,7 @@ namespace CoopPuzzle.Npc
                     "Lorem ipsum\nLorem ipsum\nLorem ipsum\nLorem ipsum\nLorem ipsum",
                     "Lorem ipsum\nLorem ipsum\nLorem ipsum\nLorem ipsum\nLorem ipsum"
                 };
-
+                hitbox = new Rectangle((int)pos.X, (int)pos.Y + (srcRecArray[0].Height * 2 - 10), srcRecArray[0].Width * 2, 10);
             }
             else if (Npc == 2)
             {
@@ -93,6 +81,7 @@ namespace CoopPuzzle.Npc
                     "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
                     "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum"
                 };
+                hitbox = new Rectangle((int)pos.X, (int)pos.Y + (srcRecArray[0].Height * 2 - 10), srcRecArray[0].Width * 2, 10);
             }
             else if (Npc == 3)
             {
@@ -107,6 +96,7 @@ namespace CoopPuzzle.Npc
                 srcRecArray[3] = new Rectangle(98, 364, 24, 53);
                 srcRecArray[4] = new Rectangle(128, 364, 24, 53);
                 grillbyTable = new Rectangle(8,441,134,35);
+                grillbyTablePos = new Vector2(pos.X - 70, pos.Y + 80);
                 bubblePos = new Vector2(pos.X+50,pos.Y);
                 bubbleSrcRec = new Rectangle(21,18,99,108);
                 range = new Rectangle((int)pos.X-40,(int)pos.Y + 149, 130,40);
@@ -119,6 +109,7 @@ namespace CoopPuzzle.Npc
                     "Lorem ipsum\nLorem ipsum\nLorem ipsum\nLorem ipsum\nLorem ipsum",
                     "Lorem ipsum\nLorem ipsum\nLorem ipsum\nLorem ipsum\nLorem ipsum"
                 };
+                hitbox = new Rectangle((int)grillbyTablePos.X, (int)grillbyTablePos.Y + (grillbyTable.Height * 2 - 10), grillbyTable.Width * 2, 10);
             }
         }
     }

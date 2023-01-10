@@ -12,8 +12,10 @@ namespace CoopPuzzle.Npc
         protected bool playerInRange, editmode = false;
         protected Rectangle[] srcRecArray;
         protected Rectangle bubbleSrcRec, range;
-        protected int frame = 0, textNum, frameCount;
-        protected double frameTimer, frameInterval = 500; 
+        protected int frame = 0, textNum, frameCount, Npc;
+        protected double frameTimer, frameInterval = 500;
+        protected Rectangle hitbox;
+        public virtual Rectangle Hitbox { get { return hitbox; } }
         public object Value { get; }
 
         public NPC(Vector2 pos, int textNum)
@@ -26,6 +28,7 @@ namespace CoopPuzzle.Npc
 
         public virtual void Update(GameTime gT, Player player, Player otherPlayer, Game1 game1) 
         {
+            Collision(player, otherPlayer);
             if (game1.editmode)
                 editmode = true;
             depth = Math.Clamp((pos.Y + 32 - game1.camera.Position.Y) / Assets.ScreenHeight, 0, 1);
@@ -33,12 +36,13 @@ namespace CoopPuzzle.Npc
             {
                 if (!playerInRange)
                     playerInRange = true;
-
-                Animation(gT);
+                if (Npc != 3)
+                    Animation(gT);
             }
-            else
+            else 
             {
-                frame = 0;
+                if (Npc != 3)
+                    frame = 0;
                 playerInRange = false;
             }
         }
@@ -50,7 +54,8 @@ namespace CoopPuzzle.Npc
                 sb.DrawLine(new Vector2(range.Left, range.Top), new Vector2(range.Left, range.Bottom), 1, Color.White);
                 sb.DrawLine(new Vector2(range.Left, range.Bottom), new Vector2(range.Right, range.Bottom), 1, Color.White);
                 sb.DrawLine(new Vector2(range.Right, range.Bottom), new Vector2(range.Right, range.Top), 1, Color.White);
-            }            
+            }
+            sb.FillRectangle(Hitbox, Color.HotPink, 1);
         }
 
         protected void Animation(GameTime gT)
@@ -64,6 +69,18 @@ namespace CoopPuzzle.Npc
                 {
                     frame = 0;
                 }
+            }
+        }
+
+        protected void Collision(Player p1, Player p2)
+        {
+            if (hitbox.Intersects(p1.hitbox))
+            {
+                p1.HandleCollision();
+            }
+            if (hitbox.Intersects(p1.hitbox))
+            {
+                p2.HandleCollision();
             }
         }
     }

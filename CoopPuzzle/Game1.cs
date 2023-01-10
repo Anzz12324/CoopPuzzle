@@ -10,12 +10,11 @@ global using LiteNetLib;
 global using LiteNetLib.Utils;
 global using MonoGame.Extended.Sprites;
 global using MonoGame.Extended.Content;
-using MonoGame.Extended.Serialization;
-using MonoGame.Extended.Timers;
-using MonoGame.Extended;
-using MonoGame.Extended.ViewportAdapters;
-using System.Runtime.CompilerServices;
-using CoopPuzzle.Npc;
+global using MonoGame.Extended.Serialization;
+global using MonoGame.Extended.Timers;
+global using MonoGame.Extended;
+global using MonoGame.Extended.ViewportAdapters;
+global using CoopPuzzle.Npc;
 
 namespace CoopPuzzle
 {
