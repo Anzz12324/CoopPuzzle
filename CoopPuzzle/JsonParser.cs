@@ -122,6 +122,40 @@ namespace CoopPuzzle
             int id = Convert.ToInt32(obj.GetValue("id"));
             return id;
         }
+
+        public static int GetRotation(string fileName, string propertyName)
+        {
+            if (wholeObj == null || currentFileName == null || currentFileName != fileName)
+            {
+                GetJObjectFromFile(fileName);
+            }
+            JObject obj = (JObject)wholeObj.GetValue(propertyName);
+            return GetRotation(obj);
+        }
+
+        public static List<int> GetRotationList(string fileName, string propertyName)
+        {
+            if (wholeObj == null || currentFileName == null || currentFileName != fileName)
+            {
+                GetJObjectFromFile(fileName);
+            }
+            List<int> rotationList = new List<int>();
+            JArray arrayObj = (JArray)wholeObj.GetValue(propertyName);
+            for (int i = 0; i < arrayObj.Count; i++)
+            {
+                JObject obj = (JObject)arrayObj[i];
+                int rotation = GetRotation(obj);
+                rotationList.Add(rotation);
+            }
+
+            return rotationList;
+        }
+        private static int GetRotation(JObject obj)
+        {
+            int rotation = Convert.ToInt32(obj.GetValue("rotation"));
+            return rotation;
+        }
+
         public static int GetSkin(string fileName, string propertyName)
         {
             if (wholeObj == null || currentFileName == null || currentFileName != fileName)
@@ -325,6 +359,7 @@ namespace CoopPuzzle
             obj.Add("positionX", door.Pos.X);
             obj.Add("positionY", door.Pos.Y);
             obj.Add("id", door.id);
+            obj.Add("rotation", door.rotation);
 
             return obj;
         }

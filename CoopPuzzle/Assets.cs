@@ -9,7 +9,7 @@ namespace CoopPuzzle
 {
     public static class Assets
     {
-        public static Texture2D white, undertaleRuins, box, brick, flowey, bubbleTex, wait, grillby, creamGuy, asgore, mettaton;
+        public static Texture2D white, undertaleRuins, box, brick, door, flowey, bubbleTex, wait, grillby, creamGuy, asgore, mettaton;
         public static SpriteFont font, bigFont;
         public static SpriteSheet spriteSheet, spriteSheet2;
         public static Song song;
@@ -31,6 +31,7 @@ namespace CoopPuzzle
             white = gd.Load<Texture2D>("white");
             undertaleRuins = gd.Load<Texture2D>("UndertaleRuins");
             box = gd.Load<Texture2D>("box");
+            door = gd.Load<Texture2D>("door");
             spriteSheet = gd.Load<SpriteSheet>("frisk.sf", new JsonContentLoader());
             spriteSheet2 = gd.Load<SpriteSheet>("frisk2.sf", new JsonContentLoader());
 

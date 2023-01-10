@@ -409,9 +409,10 @@ namespace CoopPuzzle
 
             List<Vector2> doorPosList = JsonParser.GetPosList(level, "door");
             List<int> doorIdList = JsonParser.GetIdList(level, "door");
+            List<int> doorRotationList = JsonParser.GetRotationList(level, "door");
             for (int i = 0; i < doorPosList.Count; i++)
             {
-                objects.Add(new Door(doorPosList[i], Color.Green, doorIdList[i]));
+                objects.Add(new Door(doorPosList[i], Color.White, doorIdList[i], doorRotationList[i]));
             }
 
             List<Vector2> switchPosList = JsonParser.GetPosList(level, "switch");
