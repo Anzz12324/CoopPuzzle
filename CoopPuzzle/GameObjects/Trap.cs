@@ -10,7 +10,6 @@ namespace CoopPuzzle
     internal class Trap : GameObject
     {
         private int frame = 0;
-        private double frameTimer, frameInterval;
         Rectangle[] srcRecArray;
         new float depth = 0.01f;
 
@@ -21,8 +20,6 @@ namespace CoopPuzzle
             srcRecArray = new Rectangle[2];
             srcRecArray[0] = new Rectangle(23, 860, 20, 20);
             srcRecArray[1] = new Rectangle(1, 860, 20, 20);
-            frameTimer = 500;
-            frameInterval = 500;
             this.id = id;
         }
         public override void Update(GameTime gT, Player[] players)
@@ -32,16 +29,7 @@ namespace CoopPuzzle
             {
                 if (id == 0)
                 {
-                    frameTimer -= gT.ElapsedGameTime.TotalMilliseconds;
-                    if (frameTimer <= 0)
-                    {
-                        frameTimer = frameInterval;
-                        frame++;
-                        if (frame == 2)
-                        {
-                            frame = 0;
-                        }
-                    }
+                    frame = 1;
 
                 }
                 else
