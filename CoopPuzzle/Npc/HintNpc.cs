@@ -8,11 +8,12 @@ namespace CoopPuzzle.Npc
 {
     internal class HintNpc : NPC
     {
-        public HintNpc(Texture2D tex, Vector2 pos, int Npc, int textNum) : base(tex, pos, Npc, textNum)
+        public HintNpc(Texture2D tex, Vector2 pos, int frameCount, int Npc, int textNum) : base(tex, pos, frameCount, Npc, textNum)
         {
+
         }
 
-        public override void Update(GameTime gT, Player[] players)
+        public override void Update(GameTime gT, Player player, Player otherPlayer, Game1 game1)
         {
             
         }

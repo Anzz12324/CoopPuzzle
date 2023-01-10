@@ -80,7 +80,7 @@ namespace CoopPuzzle
             editor = new Editor();
             sound = new SoundManager();
 
-            storyNpc = new StoryNpc(Assets.flowey, new Vector2(200,400), 1, 1);
+            storyNpc = new StoryNpc(Assets.flowey, new Vector2(200,400), 2, 1, 1);
 
             objects = new List<GameObject>()
             //{
