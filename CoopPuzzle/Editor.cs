@@ -80,7 +80,7 @@ namespace CoopPuzzle
             {
                 for (int i = 0; i < HUDobjects.Count; i++)
                 {
-                    if (HUDobjects[i].hitbox.Contains(mouse.Position))
+                    if (HUDobjects[i].HUDhitbox.Contains(mouse.Position))
                     {
                         placeType = HUDobjects[i].GetType().Name;
                         return;
@@ -114,7 +114,7 @@ namespace CoopPuzzle
             {
                 for (int i = 0; i < objects.Count; i++)
                 {
-                    if (objects[i].hitbox.Contains(new Vector2(mouse.Position.X, mouse.Position.Y) + camera))
+                    if (objects[i].HUDhitbox.Contains(new Vector2(mouse.Position.X, mouse.Position.Y) + camera))
                     {
                         objects.RemoveAt(i);
                     }
@@ -124,7 +124,7 @@ namespace CoopPuzzle
             canPlace = true;
             for (int i = 0; i < objects.Count; i++)                                                           //<--Ta bort kommentar när vi lagt till texturer
             {
-                if (objects[i].hitbox.Contains(new Vector2(mouse.Position.X, mouse.Position.Y) + camera))
+                if (objects[i].HUDhitbox.Contains(new Vector2(mouse.Position.X, mouse.Position.Y) + camera))
                 {
                     objects[i].TempColor = Color.Lerp(objects[i].Color, Color.Black, 0.5f);
                     canPlace = false;

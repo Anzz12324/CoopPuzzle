@@ -32,7 +32,7 @@ namespace CoopPuzzle
 
         public override void Update(GameTime gt, List<GameObject> objects, Game1 game1)
         {
-            speedValue = game1.editmode ? 500 : speedValue;
+            speedValue = game1.editmode ? 100 : speedValue;
             
             velocity = Vector2.Zero;
             float dt = (float)gt.ElapsedGameTime.TotalSeconds;
@@ -119,7 +119,7 @@ namespace CoopPuzzle
 
             sprite.Play(animation);
             sprite.Update(dt);
-            sprite.Depth = Math.Clamp((Pos.Y - game1.camera.Position.Y) / game1.ScreenHeight, 0, 1);
+            sprite.Depth = Math.Clamp((Pos.Y - game1.camera.Position.Y) / Assets.ScreenHeight, 0, 1);
             particles.EmitterLocation = emitterPos;
             particles.Update(dt, Vel, game1, emitterPos);
         }

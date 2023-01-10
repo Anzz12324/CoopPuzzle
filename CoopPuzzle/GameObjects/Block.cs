@@ -8,6 +8,7 @@ namespace CoopPuzzle
 {
     internal class Block : GameObject
     {
+        public override Rectangle hitbox { get { return new Rectangle((int)position.X, (int)position.Y + 20, (int)size.X, (int)size.Y - 20); } }
 
         public Block(Vector2 position, Vector2 size, Color color) : base(position, color)
         {
@@ -15,9 +16,9 @@ namespace CoopPuzzle
             tex = Assets.brick;
         }
 
-        public override void Update(GameTime gT)
+        public override void Update(GameTime gT, Game1 game1)
         {
-            base.Update(gT);
+            base.Update(gT, game1);
         }
 
         public override void Draw(SpriteBatch sb)
@@ -26,7 +27,7 @@ namespace CoopPuzzle
             {
                 for (int j = 0; j < size.Y; j += 40)
                 {
-                    sb.Draw(tex, new Rectangle((int)Pos.X + i, (int)Pos.Y + j, 40, 40), TempColor);
+                    sb.Draw(tex, new Rectangle((int)Pos.X + i, (int)Pos.Y + j, 40, 40), null, TempColor, 0f, Vector2.Zero, SpriteEffects.None, depth);
                 }
             }
         }

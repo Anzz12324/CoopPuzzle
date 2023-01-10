@@ -17,7 +17,9 @@ namespace CoopPuzzle
             Color = Color.Green;
         }
 
-        public override void Update(GameTime gT, List<GameObject> objects)
+        public override Rectangle hitbox { get { return new Rectangle((int)position.X, (int)position.Y + 20, (int)size.X, (int)size.Y - 20); } }
+
+        public override void Update(GameTime gT, List<GameObject> objects, Game1 game1)
         {
             Open = false;
             for (int i = 0; i < objects.Count; i++)
@@ -28,6 +30,7 @@ namespace CoopPuzzle
                     if(ws.id == id && ws.Weight) Open = true;
                 }
             }
+            base.Update(gT, game1);
         }
 
         public override void Draw(SpriteBatch sb)

@@ -12,7 +12,8 @@ namespace CoopPuzzle
         private int frame = 0;
         private double frameTimer, frameInterval;
         Rectangle[] srcRecArray;
-
+        new float depth = 0.01f;
+            
         public Trap(Vector2 position, Color color) : base(position, color)
         {
             srcRecArray = new Rectangle[2];
@@ -35,13 +36,10 @@ namespace CoopPuzzle
                     frame = 0;
                 }
             }
-
-
         }
         public override void Draw(SpriteBatch sb)
         {
-
-            sb.Draw(Assets.undertaleRuins, hitbox, srcRecArray[frame], TempColor);
+            sb.Draw(Assets.undertaleRuins, hitbox, srcRecArray[frame], TempColor, 0f, Vector2.Zero, SpriteEffects.None, depth);
         }
     }
 }

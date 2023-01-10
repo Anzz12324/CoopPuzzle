@@ -43,8 +43,6 @@ namespace CoopPuzzle
         private SpriteBatch spriteBatch;
 
         Color[] colorData;
-        public int ScreenWidth { get { return 1280; } }
-        public int ScreenHeight { get { return 720; } }
 
         private int ping;
         public string ip, password; 
@@ -52,21 +50,23 @@ namespace CoopPuzzle
         public bool editmode = false;
         public Game1()
         {
+            Assets.ScreenWidth = 1280;
+            Assets.ScreenHeight = 720;
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            graphics.PreferredBackBufferWidth = ScreenWidth;
-            graphics.PreferredBackBufferHeight = ScreenHeight;
+            graphics.PreferredBackBufferWidth = Assets.ScreenWidth;
+            graphics.PreferredBackBufferHeight = Assets.ScreenHeight;
             graphics.ApplyChanges();
         }
 
         protected override void Initialize()
         {
             TargetElapsedTime = TimeSpan.FromSeconds(1f / 144f);
-            renderTarget = new RenderTarget2D(graphics.GraphicsDevice, ScreenWidth, ScreenHeight);
-            colorData = new Color[ScreenWidth * ScreenHeight];
+            renderTarget = new RenderTarget2D(graphics.GraphicsDevice, Assets.ScreenWidth, Assets.ScreenHeight);
+            colorData = new Color[Assets.ScreenWidth * Assets.ScreenHeight];
 
-            var viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, ScreenWidth, ScreenHeight);
+            var viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, Assets.ScreenWidth, Assets.ScreenHeight);
             camera = new OrthographicCamera(viewportAdapter);
 
             base.Initialize();
@@ -206,7 +206,7 @@ namespace CoopPuzzle
             }
 
             if (!connected && !editmode)
-                spriteBatch.Draw(Assets.wait, new Vector2(ScreenWidth/2-Assets.wait.Width/2,ScreenHeight/2-Assets.wait.Height),
+                spriteBatch.Draw(Assets.wait, new Vector2(Assets.ScreenWidth /2-Assets.wait.Width/2, Assets.ScreenHeight /2-Assets.wait.Height),
                     new Rectangle(0,0, Assets.wait.Width, Assets.wait.Height) , Color.White, 0, Vector2.Zero, 1, SpriteEffects.None,1);                
             
             
@@ -263,7 +263,9 @@ namespace CoopPuzzle
                 else if (objects[i] is Trap)
                     objects[i].Update(gameTime);
                 else if (objects[i] is Door)
-                    objects[i].Update(gameTime, objects);
+                    objects[i].Update(gameTime, objects, this);
+                else if (objects[i] is Block or MovableBlock)
+                    objects[i].Update(gameTime, this);
             }
             storyNpc.Update(gameTime, player, otherPlayer, this);
         }
@@ -340,7 +342,7 @@ namespace CoopPuzzle
         {
             //try
             //{
-                return colorData[(int)position.X + (int)position.Y * ScreenWidth];
+                return colorData[(int)position.X + (int)position.Y * Assets.ScreenWidth];
             //}
             //catch (IndexOutOfRangeException)
             //{
@@ -353,26 +355,26 @@ namespace CoopPuzzle
             {
                 case DiffCam.SnapMove:
                     if (player.Pos.X < camera.Position.X)
-                        camera.Move(new Vector2(-ScreenWidth, 0));
-                    if (player.Pos.X > camera.Position.X + ScreenWidth)
-                        camera.Move(new Vector2(ScreenWidth, 0));
+                        camera.Move(new Vector2(-Assets.ScreenWidth, 0));
+                    if (player.Pos.X > camera.Position.X + Assets.ScreenWidth)
+                        camera.Move(new Vector2(Assets.ScreenWidth, 0));
                     if (player.Pos.Y < camera.Position.Y)
-                        camera.Move(new Vector2(0, -ScreenHeight));
-                    if (player.Pos.Y > camera.Position.Y + ScreenHeight)
-                        camera.Move(new Vector2(0, ScreenHeight));
+                        camera.Move(new Vector2(0, -Assets.ScreenHeight));
+                    if (player.Pos.Y > camera.Position.Y + Assets.ScreenHeight)
+                        camera.Move(new Vector2(0, Assets.ScreenHeight));
                     break;
                 case DiffCam.FollowPlayer:
                     camera.LookAt(player.Pos);
                     break;
                 case DiffCam.FullScreenMove:
                     if (kbState.IsKeyDown(Keys.H) && kbPreviousState.IsKeyUp(Keys.H))
-                        camera.Move(new Vector2(-ScreenWidth, 0));
+                        camera.Move(new Vector2(-Assets.ScreenWidth, 0));
                     if (kbState.IsKeyDown(Keys.K) && kbPreviousState.IsKeyUp(Keys.K))
-                        camera.Move(new Vector2(ScreenWidth, 0));
+                        camera.Move(new Vector2(Assets.ScreenWidth, 0));
                     if (kbState.IsKeyDown(Keys.U) && kbPreviousState.IsKeyUp(Keys.U))
-                        camera.Move(new Vector2(0, -ScreenHeight));
+                        camera.Move(new Vector2(0, -Assets.ScreenHeight));
                     if (kbState.IsKeyDown(Keys.J) && kbPreviousState.IsKeyUp(Keys.J))
-                        camera.Move(new Vector2(0, ScreenHeight));
+                        camera.Move(new Vector2(0, Assets.ScreenHeight));
                     break;
             }
         }
