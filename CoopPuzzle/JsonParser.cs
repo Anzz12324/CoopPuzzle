@@ -245,7 +245,7 @@ namespace CoopPuzzle
                     switchArray.Add(CreateObject((WeighedSwitch)objects[i]));
 
                 if (objects[i] is Trap)
-                    trapArray.Add(CreateObject(objects[i].Pos));
+                    trapArray.Add(CreateObject((Trap)objects[i]));
             }
 
             bigobj.Add("player", player);
@@ -336,7 +336,14 @@ namespace CoopPuzzle
 
             return obj;
         }
-
+        private static JObject CreateObject(Trap trap)
+        {
+            JObject obj = new JObject();
+            obj.Add("positionX", trap.Pos.X);
+            obj.Add("positionY", trap.Pos.Y);
+            obj.Add("id", trap.id);
+            return obj;
+        }
         private static JObject CreateObject(HiddenNpc npc)
         {
             JObject obj = new JObject();
