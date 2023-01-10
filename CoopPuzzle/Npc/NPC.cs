@@ -50,6 +50,10 @@ namespace CoopPuzzle.Npc
         }
         public virtual void Draw(SpriteBatch sb)
         {
+        }
+
+        public virtual void DebugDraw(SpriteBatch sb)
+        {
             if (editmode)
             {
                 sb.DrawLine(new Vector2(range.Left, range.Top), new Vector2(range.Right, range.Top), 1, Color.White);

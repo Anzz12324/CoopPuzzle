@@ -201,6 +201,7 @@ namespace CoopPuzzle
                 {
                     if (objects[i] is CheckPoint)
                         objects[i].Draw(spriteBatch);
+
                     if (objects[i] is Door)
                     {
                         Door door = (Door)objects[i];
@@ -254,6 +255,12 @@ namespace CoopPuzzle
                 spriteBatch.DrawString(Assets.font, "Place block: Left-Click\nRemove block: Right-Click\nChange size of block: Scroll (+ Ctrl)\nChange door and switch id: Scroll\nChange color: Shift + Scroll\nSave level: R", new Vector2(camera.Position.X + 2, camera.Position.Y + 500), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
 
                 editor.Draw(spriteBatch, transformMatrix);
+
+
+                for (int i = 0; i < npcs.Count; i++)
+                {
+                    npcs[i].DebugDraw(spriteBatch);
+                }
             }
 
             spriteBatch.End();
