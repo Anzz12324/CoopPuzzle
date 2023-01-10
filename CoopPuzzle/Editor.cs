@@ -33,14 +33,18 @@ namespace CoopPuzzle
                 new WeighedSwitch(new Vector2(Assets.tileSize * 5, HUDHeight), Color.White, -1),
                 new CheckPoint(new Vector2(Assets.tileSize * 6, HUDHeight), Vector2.One * Assets.tileSize, Color.White)
             };
-            HUDNpcs= new List<NPC>()
+            HUDNpcs = new List<NPC>()
             {
-                new StoryNpc(new Vector2(550,400), 1),
-                new HintNpc(new Vector2(900,500), 1),
-                new HiddenNpc(new Vector2(900,300),1,1),
-                new HiddenNpc(new Vector2(700,400),2,1),
-                new HiddenNpc(new Vector2(700,100),3,1),
+                new StoryNpc(new Vector2(Assets.tileSize * 7, HUDHeight), 1),
+                new HintNpc(new Vector2(Assets.tileSize * 8, HUDHeight), 1),
+                new HiddenNpc(new Vector2(Assets.tileSize * 9, HUDHeight), 1, 1),
+                new HiddenNpc(new Vector2(Assets.tileSize * 10, HUDHeight), 2, 1),
+                new HiddenNpc(new Vector2(Assets.tileSize * 11, HUDHeight), 3, 1),
             };
+            for (int i = 0; i < HUDNpcs.Count; i++)
+            {
+                HUDNpcs[i].IsButton();
+            }
         }
 
         public void Update(ref List<GameObject> objects, ref List<NPC> npcs, Player[] players, Vector2 camera)
@@ -57,7 +61,7 @@ namespace CoopPuzzle
             ghostRectangle.Y = ((mouse.Y + (int)camera.Y) / Assets.tileSize - extraY) * Assets.tileSize;
 
             int scroll = mouse.ScrollWheelValue - prevMouse.ScrollWheelValue;
-            if (placeType == "Door" || placeType == "WeighedSwitch")
+            if (placeType == "Door" || placeType == "WeighedSwitch" || placeType.Contains("Npc"))
             {
                 ghostRectangle.Size = new Point(Assets.tileSize, Assets.tileSize);
                 id += Math.Clamp(scroll, -1, 1);
@@ -101,15 +105,14 @@ namespace CoopPuzzle
                         return;
                     }
                 }
-                for (int i = 0; i < npcs.Count; i++)
+                for (int i = 0; i < HUDNpcs.Count; i++)
                 {
-                    if (npcs[i].Range.Contains(mouse.Position))
+                    if (HUDNpcs[i].Range.Contains(mouse.Position))
                     {
                         placeType = npcs[i].GetType().Name;
                         if (placeType == "HiddenNpc")
                         {
                             HiddenNpc hidden = (HiddenNpc)npcs[i];
-                            //placeType = "HiddenNpc " + hidden.Npc;
                             currentColor = hidden.Npc;
                         }
                         return;
@@ -178,11 +181,11 @@ namespace CoopPuzzle
                 else
                     objects[i].TempColor = objects[i].Color;
             }
-            //for (int i = 0; i < npcs.Count; i++)
-            //{
-            //    if (npcs[i].Range.Contains(new Vector2(mouse.Position.X, mouse.Position.Y) + camera))
-            //        canPlace = false;
-            //}
+            for (int i = 0; i < npcs.Count; i++)
+            {
+                if (npcs[i].Range.Contains(new Vector2(mouse.Position.X, mouse.Position.Y) + camera))
+                    canPlace = false;
+            }
 
             if (board.IsKeyDown(Keys.R) && prevBoard.IsKeyUp(Keys.R))
                 SaveLevel(objects, players);
@@ -228,7 +231,7 @@ namespace CoopPuzzle
             sb.DrawLine(new Vector2(ghostRectangle.Left, ghostRectangle.Top), new Vector2(ghostRectangle.Left, ghostRectangle.Bottom), 1, Color.Black);
             sb.DrawLine(new Vector2(ghostRectangle.Left, ghostRectangle.Bottom), new Vector2(ghostRectangle.Right, ghostRectangle.Bottom), 1, Color.Black);
             sb.DrawLine(new Vector2(ghostRectangle.Right, ghostRectangle.Bottom), new Vector2(ghostRectangle.Right, ghostRectangle.Top), 1, Color.Black);
-            if (placeType == "Door" || placeType == "WeighedSwitch")
+            if (placeType == "Door" || placeType == "WeighedSwitch" || placeType.Contains("Npc"))
                 sb.DrawString(Assets.font, id.ToString(), new Vector2(ghostRectangle.X, ghostRectangle.Y - 16), Color.Black); 
             sb.End();
 
@@ -242,7 +245,32 @@ namespace CoopPuzzle
                 sb.DrawLine(new Vector2(HUDobjects[i].Pos.X + Assets.tileSize, HUDobjects[i].Pos.Y), new Vector2(0, 1), Assets.tileSize, lineWidth, Color.Black);
                 sb.DrawLine(new Vector2(HUDobjects[i].Pos.X, HUDobjects[i].Pos.Y + Assets.tileSize), new Vector2(1, 0), Assets.tileSize, lineWidth, Color.Black);
             }
-            sb.DrawString(Assets.font, placeType + $"\nSkin: {currentColor}", new Vector2(Assets.tileSize * 1, HUDHeight + Assets.tileSize), Color.Black);
+            for (int i = 0; i < HUDNpcs.Count; i++)
+            {
+                Rectangle rect = HUDNpcs[i].Range;
+                int lineWidth = (HUDNpcs[i].GetType().Name == placeType) ? 4 : 2;
+                if(HUDNpcs[i].GetType().Name == "HiddenNpc" && placeType == "HiddenNpc")
+                    lineWidth = (currentColor == HUDNpcs[i].Npc) ? 4 : 2;
+                sb.DrawLine(new Vector2(rect.Left, rect.Top), new Vector2(rect.Left, rect.Bottom), lineWidth, Color.Black);
+                sb.DrawLine(new Vector2(rect.Left, rect.Top), new Vector2(rect.Right, rect.Top), lineWidth, Color.Black);
+                sb.DrawLine(new Vector2(rect.Right, rect.Bottom), new Vector2(rect.Right, rect.Top), lineWidth, Color.Black);
+                sb.DrawLine(new Vector2(rect.Right, rect.Bottom), new Vector2(rect.Left, rect.Bottom), lineWidth, Color.Black);
+
+                string npcName = "";
+                string[] hiddenNames = new string[] { "", "nice", "asgo", "grill" };
+                if (HUDNpcs[i].GetType().Name == "StoryNpc")
+                    npcName = "flow";
+                else if (HUDNpcs[i].GetType().Name == "HintNpc")
+                    npcName = "mett";
+                else if (HUDNpcs[i].GetType().Name == "HiddenNpc")
+                {
+                    HiddenNpc hidden = (HiddenNpc)HUDNpcs[i];
+                    npcName = hiddenNames[hidden.Npc];
+                }
+
+                sb.DrawString(Assets.font, npcName, new Vector2(rect.X + 2, rect.Y), Color.Black);
+            }
+            sb.DrawString(Assets.font, placeType, new Vector2(Assets.tileSize * 1, HUDHeight + Assets.tileSize), Color.Black);
             sb.End();
 
             sb.Begin(sortMode: SpriteSortMode.FrontToBack, samplerState: SamplerState.PointWrap, transformMatrix: transformMatrix);

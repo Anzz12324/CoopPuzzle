@@ -1,5 +1,7 @@
 ﻿
 
+using SharpDX.Direct3D9;
+
 namespace CoopPuzzle.Npc
 {
     abstract class NPC
@@ -59,6 +61,8 @@ namespace CoopPuzzle.Npc
             sb.DrawLine(new Vector2(range.Right, range.Bottom), new Vector2(range.Right, range.Top), 1, Color.White);
 
             sb.FillRectangle(Hitbox, Color.HotPink, 1);
+
+            sb.DrawString(Assets.font, textNum.ToString(), new Vector2(pos.X, pos.Y - 16), Color.Black);
         }
 
         protected void Animation(GameTime gT)
@@ -85,6 +89,11 @@ namespace CoopPuzzle.Npc
             {
                 p2.HandleCollision();
             }
+        }
+
+        public void IsButton()
+        {
+            range = new Rectangle((int)pos.X, (int)pos.Y, Assets.tileSize, Assets.tileSize);
         }
     }
 }
