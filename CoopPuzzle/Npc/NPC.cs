@@ -12,7 +12,8 @@ namespace CoopPuzzle.Npc
         protected bool playerInRange, editmode = false;
         protected Rectangle[] srcRecArray;
         protected Rectangle bubbleSrcRec, range;
-        protected int frame = 0, textNum, frameCount, Npc;
+        protected int frame = 0, textNum, frameCount;
+        public int Npc { get; protected set; }
         protected double frameTimer, frameInterval = 500;
         protected Rectangle hitbox;
         public virtual Rectangle Hitbox { get { return hitbox; } }

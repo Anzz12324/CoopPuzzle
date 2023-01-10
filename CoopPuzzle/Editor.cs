@@ -16,12 +16,11 @@ namespace CoopPuzzle
 
         int HUDHeight = Assets.ScreenHeight - Assets.tileSize * 2;
         List<GameObject> HUDobjects;
+        List<NPC> HUDNpcs;
 
         string placeType = "Block";
-        int id = 0;
+        int id, currentColor;
         bool canPlace;
-
-        int currentColor;
 
         public Editor()
         {
@@ -33,6 +32,14 @@ namespace CoopPuzzle
                 new Trap(new Vector2(Assets.tileSize * 4, HUDHeight), Color.White),
                 new WeighedSwitch(new Vector2(Assets.tileSize * 5, HUDHeight), Color.White, -1),
                 new CheckPoint(new Vector2(Assets.tileSize * 6, HUDHeight), Vector2.One * Assets.tileSize, Color.White)
+            };
+            HUDNpcs= new List<NPC>()
+            {
+                new StoryNpc(new Vector2(550,400), 1),
+                new HintNpc(new Vector2(900,500), 1),
+                new HiddenNpc(new Vector2(900,300),1,1),
+                new HiddenNpc(new Vector2(700,400),2,1),
+                new HiddenNpc(new Vector2(700,100),3,1),
             };
         }
 
@@ -84,8 +91,12 @@ namespace CoopPuzzle
                 {
                     if (HUDobjects[i].HUDhitbox.Contains(mouse.Position))
                     {
-                        if(placeType.Contains("Npc"))
+                        if (placeType.Contains("Npc"))
+                        {
+                            currentColor = 0;
                             id = 0;
+                        }
+
                         placeType = HUDobjects[i].GetType().Name;
                         return;
                     }
@@ -99,7 +110,7 @@ namespace CoopPuzzle
                         {
                             HiddenNpc hidden = (HiddenNpc)npcs[i];
                             //placeType = "HiddenNpc " + hidden.Npc;
-                            id = hidden.Npc;
+                            currentColor = hidden.Npc;
                         }
                         return;
                     }
@@ -125,6 +136,15 @@ namespace CoopPuzzle
                     case "CheckPoint":
                         objects.Add(new CheckPoint(new Vector2(ghostRectangle.X, ghostRectangle.Y), new Vector2(ghostRectangle.Width, ghostRectangle.Height), Assets.colors[currentColor]));
                         break;
+                    case "HintNpc":
+                        npcs.Add(new HintNpc(new Vector2(ghostRectangle.X, ghostRectangle.Y), 0));
+                        break;
+                    case "StoryNpc":
+                        npcs.Add(new StoryNpc(new Vector2(ghostRectangle.X, ghostRectangle.Y), 0));
+                        break;
+                    case "HiddenNpc":
+                        npcs.Add(new HiddenNpc(new Vector2(ghostRectangle.X, ghostRectangle.Y), currentColor, 0));
+                        break;
                 }
             }
 
@@ -137,10 +157,18 @@ namespace CoopPuzzle
                         objects.RemoveAt(i);
                     }
                 }
+                for (int i = 0; i < npcs.Count; i++)
+                {
+                    if (npcs[i].Range.Contains(new Vector2(mouse.Position.X, mouse.Position.Y) + camera))
+                    {
+                        npcs.RemoveAt(i);
+                        return;
+                    }
+                }
             }
 
             canPlace = true;
-            for (int i = 0; i < objects.Count; i++)                                                           //<--Ta bort kommentar när vi lagt till texturer
+            for (int i = 0; i < objects.Count; i++)                                                           
             {
                 if (objects[i].HUDhitbox.Contains(new Vector2(mouse.Position.X, mouse.Position.Y) + camera))
                 {
@@ -150,6 +178,11 @@ namespace CoopPuzzle
                 else
                     objects[i].TempColor = objects[i].Color;
             }
+            //for (int i = 0; i < npcs.Count; i++)
+            //{
+            //    if (npcs[i].Range.Contains(new Vector2(mouse.Position.X, mouse.Position.Y) + camera))
+            //        canPlace = false;
+            //}
 
             if (board.IsKeyDown(Keys.R) && prevBoard.IsKeyUp(Keys.R))
                 SaveLevel(objects, players);
@@ -181,13 +214,13 @@ namespace CoopPuzzle
                     new WeighedSwitch(new Vector2(ghostRectangle.X, ghostRectangle.Y), Color.White, id).Draw(sb);
                     break;
                 case "HintNpc":
-                    new HintNpc(new Vector2(ghostRectangle.X, ghostRectangle.Y), 0).Draw(sb);
+                    new HintNpc(new Vector2(ghostRectangle.X, ghostRectangle.Y), id).Draw(sb);
                     break;
                 case "StoryNpc":
-                    new StoryNpc(new Vector2(ghostRectangle.X, ghostRectangle.Y), 0).Draw(sb);
+                    new StoryNpc(new Vector2(ghostRectangle.X, ghostRectangle.Y), id).Draw(sb);
                     break;
                 case "HiddenNpc":
-                    new HiddenNpc(new Vector2(ghostRectangle.X, ghostRectangle.Y), id, 0).Draw(sb);
+                    new HiddenNpc(new Vector2(ghostRectangle.X, ghostRectangle.Y), currentColor, id).Draw(sb);
                     break;
             }
 
