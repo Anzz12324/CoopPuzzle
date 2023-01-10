@@ -23,7 +23,7 @@ namespace CoopPuzzle.Npc
             color = Color.Black;
             text = new string[5] 
             {
-                "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
+                "     Welcome Travelers.\r\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
                 "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
                 "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
                 "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
@@ -38,7 +38,7 @@ namespace CoopPuzzle.Npc
             if (playerInRange)
             {
                 sb.Draw(bubbleTex, bubblePos, bubbleSrcRec, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, depth);
-                sb.DrawString(Assets.font, text[textNum], textPos, color, 0, Vector2.Zero, 1, SpriteEffects.None, depth+0.01f);
+                sb.DrawString(Assets.font, text[textNum].ToUpper(), textPos, color, 0, Vector2.Zero, 1, SpriteEffects.None, depth+0.01f);
             }
             
             base.Draw(sb);

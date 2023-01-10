@@ -21,7 +21,7 @@ namespace CoopPuzzle
 
     public class Game1 : Game
     {
-        bool active = false, host = false, connected = false, editmodePlayer = false, netStats = false, fps = true;
+        bool active = false, host = false, connected = false, editmodePlayer = false, netStats = false, fps = true, EditmodeUI = true;
         NetManager netManager;
         enum DiffCam { SnapMove, FullScreenMove }
         DiffCam diffCam = DiffCam.SnapMove;
@@ -44,7 +44,7 @@ namespace CoopPuzzle
         Color[] colorData;
 
         private int ping;
-        public string ip, password; 
+        public string ip, password;
         public int port;
         public bool editmode = false;
         public Game1()
@@ -124,6 +124,8 @@ namespace CoopPuzzle
                 fps = !fps;
             if (kbState.IsKeyDown(Keys.F3) && kbPreviousState.IsKeyUp(Keys.F3))
                 netStats = !netStats;
+            if (kbState.IsKeyDown(Keys.F1) && kbPreviousState.IsKeyUp(Keys.F1))
+                EditmodeUI = !EditmodeUI;
         }
         protected override void Update(GameTime gameTime)
         {
@@ -133,7 +135,7 @@ namespace CoopPuzzle
             if (editmode)
             {
                 editor.Update(ref objects, ref npcs, players, camera.Position);
-                
+
                 if (editmodePlayer)
                 {
                     otherPlayer.Update(gameTime, objects, this);
@@ -144,7 +146,7 @@ namespace CoopPuzzle
                     player.Update(gameTime, objects, this);
                     otherPlayer.UpdateOther(gameTime, objects, this);
                 }
-                
+
                 UpdateObjects(gameTime, players);
             }
 
@@ -165,7 +167,7 @@ namespace CoopPuzzle
                 netManager.SendToAll(writer, DeliveryMethod.ReliableOrdered);
             }
 
-            CameraMove(gameTime);
+            CameraMove();
 
             renderTarget.GetData(colorData);
             base.Update(gameTime);
@@ -208,24 +210,30 @@ namespace CoopPuzzle
                         Door door = (Door)objects[i];
                         spriteBatch.DrawString(Assets.font, door.id.ToString(), new Vector2(door.Pos.X, door.Pos.Y - 16), Color.Black);
                     }
+                    if (objects[i] is Trap)
+                    {
+                        Trap trap = (Trap)objects[i];
+                        spriteBatch.DrawString(Assets.font, trap.id.ToString(), new Vector2(trap.Pos.X, trap.Pos.Y), Color.Black);
+                    }
                 }
             }
 
             if (!connected && !editmode)
-                spriteBatch.Draw(Assets.wait, new Vector2(Assets.ScreenWidth /2-Assets.wait.Width/2, Assets.ScreenHeight /2-Assets.wait.Height),
-                    new Rectangle(0,0, Assets.wait.Width, Assets.wait.Height) , Color.White, 0, Vector2.Zero, 1, SpriteEffects.None,1);                
-            
-            
+                spriteBatch.Draw(Assets.wait, new Vector2(Assets.ScreenWidth / 2 - Assets.wait.Width / 2, Assets.ScreenHeight / 2 - Assets.wait.Height),
+                    new Rectangle(0, 0, Assets.wait.Width, Assets.wait.Height), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
+
+
             otherPlayer.Draw(spriteBatch);
             player.Draw(spriteBatch);
             for (int i = 0; i < npcs.Count; i++)
             {
                 npcs[i].Draw(spriteBatch);
             }
+
             if (fps)
             {
-                spriteBatch.FillRectangle(new Rectangle((int)camera.Position.X, (int)camera.Position.Y,60,20),new Color(Color.Black, 0.5f),0.9f);
-                spriteBatch.DrawString(Assets.font, $"{(int)(1 / gameTime.ElapsedGameTime.TotalSeconds)} FPS", new Vector2(camera.Position.X+2, camera.Position.Y), Color.LightGreen, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
+                spriteBatch.FillRectangle(new Rectangle((int)camera.Position.X, (int)camera.Position.Y, 60, 20), new Color(Color.Black, 0.5f), 0.9f);
+                spriteBatch.DrawString(Assets.font, $"{(int)(1 / gameTime.ElapsedGameTime.TotalSeconds)} FPS", new Vector2(camera.Position.X + 2, camera.Position.Y), Color.LightGreen, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
                 if (netStats)
                 {
                     spriteBatch.FillRectangle(new Rectangle((int)camera.Position.X + 60, (int)camera.Position.Y, 140, 20), new Color(Color.Black, 0.5f), 0.9f);
@@ -245,7 +253,7 @@ namespace CoopPuzzle
                     spriteBatch.FillRectangle(new Rectangle((int)camera.Position.X, (int)camera.Position.Y + 290, 100, 90), new Color(Color.Gray, 0.5f), 0.9f);
                     spriteBatch.DrawString(Assets.font, "Move Camera \nUp: U\nDown: J\nLeft: H\nRight: K", new Vector2(camera.Position.X + 2, camera.Position.Y + 290), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
                 }
-                
+
                 spriteBatch.FillRectangle(new Rectangle((int)camera.Position.X, (int)camera.Position.Y + 381, 250, 230), new Color(Color.Gray, 0.5f), 0.9f);
                 spriteBatch.DrawString(Assets.font, $"Camera Pos: X:{camera.Position.X.ToString("0.00")} Y:{camera.Position.Y.ToString("0.00")}", new Vector2(camera.Position.X + 2, camera.Position.Y + 381), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
                 spriteBatch.DrawString(Assets.font, $"Camera Move: {diffCam}", new Vector2(camera.Position.X + 2, camera.Position.Y + 398), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
@@ -256,7 +264,6 @@ namespace CoopPuzzle
                 spriteBatch.DrawString(Assets.font, "Place block: Left-Click\nRemove block: Right-Click\nChange size of block: Scroll (+ Ctrl)\nChange door and switch id: Scroll\nChange color: Shift + Scroll\nSave level: R", new Vector2(camera.Position.X + 2, camera.Position.Y + 500), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
 
                 editor.Draw(spriteBatch, transformMatrix);
-
 
                 for (int i = 0; i < npcs.Count; i++)
                 {
@@ -276,7 +283,7 @@ namespace CoopPuzzle
                 if (objects[i] is WeighedSwitch)
                     objects[i].Update(gameTime, objects, players);
                 else if (objects[i] is Trap)
-                    objects[i].Update(gameTime);
+                    objects[i].Update(gameTime, players);
                 else if (objects[i] is Door)
                     objects[i].Update(gameTime, objects, this);
                 else if (objects[i] is Block or MovableBlock)
@@ -287,7 +294,6 @@ namespace CoopPuzzle
                 npcs[i].Update(gameTime, player, otherPlayer, this);
             }
         }
-
         public void ConnectionSetup(out EventBasedNetListener listener)
         {
             listener = new EventBasedNetListener();
@@ -307,7 +313,6 @@ namespace CoopPuzzle
             };
             active = true;
         }
-
         public void Host()
         {
             if (!active)
@@ -332,7 +337,6 @@ namespace CoopPuzzle
                 host = true;
             }
         }
-
         public void Join()
         {
             if (!active)
@@ -355,24 +359,23 @@ namespace CoopPuzzle
             //Port: 27960
             //192.168.1.207
         }
-
         public Color GetColorOfPixel(Vector2 position)
         {
             //try
             //{
-                return colorData[(int)position.X + (int)position.Y * Assets.ScreenWidth];
+            return colorData[(int)position.X + (int)position.Y * Assets.ScreenWidth];
             //}
             //catch (IndexOutOfRangeException)
             //{
             //    return Color.Black;
             //}
         }
-        private void CameraMove(GameTime gameTime)
+        private void CameraMove()
         {
             switch (diffCam)
             {
                 case DiffCam.SnapMove:
-                    if (player.Pos.X < camera.Position.X)
+                    if (player.Pos.X+2 < camera.Position.X)
                         camera.Move(new Vector2(-Assets.ScreenWidth, 0));
                     if (player.Pos.X > camera.Position.X + Assets.ScreenWidth)
                         camera.Move(new Vector2(Assets.ScreenWidth, 0));
@@ -393,7 +396,6 @@ namespace CoopPuzzle
                     break;
             }
         }
-
         public void LoadLevel()
         {
             string level = "Content/level.json";
@@ -437,9 +439,10 @@ namespace CoopPuzzle
             }
 
             List<Vector2> trapPosList = JsonParser.GetPosList(level, "trap");
+            List<int> trapIdList = JsonParser.GetIdList(level, "trap");
             for (int i = 0; i < trapPosList.Count; i++)
             {
-                objects.Add(new Trap(trapPosList[i], Color.White));
+                objects.Add(new Trap(trapPosList[i], Color.White, trapIdList[i]));
             }
 
             List<Vector2> hiddenNpcPosList = JsonParser.GetPosList(level, "hiddenNpc");

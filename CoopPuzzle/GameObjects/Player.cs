@@ -21,6 +21,7 @@ namespace CoopPuzzle
         public Vector2 Vel { get { return velocity; } set { velocity = value; } }
         
         public override Rectangle hitbox { get { return new Rectangle((int)position.X, (int)position.Y, 24, 16); } }
+        public Rectangle Range { get { return new Rectangle((int)position.X-48, (int)position.Y-55, 120, 120); } }
 
         public Player(Vector2 position, Color color, AnimatedSprite sprite) : base(position, color)
         {
@@ -84,7 +85,7 @@ namespace CoopPuzzle
                     if (objects[i] is WeighedSwitch)
                         continue;
 
-                    if (objects[i] is Trap)
+                    if (objects[i] is Trap && objects[i].id == 0)
                         TrapCollision();
 
                     if (objects[i] is Door)
@@ -133,6 +134,7 @@ namespace CoopPuzzle
             sb.DrawLine(new Vector2(hitbox.Left, hitbox.Top), new Vector2(hitbox.Left, hitbox.Bottom), 1, Color.White);
             sb.DrawLine(new Vector2(hitbox.Left, hitbox.Bottom), new Vector2(hitbox.Right, hitbox.Bottom), 1, Color.White);
             sb.DrawLine(new Vector2(hitbox.Right, hitbox.Bottom), new Vector2(hitbox.Right, hitbox.Top), 1, Color.White);
+            sb.DrawRectangle(Range, Color.HotPink, 1,1);
         }
 
         public void HandleCollision()

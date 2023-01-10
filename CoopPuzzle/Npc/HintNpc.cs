@@ -16,15 +16,15 @@ namespace CoopPuzzle.Npc
             srcRecArray[0] = new Rectangle(9,324,52,46);
             srcRecArray[1] = new Rectangle(62, 324, 58, 46);
             bubbleSrcRec = new Rectangle(20, 315, 174, 105);
-            range = new Rectangle((int)pos.X-10, (int)pos.Y+25, 120, 100);
+            range = new Rectangle((int)pos.X-10, (int)pos.Y+50, 120, 100);
             bubblePos = new Vector2(pos.X - (bubbleSrcRec.Width / 2) + srcRecArray[0].Width-5, pos.Y - bubbleSrcRec.Height);
             textPos = new Vector2(bubblePos.X + 5, bubblePos.Y + 5);
             color = Color.Black;
             text = new string[5]
             {
-                "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
-                "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
-                "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
+                "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nTry to push the box.",
+                "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nHave you pressed the\nbuttons. Go on try.",
+                "Watch out for the spikes.\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
                 "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
                 "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum"
             };

@@ -10,6 +10,7 @@ namespace CoopPuzzle
         protected Vector2 size = Vector2.One * 40;
         protected float depth;
 
+        public int id { get; protected set; }
         public Vector2 Pos { get { return position; } set { position = value; } }
         public Vector2 Size { get { return size; } }
         public virtual Rectangle hitbox { get { return new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y); } }

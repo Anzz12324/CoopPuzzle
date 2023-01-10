@@ -29,7 +29,7 @@ namespace CoopPuzzle
                 new Block(new Vector2(Assets.tileSize * 1, HUDHeight), Vector2.One * Assets.tileSize, Color.White),
                 new Door(new Vector2(Assets.tileSize * 2, HUDHeight), Color.Green, -1),
                 new MovableBlock(new Vector2(Assets.tileSize * 3, HUDHeight), Vector2.One * Assets.tileSize, Color.White),
-                new Trap(new Vector2(Assets.tileSize * 4, HUDHeight), Color.White),
+                new Trap(new Vector2(Assets.tileSize * 4, HUDHeight), Color.White, -1),
                 new WeighedSwitch(new Vector2(Assets.tileSize * 5, HUDHeight), Color.White, -1),
                 new CheckPoint(new Vector2(Assets.tileSize * 6, HUDHeight), Vector2.One * Assets.tileSize, Color.White)
             };
@@ -61,7 +61,7 @@ namespace CoopPuzzle
             ghostRectangle.Y = ((mouse.Y + (int)camera.Y) / Assets.tileSize - extraY) * Assets.tileSize;
 
             int scroll = mouse.ScrollWheelValue - prevMouse.ScrollWheelValue;
-            if (placeType == "Door" || placeType == "WeighedSwitch" || placeType.Contains("Npc"))
+            if (placeType == "Door" || placeType == "WeighedSwitch" || placeType.Contains("Npc") || placeType == "Trap")
             {
                 ghostRectangle.Size = new Point(Assets.tileSize, Assets.tileSize);
                 id += Math.Clamp(scroll, -1, 1);
@@ -134,7 +134,7 @@ namespace CoopPuzzle
                         objects.Add(new MovableBlock(new Vector2(ghostRectangle.X, ghostRectangle.Y), new Vector2(ghostRectangle.Width, ghostRectangle.Height), Assets.colors[currentColor]));
                         break;
                     case "Trap":
-                        objects.Add(new Trap(new Vector2(ghostRectangle.X, ghostRectangle.Y), Assets.colors[currentColor]));
+                        objects.Add(new Trap(new Vector2(ghostRectangle.X, ghostRectangle.Y), Assets.colors[currentColor], id));
                         break;
                     case "WeighedSwitch":
                         objects.Add(new WeighedSwitch(new Vector2(ghostRectangle.X, ghostRectangle.Y), Assets.colors[currentColor], id));
@@ -214,7 +214,7 @@ namespace CoopPuzzle
                     new MovableBlock(new Vector2(ghostRectangle.X, ghostRectangle.Y), new Vector2(ghostRectangle.Width, ghostRectangle.Height), Assets.colors[currentColor] * 0.5f).Draw(sb);
                     break;
                 case "Trap":
-                    new Trap(new Vector2(ghostRectangle.X, ghostRectangle.Y), Assets.colors[currentColor] * 0.5f).Draw(sb);
+                    new Trap(new Vector2(ghostRectangle.X, ghostRectangle.Y), Assets.colors[currentColor] * 0.5f, id).Draw(sb);
                     break;
                 case "WeighedSwitch":
                     new WeighedSwitch(new Vector2(ghostRectangle.X, ghostRectangle.Y), Color.White, id).Draw(sb);
@@ -234,7 +234,7 @@ namespace CoopPuzzle
             sb.DrawLine(new Vector2(ghostRectangle.Left, ghostRectangle.Top), new Vector2(ghostRectangle.Left, ghostRectangle.Bottom), 1, Color.Black);
             sb.DrawLine(new Vector2(ghostRectangle.Left, ghostRectangle.Bottom), new Vector2(ghostRectangle.Right, ghostRectangle.Bottom), 1, Color.Black);
             sb.DrawLine(new Vector2(ghostRectangle.Right, ghostRectangle.Bottom), new Vector2(ghostRectangle.Right, ghostRectangle.Top), 1, Color.Black);
-            if (placeType == "Door" || placeType == "WeighedSwitch" || placeType.Contains("Npc"))
+            if (placeType == "Door" || placeType == "WeighedSwitch" || placeType.Contains("Npc") || placeType == "Trap")
                 sb.DrawString(Assets.font, id.ToString(), new Vector2(ghostRectangle.X, ghostRectangle.Y - 16), Color.Black); 
             sb.End();
 

@@ -9,7 +9,6 @@ namespace CoopPuzzle
     internal class WeighedSwitch : GameObject
     {
         public bool Weight { get; private set; }
-        public int id { get; private set; }
         public override Rectangle hitbox { get { return new Rectangle((int)position.X + 4, (int)position.Y + 6, (int)size.X - 4 * 2, (int)size.Y - 16); } }
 
         public Player[] players { get; private set; }
@@ -36,7 +35,6 @@ namespace CoopPuzzle
 
         public override void Draw(SpriteBatch sb)
         {
-            //sb.Draw(Assets.white, hitbox, Color.Red);
             if (Weight)
             {
                 sb.Draw(Assets.undertaleRuins, Pos, new Rectangle(23, 837, 20, 20), TempColor, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
@@ -44,7 +42,6 @@ namespace CoopPuzzle
             else
             {
                 sb.Draw(Assets.undertaleRuins, Pos, new Rectangle(1, 837, 20, 20), TempColor, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
-
             }
         }
     }
