@@ -143,13 +143,13 @@ namespace CoopPuzzle
                         objects.Add(new CheckPoint(new Vector2(ghostRectangle.X, ghostRectangle.Y), new Vector2(ghostRectangle.Width, ghostRectangle.Height), Assets.colors[currentColor]));
                         break;
                     case "HintNpc":
-                        npcs.Add(new HintNpc(new Vector2(ghostRectangle.X, ghostRectangle.Y), 0));
+                        npcs.Add(new HintNpc(new Vector2(ghostRectangle.X, ghostRectangle.Y), id));
                         break;
                     case "StoryNpc":
-                        npcs.Add(new StoryNpc(new Vector2(ghostRectangle.X, ghostRectangle.Y), 0));
+                        npcs.Add(new StoryNpc(new Vector2(ghostRectangle.X, ghostRectangle.Y), id));
                         break;
                     case "HiddenNpc":
-                        npcs.Add(new HiddenNpc(new Vector2(ghostRectangle.X, ghostRectangle.Y), currentColor, 0));
+                        npcs.Add(new HiddenNpc(new Vector2(ghostRectangle.X, ghostRectangle.Y), currentColor, id));
                         break;
                 }
             }
