@@ -9,11 +9,9 @@ namespace CoopPuzzle
 {
     public static class Assets
     {
-<<<<<<< HEAD
-        public static Texture2D white, undertaleRuins, box, brick, flowey, bubbleTex, wait, grillby, creamGuy, asgore, mettaton, GrassTileSet, StoneTileSet;
-=======
-        public static Texture2D white, undertaleRuins, box, brick, door, flowey, bubbleTex, wait, grillby, creamGuy, asgore, mettaton;
->>>>>>> 4bc9f0e67f507f5b3860352d4ac75760238c7249
+
+        public static Texture2D white, undertaleRuins, box, brick, flowey, door, bubbleTex, wait, grillby, creamGuy, asgore, mettaton, GrassTileSet, StoneTileSet;
+
         public static SpriteFont font, bigFont;
         public static SpriteSheet spriteSheet, spriteSheet2;
         public static Song song;
