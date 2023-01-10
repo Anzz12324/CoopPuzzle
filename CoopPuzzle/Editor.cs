@@ -109,10 +109,13 @@ namespace CoopPuzzle
                 {
                     if (HUDNpcs[i].Range.Contains(mouse.Position))
                     {
-                        placeType = npcs[i].GetType().Name;
+                        if (!placeType.Contains("Npc"))
+                            id = 0;
+
+                        placeType = HUDNpcs[i].GetType().Name;
                         if (placeType == "HiddenNpc")
                         {
-                            HiddenNpc hidden = (HiddenNpc)npcs[i];
+                            HiddenNpc hidden = (HiddenNpc)HUDNpcs[i];
                             currentColor = hidden.Npc;
                         }
                         return;
