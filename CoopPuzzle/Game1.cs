@@ -163,6 +163,8 @@ namespace CoopPuzzle
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin(samplerState: SamplerState.PointWrap, transformMatrix: transformMatrix);
             spriteBatch.Draw(Content.Load<Texture2D>("ExamplePNG"), new Vector2(400, 100), Color.White);
+            spriteBatch.Draw(Assets.GrassTileSet, new Vector2(1280, 0), null, Color.White, 0, Vector2.Zero, 2, SpriteEffects.None, 0);
+            spriteBatch.Draw(Assets.StoneTileSet, new Vector2(1280 + Assets.GrassTileSet.Width * 2, 0), null, Color.White, 0, Vector2.Zero, 2, SpriteEffects.None, 0);
             for (int i = 0; i < objects.Count; i++)
             {
                 if (objects[i] is WeighedSwitch)
@@ -180,6 +182,7 @@ namespace CoopPuzzle
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin(sortMode: SpriteSortMode.FrontToBack, samplerState: SamplerState.PointWrap, transformMatrix: transformMatrix);
             spriteBatch.Draw(renderTarget, camera.Position, Color.White);
+            
             for (int i = 0; i < objects.Count; i++)
             {
                 if (objects[i] is not WeighedSwitch and not CheckPoint)
@@ -256,6 +259,8 @@ namespace CoopPuzzle
                     npcs[i].DebugDraw(spriteBatch);
                 }
             }
+
+            
 
             spriteBatch.End();
 
