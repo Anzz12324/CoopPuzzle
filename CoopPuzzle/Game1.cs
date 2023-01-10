@@ -197,7 +197,9 @@ namespace CoopPuzzle
                     if (objects[i] is Trap)
                     {
                         Trap trap = (Trap)objects[i];
-                        //spriteBatch.DrawString(Assets.font, trap.id.ToString(), new Vector2(trap.Pos.X, trap.Pos.Y), Color.Black);
+                        if (trap.id != 0)
+                            spriteBatch.FillRectangle(trap.hitbox, Color.Green * 0.5f);
+                        spriteBatch.DrawString(Assets.font, trap.id.ToString(), new Vector2(trap.Pos.X, trap.Pos.Y - 16), Color.Black);
                     }
                 }
             }
