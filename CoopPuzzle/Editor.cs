@@ -27,7 +27,7 @@ namespace CoopPuzzle
             HUDobjects = new List<GameObject>()
             {
                 new Block(new Vector2(Assets.tileSize * 1, HUDHeight), Vector2.One * Assets.tileSize, Color.White),
-                new Door(new Vector2(Assets.tileSize * 2, HUDHeight), Color.Green, -1),
+                new Door(new Vector2(Assets.tileSize * 2, HUDHeight), Color.White, -1, 0),
                 new MovableBlock(new Vector2(Assets.tileSize * 3, HUDHeight), Vector2.One * Assets.tileSize, Color.White),
                 new Trap(new Vector2(Assets.tileSize * 4, HUDHeight), Color.White, -1),
                 new WeighedSwitch(new Vector2(Assets.tileSize * 5, HUDHeight), Color.White, -1),
@@ -61,7 +61,7 @@ namespace CoopPuzzle
             ghostRectangle.Y = ((mouse.Y + (int)camera.Y) / Assets.tileSize - extraY) * Assets.tileSize;
 
             int scroll = mouse.ScrollWheelValue - prevMouse.ScrollWheelValue;
-            if (placeType == "Door" || placeType == "WeighedSwitch" || placeType.Contains("Npc") || placeType == "Trap")
+            if (placeType == "WeighedSwitch" || placeType.Contains("Npc") || placeType == "Trap")
             {
                 ghostRectangle.Size = new Point(Assets.tileSize, Assets.tileSize);
                 id += Math.Clamp(scroll, -1, 1);
@@ -77,17 +77,27 @@ namespace CoopPuzzle
                     else
                         ghostRectangle.Width += Assets.tileSize * Math.Clamp(scroll, -1, 1);
                 }
-
-                if (currentColor >= Assets.colors.Length)
-                    currentColor = 0;
-                if (currentColor < 0)
-                    currentColor = Assets.colors.Length - 1;
-
-                if (ghostRectangle.Height < Assets.tileSize)
-                    ghostRectangle.Height = Assets.tileSize;
-                if (ghostRectangle.Width < Assets.tileSize)
-                    ghostRectangle.Width = Assets.tileSize;
             }
+            else if (placeType == "Door")
+            {
+                ghostRectangle.Size = new Point(Assets.tileSize, Assets.tileSize);
+
+                if (board.IsKeyDown(Keys.LeftShift))
+                    currentColor += Math.Clamp(scroll, -1, 1);
+                else
+                    id += Math.Clamp(scroll, -1, 1);
+
+            }
+
+            if (currentColor >= Assets.colors.Length)
+                currentColor = 0;
+            if (currentColor < 0)
+                currentColor = Assets.colors.Length - 1;
+
+            if (ghostRectangle.Height < Assets.tileSize)
+                ghostRectangle.Height = Assets.tileSize;
+            if (ghostRectangle.Width < Assets.tileSize)
+                ghostRectangle.Width = Assets.tileSize;
 
             if (mouse.LeftButton == ButtonState.Pressed && prevMouse.LeftButton == ButtonState.Released && canPlace)
             {
@@ -128,7 +138,7 @@ namespace CoopPuzzle
                         objects.Add(new Block(new Vector2(ghostRectangle.X, ghostRectangle.Y), new Vector2(ghostRectangle.Width, ghostRectangle.Height), Assets.colors[currentColor]));
                         break;
                     case "Door":
-                        objects.Add(new Door(new Vector2(ghostRectangle.X, ghostRectangle.Y), Assets.colors[currentColor], id));
+                        objects.Add(new Door(new Vector2(ghostRectangle.X, ghostRectangle.Y), Color.White, id, currentColor));
                         break;
                     case "MovableBlock":
                         objects.Add(new MovableBlock(new Vector2(ghostRectangle.X, ghostRectangle.Y), new Vector2(ghostRectangle.Width, ghostRectangle.Height), Assets.colors[currentColor]));
@@ -208,7 +218,8 @@ namespace CoopPuzzle
                     new Block(new Vector2(ghostRectangle.X, ghostRectangle.Y), new Vector2(ghostRectangle.Width, ghostRectangle.Height), Assets.colors[currentColor] * 0.5f).Draw(sb);
                     break;
                 case "Door":
-                    new Door(new Vector2(ghostRectangle.X, ghostRectangle.Y), Assets.colors[currentColor] * 0.5f, id).Draw(sb);
+                    //sb.Draw(Assets.white, ghostRectangle, Color.SaddleBrown);
+                    new Door(new Vector2(ghostRectangle.X, ghostRectangle.Y), Color.White * 0.5f, id, currentColor).Draw(sb);
                     break;
                 case "MovableBlock":
                     new MovableBlock(new Vector2(ghostRectangle.X, ghostRectangle.Y), new Vector2(ghostRectangle.Width, ghostRectangle.Height), Assets.colors[currentColor] * 0.5f).Draw(sb);
