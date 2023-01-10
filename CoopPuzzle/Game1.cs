@@ -131,7 +131,7 @@ namespace CoopPuzzle
 
             if (editmode)
             {
-                editor.Update(ref objects, players, camera.Position);
+                editor.Update(ref objects, ref npcs, players, camera.Position);
                 
                 if (editmodePlayer)
                 {

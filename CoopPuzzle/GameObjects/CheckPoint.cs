@@ -25,7 +25,7 @@ namespace CoopPuzzle
             sb.DrawLine(new Vector2(hitbox.Left, hitbox.Top), new Vector2(hitbox.Left, hitbox.Bottom), 1, Color.Black);
             sb.DrawLine(new Vector2(hitbox.Left, hitbox.Bottom), new Vector2(hitbox.Right, hitbox.Bottom), 1, Color.Black);
             sb.DrawLine(new Vector2(hitbox.Right, hitbox.Bottom), new Vector2(hitbox.Right, hitbox.Top), 1, Color.Black);
-            sb.DrawString(Assets.font, "CHECKPOINT", Pos, Color.Black);
+            sb.DrawString(Assets.font, "CHECK\nPOINT", new Vector2(Pos.X + 2, Pos.Y), Color.Black);
         }
     }
 }

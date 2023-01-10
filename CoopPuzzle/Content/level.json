@@ -1,7 +1,7 @@
 {
   "player": {
-    "positionX": 639.0,
-    "positionY": 364.0
+    "positionX": 559.3865,
+    "positionY": 550.66
   },
   "otherPlayer": {
     "positionX": 300.0,
@@ -119,6 +119,27 @@
       "height": 120.0,
       "width": 40.0,
       "id": 2
+    },
+    {
+      "positionX": 1800.0,
+      "positionY": 800.0,
+      "height": 40.0,
+      "width": 40.0,
+      "id": 0
+    },
+    {
+      "positionX": 1720.0,
+      "positionY": 0.0,
+      "height": 40.0,
+      "width": 40.0,
+      "id": 0
+    },
+    {
+      "positionX": 2040.0,
+      "positionY": 760.0,
+      "height": 40.0,
+      "width": 40.0,
+      "id": 0
     }
   ],
   "checkpoint": [
@@ -181,14 +202,14 @@
   ],
   "movable": [
     {
-      "positionX": 709,
-      "positionY": -327,
-      "height": 20,
+      "positionX": 120,
+      "positionY": 80,
+      "height": 40,
       "width": 40
     },
     {
-      "positionX": 120,
-      "positionY": 80,
+      "positionX": 643,
+      "positionY": 88,
       "height": 40,
       "width": 40
     }

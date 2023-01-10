@@ -17,6 +17,7 @@ namespace CoopPuzzle.Npc
         protected Rectangle hitbox;
         public virtual Rectangle Hitbox { get { return hitbox; } }
         public object Value { get; }
+        public Rectangle Range { get { return range; } }
 
         public NPC(Vector2 pos, int textNum)
         {
