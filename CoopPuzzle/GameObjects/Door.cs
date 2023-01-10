@@ -34,8 +34,6 @@ namespace CoopPuzzle
         public override void Draw(SpriteBatch sb)
         {
             if(!Open) base.Draw(sb);
-
-            if()
         }
     }
 }
