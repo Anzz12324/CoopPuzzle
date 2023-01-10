@@ -7,7 +7,7 @@ namespace CoopPuzzle.Npc
         protected Color color;
         protected float depth;
         protected Texture2D tex, bubbleTex;
-        protected Vector2 pos, bubblePos;
+        protected Vector2 pos, bubblePos, textPos;
         protected string[] text;
         protected bool playerInRange, editmode = false;
         protected Rectangle[] srcRecArray;
@@ -34,16 +34,7 @@ namespace CoopPuzzle.Npc
                 if (!playerInRange)
                     playerInRange = true;
 
-                frameTimer -= gT.ElapsedGameTime.TotalMilliseconds;
-                if (frameTimer <= 0)
-                {
-                    frameTimer = frameInterval;
-                    frame++;
-                    if (frame == frameCount)
-                    {
-                        frame = 0;
-                    }
-                }
+                Animation(gT);
             }
             else
             {
@@ -59,8 +50,21 @@ namespace CoopPuzzle.Npc
                 sb.DrawLine(new Vector2(range.Left, range.Top), new Vector2(range.Left, range.Bottom), 1, Color.White);
                 sb.DrawLine(new Vector2(range.Left, range.Bottom), new Vector2(range.Right, range.Bottom), 1, Color.White);
                 sb.DrawLine(new Vector2(range.Right, range.Bottom), new Vector2(range.Right, range.Top), 1, Color.White);
+            }            
+        }
+
+        protected void Animation(GameTime gT)
+        {
+            frameTimer -= gT.ElapsedGameTime.TotalMilliseconds;
+            if (frameTimer <= 0)
+            {
+                frameTimer = frameInterval;
+                frame++;
+                if (frame == frameCount)
+                {
+                    frame = 0;
+                }
             }
-            
         }
     }
 }

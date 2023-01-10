@@ -82,11 +82,11 @@ namespace CoopPuzzle
 
             npcs = new List<NPC>()
             {
-                new StoryNpc(new Vector2(200,400), 1),
-                new HintNpc(new Vector2(-300,300), 1),
-                new HiddenNpc(new Vector2(-900,300),1,1),
-                new HiddenNpc(new Vector2(-700,300),2,1),
-                new HiddenNpc(new Vector2(-500,300),3,1),
+                new StoryNpc(new Vector2(550,400), 1),
+                new HintNpc(new Vector2(900,500), 1),
+                new HiddenNpc(new Vector2(900,300),1,1),
+                new HiddenNpc(new Vector2(700,400),2,1),
+                new HiddenNpc(new Vector2(700,100),3,1),
             };
 
             objects = new List<GameObject>()

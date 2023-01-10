@@ -16,16 +16,17 @@ namespace CoopPuzzle.Npc
             srcRecArray[0] = new Rectangle(9,324,52,46);
             srcRecArray[1] = new Rectangle(62, 324, 58, 46);
             bubbleSrcRec = new Rectangle(20, 315, 174, 105);
-            range = new Rectangle((int)pos.X - 30, (int)pos.Y - 30, 100, 100);
-            bubblePos = new Vector2(pos.X - (bubbleSrcRec.Width / 2) + srcRecArray[0].Width, pos.Y - bubbleSrcRec.Height);
+            range = new Rectangle((int)pos.X-10, (int)pos.Y+25, 120, 100);
+            bubblePos = new Vector2(pos.X - (bubbleSrcRec.Width / 2) + srcRecArray[0].Width-5, pos.Y - bubbleSrcRec.Height);
+            textPos = new Vector2(bubblePos.X + 5, bubblePos.Y + 5);
             color = Color.Black;
             text = new string[5]
             {
-                "0 Hello there travelers!\nYou seem to be lost.\n",
-                "1 Lorem ipsum dolor sit \namet, consectetur \nadipiscing elit, sed do\neiusmod tempor \nincididunt ut labore et.",
-                "2 Lorem ipsum dolor sit \namet, consectetur \nadipiscing elit, sed do\neiusmod tempor \nincididunt ut labore et.",
-                "3 Lorem ipsum dolor sit \namet, consectetur \nadipiscing elit, sed do\neiusmod tempor \nincididunt ut labore et.",
-                "4 Lorem ipsum dolor sit \namet, consectetur \nadipiscing elit, sed do\neiusmod tempor \nincididunt ut labore et."
+                "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
+                "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
+                "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
+                "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
+                "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum"
             };
         }
 
@@ -36,7 +37,7 @@ namespace CoopPuzzle.Npc
             if (playerInRange)
             {
                 sb.Draw(bubbleTex, bubblePos, bubbleSrcRec, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, depth);
-                sb.DrawString(Assets.font, text[textNum], new Vector2(bubblePos.X + 5, bubblePos.Y + 5), color, 0, Vector2.Zero, 1, SpriteEffects.None, depth + 0.01f);
+                sb.DrawString(Assets.font, text[textNum], textPos , color, 0, Vector2.Zero, 1, SpriteEffects.None, depth + 0.01f);
             }
 
             base.Draw(sb);
