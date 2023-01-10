@@ -31,7 +31,7 @@ namespace CoopPuzzle
         public virtual void Update(GameTime gT, List<GameObject> objects) { }
         public virtual void Update(GameTime gT, List<GameObject> objects, Player[] players) { }
         public virtual void Update(GameTime gT, List<GameObject> objects, Game1 game1) { }
-        public virtual void Update(GameTime gT, Game1 game1) { depth = (Pos.Y + 20 - game1.camera.Position.Y) / Assets.ScreenHeight; }
+        public virtual void Update(GameTime gT, Game1 game1) { depth = Math.Clamp((Pos.Y + 20 - game1.camera.Position.Y) / Assets.ScreenHeight, 0, 1); }
         public virtual void Draw(SpriteBatch sb)
         {
             sb.Draw(Assets.white, hitbox, null, TempColor, 0f, Vector2.Zero, SpriteEffects.None, 1f);

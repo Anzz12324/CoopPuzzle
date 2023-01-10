@@ -1,7 +1,7 @@
 {
   "player": {
-    "positionX": 559.3865,
-    "positionY": 550.66
+    "positionX": 559.0,
+    "positionY": 551.0
   },
   "otherPlayer": {
     "positionX": 300.0,
@@ -218,6 +218,40 @@
     {
       "positionX": 40.0,
       "positionY": 240.0
+    }
+  ],
+  "hiddenNpc": [
+    {
+      "positionX": 900.0,
+      "positionY": 300.0,
+      "skin": 1,
+      "id": 1
+    },
+    {
+      "positionX": 700.0,
+      "positionY": 400.0,
+      "skin": 2,
+      "id": 1
+    },
+    {
+      "positionX": 700.0,
+      "positionY": 100.0,
+      "skin": 3,
+      "id": 1
+    }
+  ],
+  "hintNpc": [
+    {
+      "positionX": 900.0,
+      "positionY": 500.0,
+      "id": 1
+    }
+  ],
+  "storyNpc": [
+    {
+      "positionX": 550.0,
+      "positionY": 400.0,
+      "id": 1
     }
   ]
 }

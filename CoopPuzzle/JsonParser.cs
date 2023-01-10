@@ -122,6 +122,38 @@ namespace CoopPuzzle
             int id = Convert.ToInt32(obj.GetValue("id"));
             return id;
         }
+        public static int GetSkin(string fileName, string propertyName)
+        {
+            if (wholeObj == null || currentFileName == null || currentFileName != fileName)
+            {
+                GetJObjectFromFile(fileName);
+            }
+            JObject obj = (JObject)wholeObj.GetValue(propertyName);
+            return GetSkin(obj);
+        }
+
+        public static List<int> GetSkinList(string fileName, string propertyName)
+        {
+            if (wholeObj == null || currentFileName == null || currentFileName != fileName)
+            {
+                GetJObjectFromFile(fileName);
+            }
+            List<int> skinList = new List<int>();
+            JArray arrayObj = (JArray)wholeObj.GetValue(propertyName);
+            for (int i = 0; i < arrayObj.Count; i++)
+            {
+                JObject obj = (JObject)arrayObj[i];
+                int skin = GetSkin(obj);
+                skinList.Add(skin);
+            }
+
+            return skinList;
+        }
+        private static int GetSkin(JObject obj)
+        {
+            int skin = Convert.ToInt32(obj.GetValue("skin"));
+            return skin;
+        }
 
         public static List<string> GetTypeList(string fileName, string propertyName)
         {
@@ -181,8 +213,10 @@ namespace CoopPuzzle
             Vector2 teleVec = new Vector2(x, y);
             return teleVec;
         }
-        public static void WriteJsonToFile(string fileName, List<GameObject> objects, Player[] players)
+        public static void WriteJsonToFile(string fileName, List<GameObject> objects, Player[] players, List<NPC> npcs)
         {
+            JObject bigobj = new JObject();
+
             JObject player = CreateObject(players[0].Pos);
             JObject otherPlayer = CreateObject(players[1].Pos);
 
@@ -192,8 +226,6 @@ namespace CoopPuzzle
             JArray switchArray = new JArray();
             JArray movableArray = new JArray();
             JArray trapArray = new JArray();
-
-            JObject bigobj = new JObject();
 
             for (int i = 0; i < objects.Count; i++)
             {
@@ -224,6 +256,24 @@ namespace CoopPuzzle
             bigobj.Add("switch", switchArray);
             bigobj.Add("movable", movableArray);
             bigobj.Add("trap", trapArray);
+
+            JArray hiddenNpcArray = new JArray();
+            JArray hintNpcArray = new JArray();
+            JArray storyNpcArray = new JArray();
+
+            for (int i = 0; i < npcs.Count; i++)
+            {
+                if (npcs[i] is HiddenNpc)
+                    hiddenNpcArray.Add(CreateObject((HiddenNpc)npcs[i]));
+                else if (npcs[i] is HintNpc)
+                    hintNpcArray.Add(CreateObject((HintNpc)npcs[i]));
+                else if (npcs[i] is StoryNpc)
+                    storyNpcArray.Add(CreateObject((StoryNpc)npcs[i]));
+            }
+
+            bigobj.Add("hiddenNpc", hiddenNpcArray);
+            bigobj.Add("hintNpc", hintNpcArray);
+            bigobj.Add("storyNpc", storyNpcArray);
 
             File.WriteAllText(fileName, bigobj.ToString());
         }
@@ -283,6 +333,36 @@ namespace CoopPuzzle
             JObject obj = new JObject();
             obj.Add("positionX", pos.X);
             obj.Add("positionY", pos.Y);
+
+            return obj;
+        }
+
+        private static JObject CreateObject(HiddenNpc npc)
+        {
+            JObject obj = new JObject();
+            obj.Add("positionX", npc.Pos.X);
+            obj.Add("positionY", npc.Pos.Y);
+            obj.Add("skin", npc.Npc);
+            obj.Add("id", npc.TextNum);
+
+            return obj;
+        }
+
+        private static JObject CreateObject(HintNpc npc)
+        {
+            JObject obj = new JObject();
+            obj.Add("positionX", npc.Pos.X);
+            obj.Add("positionY", npc.Pos.Y);
+            obj.Add("id", npc.TextNum);
+
+            return obj;
+        }
+        private static JObject CreateObject(StoryNpc npc)
+        {
+            JObject obj = new JObject();
+            obj.Add("positionX", npc.Pos.X);
+            obj.Add("positionY", npc.Pos.Y);
+            obj.Add("id", npc.TextNum);
 
             return obj;
         }

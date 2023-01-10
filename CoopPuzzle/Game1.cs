@@ -80,13 +80,14 @@ namespace CoopPuzzle
             sound = new SoundManager();
 
             npcs = new List<NPC>()
-            {
-                new StoryNpc(new Vector2(550,400), 1),
-                new HintNpc(new Vector2(900,500), 1),
-                new HiddenNpc(new Vector2(900,300),1,1),
-                new HiddenNpc(new Vector2(700,400),2,1),
-                new HiddenNpc(new Vector2(700,100),3,1),
-            };
+            //{
+            //    new StoryNpc(new Vector2(550,400), 1),
+            //    new HintNpc(new Vector2(900,500), 1),
+            //    new HiddenNpc(new Vector2(900,300),1,1),
+            //    new HiddenNpc(new Vector2(700,400),2,1),
+            //    new HiddenNpc(new Vector2(700,100),3,1),
+            //}
+            ;
 
             objects = new List<GameObject>()
             //{
@@ -439,6 +440,28 @@ namespace CoopPuzzle
             for (int i = 0; i < trapPosList.Count; i++)
             {
                 objects.Add(new Trap(trapPosList[i], Color.White));
+            }
+
+            List<Vector2> hiddenNpcPosList = JsonParser.GetPosList(level, "hiddenNpc");
+            List<int> hiddenNpcSkinList = JsonParser.GetSkinList(level, "hiddenNpc");
+            List<int> hiddenNpcIdList = JsonParser.GetIdList(level, "hiddenNpc");
+            for (int i = 0; i < hiddenNpcPosList.Count; i++)
+            {
+                npcs.Add(new HiddenNpc(hiddenNpcPosList[i], hiddenNpcSkinList[i], hiddenNpcIdList[i]));
+            }
+
+            List<Vector2> hintNpcPosList = JsonParser.GetPosList(level, "hintNpc");
+            List<int> hintNpcIdList = JsonParser.GetIdList(level, "hintNpc");
+            for (int i = 0; i < hintNpcPosList.Count; i++)
+            {
+                npcs.Add(new HintNpc(hintNpcPosList[i], hintNpcIdList[i]));
+            }
+
+            List<Vector2> storyNpcPosList = JsonParser.GetPosList(level, "storyNpc");
+            List<int> storyNpcIdList = JsonParser.GetIdList(level, "storyNpc");
+            for (int i = 0; i < storyNpcPosList.Count; i++)
+            {
+                npcs.Add(new StoryNpc(storyNpcPosList[i], storyNpcIdList[i]));
             }
         }
     }
