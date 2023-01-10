@@ -17,8 +17,6 @@ namespace CoopPuzzle
             Color = Color.Green;
         }
 
-        public override Rectangle hitbox { get { return new Rectangle((int)position.X, (int)position.Y + 20, (int)size.X, (int)size.Y - 20); } }
-
         public override void Update(GameTime gT, List<GameObject> objects, Game1 game1)
         {
             Open = false;
