@@ -84,6 +84,8 @@ namespace CoopPuzzle
                 {
                     if (HUDobjects[i].HUDhitbox.Contains(mouse.Position))
                     {
+                        if(placeType.Contains("Npc"))
+                            id = 0;
                         placeType = HUDobjects[i].GetType().Name;
                         return;
                     }
@@ -96,7 +98,8 @@ namespace CoopPuzzle
                         if (placeType == "HiddenNpc")
                         {
                             HiddenNpc hidden = (HiddenNpc)npcs[i];
-                            placeType = "HiddenNpc " + hidden.Npc;
+                            //placeType = "HiddenNpc " + hidden.Npc;
+                            id = hidden.Npc;
                         }
                         return;
                     }
@@ -176,6 +179,15 @@ namespace CoopPuzzle
                     break;
                 case "WeighedSwitch":
                     new WeighedSwitch(new Vector2(ghostRectangle.X, ghostRectangle.Y), Color.White, id).Draw(sb);
+                    break;
+                case "HintNpc":
+                    new HintNpc(new Vector2(ghostRectangle.X, ghostRectangle.Y), 0).Draw(sb);
+                    break;
+                case "StoryNpc":
+                    new StoryNpc(new Vector2(ghostRectangle.X, ghostRectangle.Y), 0).Draw(sb);
+                    break;
+                case "HiddenNpc":
+                    new HiddenNpc(new Vector2(ghostRectangle.X, ghostRectangle.Y), id, 0).Draw(sb);
                     break;
             }
 
