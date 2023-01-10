@@ -1,7 +1,7 @@
 {
   "player": {
-    "positionX": 240.50056,
-    "positionY": 524.6665
+    "positionX": 268.77744,
+    "positionY": 455.5567
   },
   "otherPlayer": {
     "positionX": 300.0,
@@ -2610,6 +2610,61 @@
       "positionX": 760.0,
       "positionY": 1080.0,
       "id": 1
+    },
+    {
+      "positionX": 40.0,
+      "positionY": 1360.0,
+      "id": 0
+    },
+    {
+      "positionX": 80.0,
+      "positionY": 1360.0,
+      "id": 0
+    },
+    {
+      "positionX": 120.0,
+      "positionY": 1360.0,
+      "id": 0
+    },
+    {
+      "positionX": 160.0,
+      "positionY": 1360.0,
+      "id": 0
+    },
+    {
+      "positionX": 200.0,
+      "positionY": 1360.0,
+      "id": 0
+    },
+    {
+      "positionX": 240.0,
+      "positionY": 1360.0,
+      "id": 0
+    },
+    {
+      "positionX": 280.0,
+      "positionY": 1360.0,
+      "id": 0
+    },
+    {
+      "positionX": 320.0,
+      "positionY": 1360.0,
+      "id": 0
+    },
+    {
+      "positionX": 360.0,
+      "positionY": 1360.0,
+      "id": 0
+    },
+    {
+      "positionX": 400.0,
+      "positionY": 1360.0,
+      "id": 0
+    },
+    {
+      "positionX": 440.0,
+      "positionY": 1360.0,
+      "id": 0
     }
   ],
   "hiddenNpc": [

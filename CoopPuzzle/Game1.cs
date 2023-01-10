@@ -23,7 +23,7 @@ namespace CoopPuzzle
     {
         bool active = false, host = false, connected = false, editmodePlayer = false, netStats = false, fps = true, EditmodeUI = true;
         NetManager netManager;
-        enum DiffCam { SnapMove, FullScreenMove }
+        enum DiffCam { SnapMove, FullScreenMove, FollowPlayer }
         DiffCam diffCam = DiffCam.SnapMove;
 
         Player player, otherPlayer;
@@ -78,26 +78,8 @@ namespace CoopPuzzle
             Assets.LoadTextures(Content);
             editor = new Editor();
             sound = new SoundManager();
-
-            npcs = new List<NPC>()
-            //{
-            //    new StoryNpc(new Vector2(550,400), 1),
-            //    new HintNpc(new Vector2(900,500), 1),
-            //    new HiddenNpc(new Vector2(900,300),1,1),
-            //    new HiddenNpc(new Vector2(700,400),2,1),
-            //    new HiddenNpc(new Vector2(700,100),3,1),
-            //}
-            ;
-
-            objects = new List<GameObject>()
-            //{
-            //    new WeighedSwitch(new Vector2(200, 100), Color.White, 0),
-            //    new Door(new Vector2(300, 100), Color.Green, 0),
-            //    new Block(new Vector2(500), Vector2.One * 32, Color.Red),
-            //    new Trap(new Vector2(550, 500), Color.White),
-            //    new MovableBlock(new Vector2(400, 500), new Vector2(40, 80), Color.White)
-            //}
-            ;
+            npcs = new List<NPC>();
+            objects = new List<GameObject>();
 
             LoadLevel();
         }
@@ -120,6 +102,8 @@ namespace CoopPuzzle
             }
             if (kbState.IsKeyDown(Keys.O) && kbPreviousState.IsKeyUp(Keys.O))
                 diffCam = DiffCam.FullScreenMove;
+            if (kbState.IsKeyDown(Keys.P) && kbPreviousState.IsKeyUp(Keys.P))
+                diffCam = DiffCam.FollowPlayer;
             if (kbState.IsKeyDown(Keys.F2) && kbPreviousState.IsKeyUp(Keys.F2))
                 fps = !fps;
             if (kbState.IsKeyDown(Keys.F3) && kbPreviousState.IsKeyUp(Keys.F3))
@@ -393,6 +377,9 @@ namespace CoopPuzzle
                         camera.Move(new Vector2(0, -Assets.ScreenHeight));
                     if (kbState.IsKeyDown(Keys.J) && kbPreviousState.IsKeyUp(Keys.J))
                         camera.Move(new Vector2(0, Assets.ScreenHeight));
+                    break;
+                case DiffCam.FollowPlayer:
+                    camera.LookAt(player.Pos);
                     break;
             }
         }
