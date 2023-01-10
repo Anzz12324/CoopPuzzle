@@ -58,7 +58,7 @@ namespace CoopPuzzle.Npc
                     "Lorem ipsum\nLorem ipsum\nLorem ipsum\nLorem ipsum\nLorem ipsum",
                     "Lorem ipsum\nLorem ipsum\nLorem ipsum\nLorem ipsum\nLorem ipsum"
                 };
-                hitbox = new Rectangle((int)pos.X, (int)pos.Y + (srcRecArray[0].Height * 2 - 10), srcRecArray[0].Width * 2, 10);
+                hitbox = new Rectangle((int)pos.X+20, (int)pos.Y + (srcRecArray[0].Height * 2 - 30), srcRecArray[0].Width * 2-25 , 20);
             }
             else if (Npc == 2)
             {
