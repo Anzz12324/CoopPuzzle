@@ -192,7 +192,7 @@ namespace CoopPuzzle
         {
             sb.End();
 
-            sb.Begin(sortMode: SpriteSortMode.FrontToBack, samplerState: SamplerState.PointWrap, transformMatrix: transformMatrix);
+            sb.Begin(sortMode: SpriteSortMode.Deferred, samplerState: SamplerState.PointWrap, transformMatrix: transformMatrix);
 
             //sb.Draw(Assets.white, ghostRectangle, colors[currentColor] * 0.5f);
 
