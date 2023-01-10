@@ -24,12 +24,12 @@ namespace CoopPuzzle
     {
         bool active = false, host = false, connected = false, editmodePlayer = false, netStats = false, fps = true;
         NetManager netManager;
-        enum DiffCam { SnapMove, FollowPlayer, FullScreenMove }
+        enum DiffCam { SnapMove, FullScreenMove }
         DiffCam diffCam = DiffCam.SnapMove;
 
         Player player, otherPlayer;
-        StoryNpc storyNpc;
         List<GameObject> objects;
+        List<NPC> npcs;
 
         RenderTarget2D renderTarget;
 
@@ -80,7 +80,14 @@ namespace CoopPuzzle
             editor = new Editor();
             sound = new SoundManager();
 
-            storyNpc = new StoryNpc(Assets.flowey, new Vector2(200,400), 2, 1, 1);
+            npcs = new List<NPC>()
+            {
+                new StoryNpc(new Vector2(200,400), 1),
+                new HintNpc(new Vector2(-300,300), 1),
+                new HiddenNpc(new Vector2(-900,300),1,1),
+                new HiddenNpc(new Vector2(-700,300),2,1),
+                new HiddenNpc(new Vector2(-500,300),3,1),
+            };
 
             objects = new List<GameObject>()
             //{
@@ -112,8 +119,6 @@ namespace CoopPuzzle
                 diffCam = DiffCam.SnapMove;
             }
             if (kbState.IsKeyDown(Keys.O) && kbPreviousState.IsKeyUp(Keys.O))
-                diffCam = DiffCam.FollowPlayer;
-            if (kbState.IsKeyDown(Keys.P) && kbPreviousState.IsKeyUp(Keys.P))
                 diffCam = DiffCam.FullScreenMove;
             if (kbState.IsKeyDown(Keys.F2) && kbPreviousState.IsKeyUp(Keys.F2))
                 fps = !fps;
@@ -212,7 +217,10 @@ namespace CoopPuzzle
             
             otherPlayer.Draw(spriteBatch);
             player.Draw(spriteBatch);
-            storyNpc.Draw(spriteBatch);
+            for (int i = 0; i < npcs.Count; i++)
+            {
+                npcs[i].Draw(spriteBatch);
+            }
             if (fps)
             {
                 spriteBatch.FillRectangle(new Rectangle((int)camera.Position.X, (int)camera.Position.Y,60,20),new Color(Color.Black, 0.5f),0.9f);
@@ -240,7 +248,7 @@ namespace CoopPuzzle
                 spriteBatch.FillRectangle(new Rectangle((int)camera.Position.X, (int)camera.Position.Y + 381, 250, 230), new Color(Color.Gray, 0.5f), 0.9f);
                 spriteBatch.DrawString(Assets.font, $"Camera Pos: X:{camera.Position.X.ToString("0.00")} Y:{camera.Position.Y.ToString("0.00")}", new Vector2(camera.Position.X + 2, camera.Position.Y + 381), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
                 spriteBatch.DrawString(Assets.font, $"Camera Move: {diffCam}", new Vector2(camera.Position.X + 2, camera.Position.Y + 398), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
-                spriteBatch.DrawString(Assets.font, "Switch Camera: I, O, P", new Vector2(camera.Position.X + 2, camera.Position.Y + 415), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
+                spriteBatch.DrawString(Assets.font, "Switch Camera: I, O", new Vector2(camera.Position.X + 2, camera.Position.Y + 415), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
                 spriteBatch.DrawString(Assets.font, $"P1 Pos:X:{player.Pos.X.ToString("0.00")} Y:{player.Pos.Y.ToString("0.00")}\nP2 Pos:X:{otherPlayer.Pos.X.ToString("0.00")} Y:{otherPlayer.Pos.Y.ToString("0.00")}", new Vector2(camera.Position.X + 2, camera.Position.Y + 432), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
                 spriteBatch.DrawString(Assets.font, "Switch between player : L", new Vector2(camera.Position.X + 2, camera.Position.Y + 466), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
                 spriteBatch.DrawString(Assets.font, $"Player 2: {editmodePlayer}", new Vector2(camera.Position.X + 2, camera.Position.Y + 483), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
@@ -267,7 +275,10 @@ namespace CoopPuzzle
                 else if (objects[i] is Block or MovableBlock)
                     objects[i].Update(gameTime, this);
             }
-            storyNpc.Update(gameTime, player, otherPlayer, this);
+            for (int i = 0; i < npcs.Count; i++)
+            {
+                npcs[i].Update(gameTime, player, otherPlayer, this);
+            }
         }
 
         public void ConnectionSetup(out EventBasedNetListener listener)
@@ -362,9 +373,6 @@ namespace CoopPuzzle
                         camera.Move(new Vector2(0, -Assets.ScreenHeight));
                     if (player.Pos.Y > camera.Position.Y + Assets.ScreenHeight)
                         camera.Move(new Vector2(0, Assets.ScreenHeight));
-                    break;
-                case DiffCam.FollowPlayer:
-                    camera.LookAt(player.Pos);
                     break;
                 case DiffCam.FullScreenMove:
                     if (kbState.IsKeyDown(Keys.H) && kbPreviousState.IsKeyUp(Keys.H))
