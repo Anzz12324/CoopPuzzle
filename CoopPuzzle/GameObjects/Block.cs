@@ -8,8 +8,6 @@ namespace CoopPuzzle
 {
     internal class Block : GameObject
     {
-        public override Rectangle hitbox { get { return new Rectangle((int)position.X, (int)position.Y + 20, (int)size.X, (int)size.Y - 20); } }
-
         public Block(Vector2 position, Vector2 size, Color color) : base(position, color)
         {
             this.size = size;

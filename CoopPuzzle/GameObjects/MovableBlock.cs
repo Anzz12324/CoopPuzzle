@@ -10,8 +10,6 @@ namespace CoopPuzzle
 {
     internal class MovableBlock : GameObject
     {
-        public override Rectangle hitbox { get { return new Rectangle((int)position.X, (int)position.Y + 20, (int)size.X, (int)size.Y - 20); } }
-
         public MovableBlock(Vector2 position, Vector2 size, Color color) : base(position, color)
         {
             this.size = size;
@@ -25,7 +23,7 @@ namespace CoopPuzzle
 
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(tex, HUDhitbox, null, TempColor, 0f, Vector2.Zero, SpriteEffects.None, depth);
+            sb.Draw(tex, hitbox, null, TempColor, 0f, Vector2.Zero, SpriteEffects.None, depth);
         }
 
         public void Push(GameObject pusher, List<GameObject> objects, out bool stuck, out float divideSpeedBy, ref int movables)

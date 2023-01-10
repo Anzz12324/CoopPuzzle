@@ -13,7 +13,7 @@ namespace CoopPuzzle
         public Vector2 Pos { get { return position; } set { position = value; } }
         public Vector2 Size { get { return size; } }
         public virtual Rectangle hitbox { get { return new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y); } }
-        public Rectangle HUDhitbox { get { return hitbox; } }
+        public Rectangle HUDhitbox { get { return new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y); } }
         public Color TempColor { set; get; }
         public Color Color { set { color = value; } get { return color; } }
 
