@@ -13,15 +13,8 @@ namespace CoopPuzzle
 
         Rectangle ghostRectangle = new Rectangle(0,0,Assets.tileSize,Assets.tileSize);
 
-        List<GameObject> HUDobjects = new List<GameObject>()
-        {
-            new Block(new Vector2(Assets.tileSize, Assets.ScreenHeight - Assets.tileSize * 2), Vector2.One * Assets.tileSize, Color.White),
-            new Door(new Vector2(256 + 45, 640), Color.Green, -1),
-            new MovableBlock(new Vector2(256 + 45 * 2, 640), Vector2.One * Assets.tileSize, Color.White),
-            new Trap(new Vector2(256 + 45 * 3, 640), Color.White),
-            new WeighedSwitch(new Vector2(256 + 45 * 4, 640), Color.White, -1),
-            new CheckPoint(new Vector2(256 + 45 * 5, 640), Vector2.One * Assets.tileSize, Color.White)
-        };
+        int HUDHeight = Assets.ScreenHeight - Assets.tileSize * 2;
+        List<GameObject> HUDobjects;
 
         string placeType = "Block";
         int id = 0;
@@ -31,7 +24,15 @@ namespace CoopPuzzle
 
         public Editor()
         {
-
+            HUDobjects = new List<GameObject>()
+            {
+                new Block(new Vector2(Assets.tileSize * 1, HUDHeight), Vector2.One * Assets.tileSize, Color.White),
+                new Door(new Vector2(Assets.tileSize * 2, HUDHeight), Color.Green, -1),
+                new MovableBlock(new Vector2(Assets.tileSize * 3, HUDHeight), Vector2.One * Assets.tileSize, Color.White),
+                new Trap(new Vector2(Assets.tileSize * 4, HUDHeight), Color.White),
+                new WeighedSwitch(new Vector2(Assets.tileSize * 5, HUDHeight), Color.White, -1),
+                new CheckPoint(new Vector2(Assets.tileSize * 6, HUDHeight), Vector2.One * Assets.tileSize, Color.White)
+            };
         }
 
         public void Update(ref List<GameObject> objects, Player[] players, Vector2 camera)
@@ -176,7 +177,7 @@ namespace CoopPuzzle
             for (int i = 0; i < HUDobjects.Count; i++)
             {
                 HUDobjects[i].Draw(sb);
-                int lineWidth = (HUDobjects[i].GetType().Name == placeType) ? 3 : 1;
+                int lineWidth = (HUDobjects[i].GetType().Name == placeType) ? 4 : 2;
                 sb.DrawLine(HUDobjects[i].Pos, new Vector2(0, 1), Assets.tileSize, lineWidth, Color.Black);
                 sb.DrawLine(HUDobjects[i].Pos, new Vector2(1, 0), Assets.tileSize, lineWidth, Color.Black);
                 sb.DrawLine(new Vector2(HUDobjects[i].Pos.X + Assets.tileSize, HUDobjects[i].Pos.Y), new Vector2(0, 1), Assets.tileSize, lineWidth, Color.Black);
