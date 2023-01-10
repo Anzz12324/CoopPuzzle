@@ -242,7 +242,7 @@ namespace CoopPuzzle
                 sb.DrawLine(new Vector2(HUDobjects[i].Pos.X + Assets.tileSize, HUDobjects[i].Pos.Y), new Vector2(0, 1), Assets.tileSize, lineWidth, Color.Black);
                 sb.DrawLine(new Vector2(HUDobjects[i].Pos.X, HUDobjects[i].Pos.Y + Assets.tileSize), new Vector2(1, 0), Assets.tileSize, lineWidth, Color.Black);
             }
-            sb.DrawString(Assets.font, placeType, new Vector2(Assets.tileSize * 1, HUDHeight + Assets.tileSize), Color.Black);
+            sb.DrawString(Assets.font, placeType + $"\nSkin: {currentColor}", new Vector2(Assets.tileSize * 1, HUDHeight + Assets.tileSize), Color.Black);
             sb.End();
 
             sb.Begin(sortMode: SpriteSortMode.FrontToBack, samplerState: SamplerState.PointWrap, transformMatrix: transformMatrix);

@@ -34,7 +34,7 @@ namespace CoopPuzzle
         public virtual void Update(GameTime gT, Game1 game1) { depth = (Pos.Y + 20 - game1.camera.Position.Y) / Assets.ScreenHeight; }
         public virtual void Draw(SpriteBatch sb)
         {
-            sb.Draw(Assets.white, hitbox, TempColor);
+            sb.Draw(Assets.white, hitbox, null, TempColor, 0f, Vector2.Zero, SpriteEffects.None, 1f);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace CoopPuzzle.Npc
         protected Texture2D tex, bubbleTex;
         protected Vector2 pos, bubblePos, textPos;
         protected string[] text;
-        protected bool playerInRange, editmode = false;
+        protected bool playerInRange;
         protected Rectangle[] srcRecArray;
         protected Rectangle bubbleSrcRec, range;
         protected int frame = 0, textNum, frameCount;
@@ -31,8 +31,7 @@ namespace CoopPuzzle.Npc
         public virtual void Update(GameTime gT, Player player, Player otherPlayer, Game1 game1) 
         {
             Collision(player, otherPlayer);
-            if (game1.editmode)
-                editmode = true;
+
             depth = Math.Clamp((pos.Y + 32 - game1.camera.Position.Y) / Assets.ScreenHeight, 0, 1);
             if (range.Intersects(player.hitbox) || range.Intersects(otherPlayer.hitbox))
             {
@@ -54,13 +53,11 @@ namespace CoopPuzzle.Npc
 
         public virtual void DebugDraw(SpriteBatch sb)
         {
-            if (editmode)
-            {
-                sb.DrawLine(new Vector2(range.Left, range.Top), new Vector2(range.Right, range.Top), 1, Color.White);
-                sb.DrawLine(new Vector2(range.Left, range.Top), new Vector2(range.Left, range.Bottom), 1, Color.White);
-                sb.DrawLine(new Vector2(range.Left, range.Bottom), new Vector2(range.Right, range.Bottom), 1, Color.White);
-                sb.DrawLine(new Vector2(range.Right, range.Bottom), new Vector2(range.Right, range.Top), 1, Color.White);
-            }
+            sb.DrawLine(new Vector2(range.Left, range.Top), new Vector2(range.Right, range.Top), 1, Color.White);
+            sb.DrawLine(new Vector2(range.Left, range.Top), new Vector2(range.Left, range.Bottom), 1, Color.White);
+            sb.DrawLine(new Vector2(range.Left, range.Bottom), new Vector2(range.Right, range.Bottom), 1, Color.White);
+            sb.DrawLine(new Vector2(range.Right, range.Bottom), new Vector2(range.Right, range.Top), 1, Color.White);
+
             sb.FillRectangle(Hitbox, Color.HotPink, 1);
         }
 

@@ -25,11 +25,10 @@ namespace CoopPuzzle.Npc
         public override void Draw(SpriteBatch sb)
         {
             if (Npc == 3)
-            {
                 sb.Draw(tex, grillbyTablePos, grillbyTable, Color.White, 0, Vector2.Zero, 2, SpriteEffects.None, depth+0.01f);
-                sb.DrawRectangle(range, Color.White);
-            }
+
             sb.Draw(tex, pos, srcRecArray[frame], Color.White, 0, Vector2.Zero, 2, SpriteEffects.None, depth + 0.02f);
+
             if (playerInRange)
             {
                 sb.Draw(bubbleTex, bubblePos, bubbleSrcRec, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, depth+0.03f);
