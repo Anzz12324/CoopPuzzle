@@ -95,7 +95,7 @@ namespace CoopPuzzle.Npc
                 srcRecArray[3] = new Rectangle(98, 364, 24, 53);
                 srcRecArray[4] = new Rectangle(128, 364, 24, 53);
                 grillbyTable = new Rectangle(8,441,134,35);
-                grillbyTablePos = new Vector2(pos.X - 70, pos.Y + 80);
+                grillbyTablePos = new Vector2(pos.X - 68, pos.Y + 80);
                 bubblePos = new Vector2(pos.X+50,pos.Y);
                 bubbleSrcRec = new Rectangle(21,18,99,108);
                 range = new Rectangle((int)pos.X-40,(int)pos.Y + 149, 130,40);
