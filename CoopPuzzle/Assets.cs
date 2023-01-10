@@ -14,7 +14,7 @@ namespace CoopPuzzle
         public static SpriteSheet spriteSheet, spriteSheet2;
         public static Song song;
 
-        public static int ScreenWidth, ScreenHeight;
+        public static int ScreenWidth, ScreenHeight, tileSize = 40;
 
         public static Color[] colors = new Color[]
         {
