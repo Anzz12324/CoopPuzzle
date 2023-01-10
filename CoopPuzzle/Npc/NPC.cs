@@ -9,25 +9,58 @@ namespace CoopPuzzle.Npc
         protected Texture2D tex, bubbleTex;
         protected Vector2 pos, bubblePos;
         protected string[] text;
-        protected bool playerInRange;
+        protected bool playerInRange, editmode = false;
         protected Rectangle[] srcRecArray;
         protected Rectangle bubbleSrcRec, range;
-        protected int frame = 0, Npc, textNum, frameCount;
+        protected int frame = 0, textNum, frameCount;
         protected double frameTimer, frameInterval = 500; 
         public object Value { get; }
 
-        public NPC(Texture2D tex, Vector2 pos, int frameCount, int Npc, int textNum)
+        public NPC(Vector2 pos, int textNum)
         {
-            this.tex = tex;
             this.pos = pos;
-            this.Npc = Npc;
-            this.frameCount= frameCount;
             this.textNum = textNum;
             this.bubbleTex = Assets.bubbleTex;
             
         }
 
-        public virtual void Update(GameTime gT, Player player, Player otherPlayer, Game1 game1) { }
-        public abstract void Draw(SpriteBatch sb);
+        public virtual void Update(GameTime gT, Player player, Player otherPlayer, Game1 game1) 
+        {
+            if (game1.editmode)
+                editmode = true;
+            depth = Math.Clamp((pos.Y + 32 - game1.camera.Position.Y) / game1.ScreenHeight, 0, 1);
+            if (range.Intersects(player.hitbox) || range.Intersects(otherPlayer.hitbox))
+            {
+                if (!playerInRange)
+                    playerInRange = true;
+
+                frameTimer -= gT.ElapsedGameTime.TotalMilliseconds;
+                if (frameTimer <= 0)
+                {
+                    frameTimer = frameInterval;
+                    frame++;
+                    if (frame == frameCount)
+                    {
+                        frame = 0;
+                    }
+                }
+            }
+            else
+            {
+                frame = 0;
+                playerInRange = false;
+            }
+        }
+        public virtual void Draw(SpriteBatch sb)
+        {
+            if (editmode)
+            {
+                sb.DrawLine(new Vector2(range.Left, range.Top), new Vector2(range.Right, range.Top), 1, Color.White);
+                sb.DrawLine(new Vector2(range.Left, range.Top), new Vector2(range.Left, range.Bottom), 1, Color.White);
+                sb.DrawLine(new Vector2(range.Left, range.Bottom), new Vector2(range.Right, range.Bottom), 1, Color.White);
+                sb.DrawLine(new Vector2(range.Right, range.Bottom), new Vector2(range.Right, range.Top), 1, Color.White);
+            }
+            
+        }
     }
 }
