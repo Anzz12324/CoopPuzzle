@@ -99,7 +99,7 @@ namespace CoopPuzzle
                         {
                             HiddenNpc hidden = (HiddenNpc)npcs[i];
                             //placeType = "HiddenNpc " + hidden.Npc;
-                            id = hidden.NPCNum;
+                            id = hidden.Npc;
                         }
                         return;
                     }
