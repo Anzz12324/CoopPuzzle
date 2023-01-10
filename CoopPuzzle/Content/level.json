@@ -1,7 +1,7 @@
 {
   "player": {
-    "positionX": 225.33505,
-    "positionY": 299.88544
+    "positionX": 638.885,
+    "positionY": 363.88733
   },
   "otherPlayer": {
     "positionX": 300.0,
@@ -182,14 +182,14 @@
   "movable": [
     {
       "positionX": 133,
-      "positionY": 98,
-      "height": 40,
+      "positionY": 118,
+      "height": 20,
       "width": 40
     },
     {
       "positionX": 709,
-      "positionY": -347,
-      "height": 40,
+      "positionY": -327,
+      "height": 20,
       "width": 40
     }
   ],
