@@ -160,13 +160,13 @@ namespace CoopPuzzle
                 writer.PutArray(new float[] { player.Pos.X, player.Pos.Y });
                 //if (host)
                 //{
-                    for (int i = 0; i < objects.Count; i++)
+                for (int i = 0; i < objects.Count; i++)
+                {
+                    if (objects[i] is MovableBlock)
                     {
-                        if (objects[i] is MovableBlock)
-                        {
-                            writer.PutArray(new float[] { objects[i].Pos.X, objects[i].Pos.Y, i });
-                        }
+                        writer.PutArray(new float[] { objects[i].Pos.X, objects[i].Pos.Y, i });
                     }
+                }
                 //}
                 netManager.SendToAll(writer, DeliveryMethod.ReliableOrdered);
             }
@@ -320,10 +320,10 @@ namespace CoopPuzzle
                 otherPlayer.Vel = new Vector2(array[0], array[1]);
                 float[] array2 = dataReader.GetFloatArray();
                 otherPlayer.Pos = new Vector2(array2[0], array2[1]);
-                
-                    float[] array3 = dataReader.GetFloatArray();
-                    objects[(int)array3[2]].Pos = new Vector2(array3[0], array3[1]);
-                
+
+                float[] array3 = dataReader.GetFloatArray();
+                objects[(int)array3[2]].Pos = new Vector2(array3[0], array3[1]);
+
                 dataReader.Recycle();
             };
             listener.NetworkLatencyUpdateEvent += (fromPeer, latency) =>
