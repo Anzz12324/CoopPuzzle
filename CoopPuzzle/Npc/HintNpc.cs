@@ -38,10 +38,8 @@ namespace CoopPuzzle.Npc
             },
             new string[]
             {
-                "Did you see that. WOW\nOur buttons are amazing\nTo bad that they are\nSuper expensive",
-                "or I would have \n1 000 000 000 of them.\nI love me some boutons.\nOOO beautiful boutons.",
-                "               EEYY\nYou don't happen to have\nsome gold on you?\nI need more boutons.",
-                "Owell time for you\nto move on but we might\nmeet again. See you\nlater. boutons boutons",
+                "what doesn't kill you\nmakes you stronger.\nBut not spikes\nthey do kill.",
+                "Also you can push\nthe boxes around\ntry solving the puzzle\nand get a box out",
             }
             };
             hitbox = new Rectangle((int)pos.X, (int)pos.Y + (srcRecArray[0].Height * 2 - 10), srcRecArray[0].Width * 2, 10);
