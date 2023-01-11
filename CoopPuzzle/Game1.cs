@@ -81,20 +81,7 @@ namespace CoopPuzzle
             sound = new SoundManager();
             npcs = new List<NPC>();
             objects = new List<GameObject>();
-
-            bgTiles = new List<BGTile>()
-            {
-                new BGTile(new Vector2(340+40,40+0),0,0),
-                new BGTile(new Vector2(340+40,40+40),0,1),
-                new BGTile(new Vector2(340+40,40+80),0,2),
-                new BGTile(new Vector2(340+40,40+120),0,3),
-                new BGTile(new Vector2(340+40,40+160),0,4),
-                new BGTile(new Vector2(340+80,40+0),1,0),
-                new BGTile(new Vector2(340+80,40+40),1,1),
-                new BGTile(new Vector2(340+80,40+80),1,2),
-                new BGTile(new Vector2(340+80,40+120),1,3),
-                new BGTile(new Vector2(340+80,40+160),1,4),
-            };
+            bgTiles = new List<BGTile>();
 
             LoadLevel();
         }
@@ -482,6 +469,15 @@ namespace CoopPuzzle
             for (int i = 0; i < storyNpcPosList.Count; i++)
             {
                 npcs.Add(new StoryNpc(storyNpcPosList[i], storyNpcIdList[i]));
+            }
+
+            List<Vector2> bgTilePosList = JsonParser.GetPosList(level, "bgTile");
+            List<int> bgTileSkinList = JsonParser.GetSkinList(level, "bgTile");
+            List<int> bgTileIdList = JsonParser.GetIdList(level, "bgTile");
+
+            for (int i = 0; i < bgTilePosList.Count; i++)
+            {
+                bgTiles.Add(new BGTile(bgTilePosList[i], bgTileSkinList[i], bgTileIdList[i]));
             }
         }
     }

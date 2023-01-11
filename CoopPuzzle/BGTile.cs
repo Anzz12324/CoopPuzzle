@@ -5,15 +5,15 @@ namespace CoopPuzzle
     public class BGTile
     {
         private Texture2D tex;
-        private Vector2 pos;
         private Rectangle[] srcRec;
-        private int rndSrc, texNum;
 
-        public Vector2 Pos { get { return pos; } }
+        public Vector2 Pos { get; private set; }
+        public int rndSrc { get; private set; }
+        public int texNum { get; private set; }
 
         public BGTile(Vector2 pos, int texNum, int rndSrc)
         {
-            this.pos = pos;
+            Pos = pos;
             this.rndSrc = rndSrc;
             this.texNum = texNum;
 
@@ -22,7 +22,7 @@ namespace CoopPuzzle
 
         public void Draw(SpriteBatch sb)
         {
-            sb.Draw(tex, pos, srcRec[rndSrc], Color.White);
+            sb.Draw(tex, Pos, srcRec[rndSrc], Color.White);
         }
 
         private void LoadTex()

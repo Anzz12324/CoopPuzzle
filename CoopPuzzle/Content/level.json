@@ -1,7 +1,7 @@
 {
   "player": {
-    "positionX": 440.279,
-    "positionY": 378.5139
+    "positionX": 440.0,
+    "positionY": 379.0
   },
   "otherPlayer": {
     "positionX": 300.0,
@@ -130,6 +130,68 @@
       "positionX": 560.0,
       "positionY": 400.0,
       "id": 0
+    }
+  ],
+  "bgTile": [
+    {
+      "positionX": 380.0,
+      "positionY": 40.0,
+      "skin": 0,
+      "id": 0
+    },
+    {
+      "positionX": 380.0,
+      "positionY": 80.0,
+      "skin": 0,
+      "id": 1
+    },
+    {
+      "positionX": 380.0,
+      "positionY": 120.0,
+      "skin": 0,
+      "id": 2
+    },
+    {
+      "positionX": 380.0,
+      "positionY": 160.0,
+      "skin": 0,
+      "id": 3
+    },
+    {
+      "positionX": 380.0,
+      "positionY": 200.0,
+      "skin": 0,
+      "id": 4
+    },
+    {
+      "positionX": 420.0,
+      "positionY": 40.0,
+      "skin": 1,
+      "id": 0
+    },
+    {
+      "positionX": 420.0,
+      "positionY": 80.0,
+      "skin": 1,
+      "id": 1
+    },
+    {
+      "positionX": 420.0,
+      "positionY": 120.0,
+      "skin": 1,
+      "id": 2
+    },
+    {
+      "positionX": 420.0,
+      "positionY": 160.0,
+      "skin": 1,
+      "id": 3
+    },
+    {
+      "positionX": 420.0,
+      "positionY": 200.0,
+      "skin": 1,
+      "id": 4
     }
   ]
 }

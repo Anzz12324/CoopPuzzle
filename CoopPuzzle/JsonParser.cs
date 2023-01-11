@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System.Diagnostics;
 using System;
+using SharpDX.Direct2D1.Effects;
 
 namespace CoopPuzzle
 {
@@ -247,7 +248,7 @@ namespace CoopPuzzle
             Vector2 teleVec = new Vector2(x, y);
             return teleVec;
         }
-        public static void WriteJsonToFile(string fileName, List<GameObject> objects, Player[] players, List<NPC> npcs)
+        public static void WriteJsonToFile(string fileName, List<GameObject> objects, List<BGTile> bgtiles, Player[] players, List<NPC> npcs)
         {
             JObject bigobj = new JObject();
 
@@ -309,7 +310,25 @@ namespace CoopPuzzle
             bigobj.Add("hintNpc", hintNpcArray);
             bigobj.Add("storyNpc", storyNpcArray);
 
+            JArray bgArray = new JArray();
+
+            for (int i = 0; i < bgtiles.Count; i++)
+                bgArray.Add(CreateObject(bgtiles[i]));
+
+            bigobj.Add("bgTile", bgArray);
+
             File.WriteAllText(fileName, bigobj.ToString());
+        }
+
+        private static JObject CreateObject(BGTile tile)
+        {
+            JObject obj = new JObject();
+            obj.Add("positionX", tile.Pos.X);
+            obj.Add("positionY", tile.Pos.Y);
+            obj.Add("skin", tile.texNum);
+            obj.Add("id", tile.rndSrc);
+
+            return obj;
         }
 
         private static JObject CreateObject(Rectangle rect)

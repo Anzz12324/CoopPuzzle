@@ -245,7 +245,7 @@ namespace CoopPuzzle
             }
 
             if (board.IsKeyDown(Keys.R) && prevBoard.IsKeyUp(Keys.R))
-                SaveLevel(objects, players, npcs);
+                SaveLevel(objects, bgtiles, players, npcs);
         }
 
         public void Draw(SpriteBatch sb, Matrix transformMatrix)
@@ -330,9 +330,9 @@ namespace CoopPuzzle
             sb.Begin(sortMode: SpriteSortMode.FrontToBack, samplerState: SamplerState.PointWrap, transformMatrix: transformMatrix);
         }
 
-        public void SaveLevel(List<GameObject> objects, Player[] players, List<NPC> npcs)
+        public void SaveLevel(List<GameObject> objects, List<BGTile> bgtiles, Player[] players, List<NPC> npcs)
         {
-            JsonParser.WriteJsonToFile("../../../Content/level.json", objects, players, npcs);
+            JsonParser.WriteJsonToFile("../../../Content/level.json", objects, bgtiles, players, npcs);
         }
     }
 }
