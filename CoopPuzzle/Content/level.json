@@ -1,11 +1,11 @@
 {
   "player": {
-    "positionX": 563.0674,
-    "positionY": 1075.6777
+    "positionX": 687.9997,
+    "positionY": 1775.9829
   },
   "otherPlayer": {
-    "positionX": 687.63184,
-    "positionY": 1082.9705
+    "positionX": 649.1112,
+    "positionY": 1027.4458
   },
   "block": [
     {
@@ -995,6 +995,12 @@
     {
       "positionX": -520,
       "positionY": 1920,
+      "height": 40,
+      "width": 40
+    },
+    {
+      "positionX": 2440,
+      "positionY": 2680,
       "height": 40,
       "width": 40
     }

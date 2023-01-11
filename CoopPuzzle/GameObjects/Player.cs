@@ -10,7 +10,7 @@ namespace CoopPuzzle
     {
         AnimatedSprite sprite;
         ParticleSystem particles;
-        float speed, speedValue = 100;
+        float speed, speedValue = 200;
         string animation;
 
         Vector2 start, oldPos, velocity;
@@ -33,7 +33,7 @@ namespace CoopPuzzle
 
         public override void Update(GameTime gt, List<GameObject> objects, Game1 game1)
         {
-            speedValue = game1.editmode ? 250 : speedValue;
+            speed = game1.editmode ? speedValue * 2 : speedValue;
             
             velocity = Vector2.Zero;
             float dt = (float)gt.ElapsedGameTime.TotalSeconds;
