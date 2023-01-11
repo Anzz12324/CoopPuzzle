@@ -318,6 +318,7 @@ namespace CoopPuzzle
             bigobj.Add("bgTile", bgArray);
 
             File.WriteAllText(fileName, bigobj.ToString());
+            Debug.WriteLine($"Level saved to {fileName}");
         }
 
         private static JObject CreateObject(BGTile tile)
