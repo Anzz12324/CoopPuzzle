@@ -77,5 +77,23 @@ namespace CoopPuzzle
             linkFlower.LinkVisited = true;
             Process.Start(new ProcessStartInfo() { FileName = "https://somewhatgoodroyaltyfreemusic.bandcamp.com/track/frog-shop", UseShellExecute = true });
         }
+
+        private void linkBGTile_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            linkFlower.LinkVisited = true;
+            Process.Start(new ProcessStartInfo() { FileName = "https://cainos.itch.io/pixel-art-top-down-basic", UseShellExecute = true });
+        }
+
+        private void linkUndertale_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            linkFlower.LinkVisited = true;
+            Process.Start(new ProcessStartInfo() { FileName = "https://undertale.com/", UseShellExecute = true });
+        }
+
+        private void linkFont_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            linkFlower.LinkVisited = true;
+            Process.Start(new ProcessStartInfo() { FileName = "https://www.dafont.com/vigilante-typeface-corporation.d91?page=1", UseShellExecute = true });
+        }
     }
 }

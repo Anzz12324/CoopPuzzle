@@ -50,7 +50,14 @@
             this.radBtnEdit = new System.Windows.Forms.RadioButton();
             this.radBtnCredits = new System.Windows.Forms.RadioButton();
             this.grpCredits = new System.Windows.Forms.GroupBox();
+            this.groupFont = new System.Windows.Forms.GroupBox();
+            this.linkFont = new System.Windows.Forms.LinkLabel();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.grpTex = new System.Windows.Forms.GroupBox();
+            this.linkUndertale = new System.Windows.Forms.LinkLabel();
+            this.linkBGTile = new System.Windows.Forms.LinkLabel();
             this.grpMusic = new System.Windows.Forms.GroupBox();
             this.linkFlower = new System.Windows.Forms.LinkLabel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -58,6 +65,9 @@
             this.grpJoin.SuspendLayout();
             this.grpEdit.SuspendLayout();
             this.grpCredits.SuspendLayout();
+            this.groupFont.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.grpTex.SuspendLayout();
             this.grpMusic.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -268,6 +278,8 @@
             // 
             // grpCredits
             // 
+            this.grpCredits.Controls.Add(this.groupFont);
+            this.grpCredits.Controls.Add(this.groupBox1);
             this.grpCredits.Controls.Add(this.grpTex);
             this.grpCredits.Controls.Add(this.grpMusic);
             this.grpCredits.Location = new System.Drawing.Point(12, 94);
@@ -277,21 +289,95 @@
             this.grpCredits.TabStop = false;
             this.grpCredits.Text = "Credits";
             // 
+            // groupFont
+            // 
+            this.groupFont.Controls.Add(this.linkFont);
+            this.groupFont.Location = new System.Drawing.Point(167, 106);
+            this.groupFont.Name = "groupFont";
+            this.groupFont.Size = new System.Drawing.Size(107, 75);
+            this.groupFont.TabIndex = 3;
+            this.groupFont.TabStop = false;
+            this.groupFont.Text = "Font";
+            // 
+            // linkFont
+            // 
+            this.linkFont.AutoSize = true;
+            this.linkFont.Location = new System.Drawing.Point(19, 19);
+            this.linkFont.Name = "linkFont";
+            this.linkFont.Size = new System.Drawing.Size(71, 45);
+            this.linkFont.TabIndex = 0;
+            this.linkFont.TabStop = true;
+            this.linkFont.Text = "Vigilante \r\nTypeface \r\nCorporation";
+            this.linkFont.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkFont_LinkClicked);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Location = new System.Drawing.Point(167, 16);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(107, 78);
+            this.groupBox1.TabIndex = 2;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "The Game";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 43);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(93, 15);
+            this.label7.TabIndex = 1;
+            this.label7.Text = "Johannes Widén";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 19);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(84, 15);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "Andreas Rödin";
+            // 
             // grpTex
             // 
+            this.grpTex.Controls.Add(this.linkUndertale);
+            this.grpTex.Controls.Add(this.linkBGTile);
             this.grpTex.Location = new System.Drawing.Point(6, 106);
             this.grpTex.Name = "grpTex";
-            this.grpTex.Size = new System.Drawing.Size(268, 75);
+            this.grpTex.Size = new System.Drawing.Size(155, 75);
             this.grpTex.TabIndex = 1;
             this.grpTex.TabStop = false;
             this.grpTex.Text = "Textures";
+            // 
+            // linkUndertale
+            // 
+            this.linkUndertale.AutoSize = true;
+            this.linkUndertale.Location = new System.Drawing.Point(6, 45);
+            this.linkUndertale.Name = "linkUndertale";
+            this.linkUndertale.Size = new System.Drawing.Size(118, 15);
+            this.linkUndertale.TabIndex = 1;
+            this.linkUndertale.TabStop = true;
+            this.linkUndertale.Text = "Undertale by tobyfox";
+            this.linkUndertale.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkUndertale_LinkClicked);
+            // 
+            // linkBGTile
+            // 
+            this.linkBGTile.AutoSize = true;
+            this.linkBGTile.Location = new System.Drawing.Point(6, 19);
+            this.linkBGTile.Name = "linkBGTile";
+            this.linkBGTile.Size = new System.Drawing.Size(94, 15);
+            this.linkBGTile.TabIndex = 0;
+            this.linkBGTile.TabStop = true;
+            this.linkBGTile.Text = "BGTils by Cainos";
+            this.linkBGTile.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkBGTile_LinkClicked);
             // 
             // grpMusic
             // 
             this.grpMusic.Controls.Add(this.linkFlower);
             this.grpMusic.Location = new System.Drawing.Point(6, 16);
             this.grpMusic.Name = "grpMusic";
-            this.grpMusic.Size = new System.Drawing.Size(268, 78);
+            this.grpMusic.Size = new System.Drawing.Size(155, 78);
             this.grpMusic.TabIndex = 0;
             this.grpMusic.TabStop = false;
             this.grpMusic.Text = "Music";
@@ -322,7 +408,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(292, 281);
+            this.ClientSize = new System.Drawing.Size(306, 295);
             this.ControlBox = false;
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.grpCredits);
@@ -349,6 +435,12 @@
             this.grpJoin.PerformLayout();
             this.grpEdit.ResumeLayout(false);
             this.grpCredits.ResumeLayout(false);
+            this.groupFont.ResumeLayout(false);
+            this.groupFont.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.grpTex.ResumeLayout(false);
+            this.grpTex.PerformLayout();
             this.grpMusic.ResumeLayout(false);
             this.grpMusic.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -384,5 +476,12 @@
         private System.Windows.Forms.GroupBox grpTex;
         private System.Windows.Forms.LinkLabel linkFlower;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.LinkLabel linkBGTile;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.LinkLabel linkUndertale;
+        private System.Windows.Forms.GroupBox groupFont;
+        private System.Windows.Forms.LinkLabel linkFont;
     }
 }
