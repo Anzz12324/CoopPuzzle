@@ -115,10 +115,13 @@ namespace CoopPuzzle
                 camera.Position = Vector2.Zero;
                 diffCam = DiffCam.SnapMove;
             }
-            if (kbState.IsKeyDown(Keys.O) && kbPreviousState.IsKeyUp(Keys.O))
-                diffCam = DiffCam.FullScreenMove;
-            if (kbState.IsKeyDown(Keys.P) && kbPreviousState.IsKeyUp(Keys.P))
-                diffCam = DiffCam.FollowPlayer;
+            if (editmode)
+            {
+                if (kbState.IsKeyDown(Keys.O) && kbPreviousState.IsKeyUp(Keys.O))
+                    diffCam = DiffCam.FullScreenMove;
+                if (kbState.IsKeyDown(Keys.P) && kbPreviousState.IsKeyUp(Keys.P))
+                    diffCam = DiffCam.FollowPlayer;
+            }
             if (kbState.IsKeyDown(Keys.F2) && kbPreviousState.IsKeyUp(Keys.F2))
                 fps = !fps;
             if (kbState.IsKeyDown(Keys.F3) && kbPreviousState.IsKeyUp(Keys.F3))
@@ -259,14 +262,17 @@ namespace CoopPuzzle
                     spriteBatch.DrawString(Assets.font, "Move Camera \nUp: U\nDown: J\nLeft: H\nRight: K", new Vector2(camera.Position.X + 2, camera.Position.Y + 290), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
                 }
 
-                spriteBatch.FillRectangle(new Rectangle((int)camera.Position.X, (int)camera.Position.Y + 381, 250, 230), new Color(Color.Gray, 0.5f), 0.9f);
-                spriteBatch.DrawString(Assets.font, $"Camera Pos: X:{camera.Position.X.ToString("0.00")} Y:{camera.Position.Y.ToString("0.00")}", new Vector2(camera.Position.X + 2, camera.Position.Y + 381), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
-                spriteBatch.DrawString(Assets.font, $"Camera Move: {diffCam}", new Vector2(camera.Position.X + 2, camera.Position.Y + 398), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
-                spriteBatch.DrawString(Assets.font, "Switch Camera: I, O, P", new Vector2(camera.Position.X + 2, camera.Position.Y + 415), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
-                spriteBatch.DrawString(Assets.font, $"P1 Pos:X:{player.Pos.X.ToString("0.00")} Y:{player.Pos.Y.ToString("0.00")}\nP2 Pos:X:{otherPlayer.Pos.X.ToString("0.00")} Y:{otherPlayer.Pos.Y.ToString("0.00")}", new Vector2(camera.Position.X + 2, camera.Position.Y + 432), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
-                spriteBatch.DrawString(Assets.font, "Switch between player : L", new Vector2(camera.Position.X + 2, camera.Position.Y + 466), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
-                spriteBatch.DrawString(Assets.font, $"Player 2: {editmodePlayer}", new Vector2(camera.Position.X + 2, camera.Position.Y + 483), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
-                spriteBatch.DrawString(Assets.font, "Place block: Left-Click\nRemove block: Right-Click\nChange size of block: Scroll (+ Ctrl)\nChange door and switch id: Scroll\nChange color: Shift + Scroll\nSave level: R", new Vector2(camera.Position.X + 2, camera.Position.Y + 500), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
+                if (EditmodeUI)
+                {
+                    spriteBatch.FillRectangle(new Rectangle((int)camera.Position.X, (int)camera.Position.Y + 381, 250, 230), new Color(Color.Gray, 0.5f), 0.9f);
+                    spriteBatch.DrawString(Assets.font, $"Camera Pos: X:{camera.Position.X.ToString("0.00")} Y:{camera.Position.Y.ToString("0.00")}", new Vector2(camera.Position.X + 2, camera.Position.Y + 381), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
+                    spriteBatch.DrawString(Assets.font, $"Camera Move: {diffCam}", new Vector2(camera.Position.X + 2, camera.Position.Y + 398), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
+                    spriteBatch.DrawString(Assets.font, "Switch Camera: I, O, P", new Vector2(camera.Position.X + 2, camera.Position.Y + 415), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
+                    spriteBatch.DrawString(Assets.font, $"P1 Pos:X:{player.Pos.X.ToString("0.00")} Y:{player.Pos.Y.ToString("0.00")}\nP2 Pos:X:{otherPlayer.Pos.X.ToString("0.00")} Y:{otherPlayer.Pos.Y.ToString("0.00")}", new Vector2(camera.Position.X + 2, camera.Position.Y + 432), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
+                    spriteBatch.DrawString(Assets.font, "Switch between player : L", new Vector2(camera.Position.X + 2, camera.Position.Y + 466), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
+                    spriteBatch.DrawString(Assets.font, $"Player 2: {editmodePlayer}", new Vector2(camera.Position.X + 2, camera.Position.Y + 483), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
+                    spriteBatch.DrawString(Assets.font, "Place block: Left-Click\nRemove block: Right-Click\nChange size of block: Scroll (+ Ctrl)\nChange door and switch id: Scroll\nChange color: Shift + Scroll\nSave level: R", new Vector2(camera.Position.X + 2, camera.Position.Y + 500), Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
+                }
 
                 editor.Draw(spriteBatch, transformMatrix);
 
