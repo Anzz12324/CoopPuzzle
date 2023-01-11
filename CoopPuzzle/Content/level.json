@@ -1,11 +1,11 @@
 {
   "player": {
-    "positionX": 2741.8528,
-    "positionY": 1782.6843
+    "positionX": 563.0674,
+    "positionY": 1075.6777
   },
   "otherPlayer": {
-    "positionX": 2013.9587,
-    "positionY": 1858.7622
+    "positionX": 687.63184,
+    "positionY": 1082.9705
   },
   "block": [
     {
@@ -734,21 +734,9 @@
     },
     {
       "positionX": 3800.0,
-      "positionY": 1800.0,
-      "id": 9,
-      "rotation": 0
-    },
-    {
-      "positionX": 3800.0,
       "positionY": 1760.0,
       "id": 9,
       "rotation": 2
-    },
-    {
-      "positionX": 3840.0,
-      "positionY": 1800.0,
-      "id": 9,
-      "rotation": 0
     },
     {
       "positionX": 3840.0,
@@ -838,6 +826,24 @@
       "positionX": 3480.0,
       "positionY": 2000.0,
       "id": 12,
+      "rotation": 2
+    },
+    {
+      "positionX": 3840.0,
+      "positionY": 1800.0,
+      "id": 9,
+      "rotation": 0
+    },
+    {
+      "positionX": 3800.0,
+      "positionY": 1800.0,
+      "id": 9,
+      "rotation": 0
+    },
+    {
+      "positionX": 1240.0,
+      "positionY": 1760.0,
+      "id": 0,
       "rotation": 2
     },
     {
@@ -987,8 +993,8 @@
       "width": 40
     },
     {
-      "positionX": -640,
-      "positionY": 1760,
+      "positionX": -520,
+      "positionY": 1920,
       "height": 40,
       "width": 40
     }
@@ -1573,6 +1579,24 @@
       "positionY": 100.0,
       "skin": 3,
       "id": 1
+    },
+    {
+      "positionX": 4400.0,
+      "positionY": 1680.0,
+      "skin": 2,
+      "id": 0
+    },
+    {
+      "positionX": 3600.0,
+      "positionY": 1120.0,
+      "skin": 3,
+      "id": 0
+    },
+    {
+      "positionX": -560.0,
+      "positionY": 1600.0,
+      "skin": 1,
+      "id": 0
     }
   ],
   "hintNpc": [
@@ -1590,6 +1614,11 @@
       "positionX": 1480.0,
       "positionY": 1920.0,
       "id": 1
+    },
+    {
+      "positionX": 1760.0,
+      "positionY": 1160.0,
+      "id": 2
     }
   ],
   "storyNpc": [
