@@ -1,7 +1,7 @@
 {
   "player": {
-    "positionX": 1510.9182,
-    "positionY": 1810.1113
+    "positionX": 1523.1218,
+    "positionY": 1804.2024
   },
   "otherPlayer": {
     "positionX": 1468.0,
@@ -136,13 +136,6 @@
     },
     {
       "positionX": -1280.0,
-      "positionY": 1440.0,
-      "height": 720.0,
-      "width": 40.0,
-      "id": 4
-    },
-    {
-      "positionX": -1280.0,
       "positionY": 760.0,
       "height": 720.0,
       "width": 40.0,
@@ -152,6 +145,55 @@
       "positionX": 1240.0,
       "positionY": 2160.0,
       "height": 680.0,
+      "width": 40.0,
+      "id": 4
+    },
+    {
+      "positionX": 1280.0,
+      "positionY": 720.0,
+      "height": 720.0,
+      "width": 40.0,
+      "id": 0
+    },
+    {
+      "positionX": 40.0,
+      "positionY": 1400.0,
+      "height": 40.0,
+      "width": 40.0,
+      "id": 0
+    },
+    {
+      "positionX": 200.0,
+      "positionY": 1320.0,
+      "height": 40.0,
+      "width": 40.0,
+      "id": 0
+    },
+    {
+      "positionX": 960.0,
+      "positionY": 2360.0,
+      "height": 40.0,
+      "width": 40.0,
+      "id": 0
+    },
+    {
+      "positionX": 40.0,
+      "positionY": 2200.0,
+      "height": 40.0,
+      "width": 40.0,
+      "id": 0
+    },
+    {
+      "positionX": 120.0,
+      "positionY": 1320.0,
+      "height": 40.0,
+      "width": 40.0,
+      "id": 0
+    },
+    {
+      "positionX": -1280.0,
+      "positionY": 1480.0,
+      "height": 720.0,
       "width": 40.0,
       "id": 4
     }
