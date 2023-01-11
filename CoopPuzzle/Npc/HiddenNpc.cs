@@ -54,11 +54,9 @@ namespace CoopPuzzle.Npc
                 {
                     new string[]
                     {
-                        "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
-                        "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
-                        "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
-                        "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
-                        "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum"
+                        "It takes 12\npounds of \nmilk to\nproduce just\n1 gallon of\nice cream",
+                        "The most \npopular \nflavor is \nvanilla, then\nchocolate",
+                        "Chocolate\nice cream\nwas invented\nbefore \nvanilla"
                     }
                 };
                 hitbox = new Rectangle((int)pos.X+20, (int)pos.Y + (srcRecArray[0].Height * 2 - 30), srcRecArray[0].Width * 2-25 , 20);
@@ -79,11 +77,10 @@ namespace CoopPuzzle.Npc
                 {
                     new string[]
                     {
-                        "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
-                        "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
-                        "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
-                        "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
-                        "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum"
+                        "Hello, thank you for\ngetting the letter\nto me. lets see what\nit says.",
+                        "Hmm... ok... hmm...\nok... hmm... ok...\nhmm... ok... hmm...\nok... hmm... ok...",
+                        "I see this was just \na letter to inform on\nthat i am\n",
+                        "Behind on the bills\nand that the goverment\nwill come and take the\ncastle"
                     }
                 };
                 hitbox = new Rectangle((int)pos.X, (int)pos.Y + (srcRecArray[0].Height * 2 - 10), srcRecArray[0].Width * 2, 10);
@@ -110,11 +107,9 @@ namespace CoopPuzzle.Npc
                 {
                     new string[]
                     {
-                        "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
-                        "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
-                        "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
-                        "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
-                        "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum"
+                        "\nI'm afraid for\nthe calendar.\nIts days are\nnumbered.",
+                        "I only know\n25 letters of\nthe alphabet.\nI don't\nknow y.",
+                        "I asked my\ndog what's \ntwo minus\ntwo. He said\nnothing.",
                     }
                 };
                 hitbox = new Rectangle((int)grillbyTablePos.X, (int)grillbyTablePos.Y + (grillbyTable.Height * 2 - 10), grillbyTable.Width * 2, 10);
