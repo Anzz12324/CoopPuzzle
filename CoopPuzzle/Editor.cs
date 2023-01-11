@@ -327,6 +327,9 @@ namespace CoopPuzzle
                 sb.DrawString(Assets.font, npcName, new Vector2(HUDNpcs[i].Range.X + 2, HUDNpcs[i].Range.Y), Color.Black);
             }
 
+            sb.DrawLine(new Vector2(0, Assets.ScreenHeight / 2), new Vector2(Assets.ScreenWidth, Assets.ScreenHeight / 2), 1, Color.Black * 0.5f);
+            sb.DrawLine(new Vector2(Assets.ScreenWidth / 2, 0), new Vector2(Assets.ScreenWidth / 2, Assets.ScreenHeight), 1, Color.Black * 0.5f);
+
             sb.DrawRectangle(bgButton, Color.Black, (placeType == "BGTile") ? 3 : 1, 1);
             sb.DrawString(Assets.font, "BG\nTile", new Vector2(bgButton.X + 2, bgButton.Y), Color.Black);
 
