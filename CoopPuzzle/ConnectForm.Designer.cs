@@ -322,7 +322,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(304, 292);
+            this.ClientSize = new System.Drawing.Size(296, 285);
+            this.ControlBox = false;
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.grpCredits);
             this.Controls.Add(this.radBtnCredits);
@@ -334,8 +335,11 @@
             this.Controls.Add(this.radBtnHost);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "ConnectForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.Text = "ConnectForm";
             this.TopMost = true;
             this.grpHost.ResumeLayout(false);
