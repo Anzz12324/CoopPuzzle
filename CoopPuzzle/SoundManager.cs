@@ -10,15 +10,8 @@ namespace CoopPuzzle
 {
     internal class SoundManager
     {
-        Random random;
-
-        float timer;
-        float dt;
-
         public SoundManager()
         {
-            random = new Random();
-
             MediaPlayer.Play(Assets.song);
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Volume = 0.25f;

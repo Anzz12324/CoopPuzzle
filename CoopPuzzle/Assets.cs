@@ -18,6 +18,8 @@ namespace CoopPuzzle
 
         public static int ScreenWidth, ScreenHeight, tileSize = 40;
 
+        public static Random random;
+
         public static Color[] colors = new Color[]
         {
             Color.White,
@@ -53,6 +55,8 @@ namespace CoopPuzzle
 
             GrassTileSet = gd.Load<Texture2D>("TX Tileset Grass");
             StoneTileSet = gd.Load<Texture2D>("TX Tileset Stone Ground");
+
+            random = new Random();
         }
 
         static Texture2D GetTextureFromTileset(Texture2D originalTexture, Rectangle srcRect)

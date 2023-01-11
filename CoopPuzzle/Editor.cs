@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CoopPuzzle.Npc;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace CoopPuzzle
 {
@@ -17,6 +18,7 @@ namespace CoopPuzzle
         int HUDHeight = Assets.ScreenHeight - Assets.tileSize * 2;
         List<GameObject> HUDobjects;
         List<NPC> HUDNpcs;
+        Rectangle bgButton;
 
         string placeType = "Block";
         int id, currentColor;
@@ -35,19 +37,21 @@ namespace CoopPuzzle
             };
             HUDNpcs = new List<NPC>()
             {
-                new StoryNpc(new Vector2(Assets.tileSize * 7, HUDHeight), 1),
-                new HintNpc(new Vector2(Assets.tileSize * 8, HUDHeight), 1),
-                new HiddenNpc(new Vector2(Assets.tileSize * 9, HUDHeight), 1, 1),
-                new HiddenNpc(new Vector2(Assets.tileSize * 10, HUDHeight), 2, 1),
-                new HiddenNpc(new Vector2(Assets.tileSize * 11, HUDHeight), 3, 1),
+                new StoryNpc(new Vector2(Assets.tileSize * 8, HUDHeight), 1),
+                new HintNpc(new Vector2(Assets.tileSize * 9, HUDHeight), 1),
+                new HiddenNpc(new Vector2(Assets.tileSize * 10, HUDHeight), 1, 1),
+                new HiddenNpc(new Vector2(Assets.tileSize * 11, HUDHeight), 2, 1),
+                new HiddenNpc(new Vector2(Assets.tileSize * 12, HUDHeight), 3, 1),
             };
             for (int i = 0; i < HUDNpcs.Count; i++)
             {
                 HUDNpcs[i].IsButton();
             }
+
+            bgButton = new Rectangle(Assets.tileSize * 14, HUDHeight, Assets.tileSize, Assets.tileSize);
         }
 
-        public void Update(ref List<GameObject> objects, ref List<NPC> npcs, Player[] players, Vector2 camera)
+        public void Update(ref List<GameObject> objects, ref List<NPC> npcs, ref List<BGTile> bgtiles, Player[] players, Vector2 camera)
         {
             prevMouse = mouse;
             mouse = Mouse.GetState();
@@ -87,6 +91,18 @@ namespace CoopPuzzle
                 else
                     id += Math.Clamp(scroll, -1, 1);
 
+            }
+            else if (placeType == "BGTile")
+            {
+                if (board.IsKeyDown(Keys.LeftShift))
+                    id += Math.Clamp(scroll, -1, 1);
+                else
+                {
+                    if (board.IsKeyDown(Keys.LeftControl))
+                        ghostRectangle.Height += Assets.tileSize * Math.Clamp(scroll, -1, 1);
+                    else
+                        ghostRectangle.Width += Assets.tileSize * Math.Clamp(scroll, -1, 1);
+                }
             }
 
             if (currentColor >= Assets.colors.Length)
@@ -132,6 +148,13 @@ namespace CoopPuzzle
                     }
                 }
 
+                if (bgButton.Contains(mouse.Position))
+                {
+                    placeType = "BGTile";
+                    id = 0;
+                    return;
+                }
+
                 switch (placeType)
                 {
                     case "Block":
@@ -164,6 +187,17 @@ namespace CoopPuzzle
                 }
             }
 
+            if(mouse.LeftButton == ButtonState.Pressed && prevMouse.LeftButton == ButtonState.Released && placeType == "BGTile")
+            {
+                for (int i = 0; i < ghostRectangle.Width; i += 40)
+                {
+                    for (int j = 0; j < ghostRectangle.Height; j += 40)
+                    {
+                        bgtiles.Add(new BGTile(new Vector2(ghostRectangle.X + i, ghostRectangle.Y + j), id % 2, Assets.random.Next(10)));
+                    }
+                }
+            }
+
             if (mouse.RightButton == ButtonState.Pressed && prevMouse.RightButton == ButtonState.Released)
             {
                 for (int i = 0; i < objects.Count; i++)
@@ -171,6 +205,7 @@ namespace CoopPuzzle
                     if (objects[i].HUDhitbox.Contains(new Vector2(mouse.Position.X, mouse.Position.Y) + camera))
                     {
                         objects.RemoveAt(i);
+                        return;
                     }
                 }
                 for (int i = 0; i < npcs.Count; i++)
@@ -180,6 +215,15 @@ namespace CoopPuzzle
                         npcs.RemoveAt(i);
                         return;
                     }
+                }
+            }
+
+            if (mouse.RightButton == ButtonState.Pressed && placeType == "BGTile")
+            {
+                for (int i = 0; i < bgtiles.Count; i++)
+                {
+                    if (new Rectangle((int)bgtiles[i].Pos.X, (int)bgtiles[i].Pos.Y, Assets.tileSize, Assets.tileSize).Contains(new Vector2(mouse.Position.X, mouse.Position.Y) + camera))
+                        bgtiles.RemoveAt(i);
                 }
             }
 
@@ -243,7 +287,7 @@ namespace CoopPuzzle
 
             sb.DrawRectangle(ghostRectangle, Color.Black, 1, 1);
 
-            if (placeType == "Door" || placeType == "WeighedSwitch" || placeType.Contains("Npc") || placeType == "Trap")
+            if (placeType == "Door" || placeType == "WeighedSwitch" || placeType.Contains("Npc") || placeType == "Trap" || placeType == "BGTile")
                 sb.DrawString(Assets.font, id.ToString(), new Vector2(ghostRectangle.X, ghostRectangle.Y - 16), Color.Black); 
             sb.End();
 
@@ -276,6 +320,10 @@ namespace CoopPuzzle
 
                 sb.DrawString(Assets.font, npcName, new Vector2(HUDNpcs[i].Range.X + 2, HUDNpcs[i].Range.Y), Color.Black);
             }
+
+            sb.DrawRectangle(bgButton, Color.Black, (placeType == "BGTile") ? 3 : 1, 1);
+            sb.DrawString(Assets.font, "BG\nTile", new Vector2(bgButton.X + 2, bgButton.Y), Color.Black);
+
             sb.DrawString(Assets.font, placeType, new Vector2(Assets.tileSize * 1, HUDHeight + Assets.tileSize), Color.Black);
             sb.End();
 

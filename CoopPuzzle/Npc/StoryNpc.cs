@@ -23,7 +23,7 @@ namespace CoopPuzzle.Npc
             color = Color.Black;
             text = new string[5] 
             {
-                "     Welcome Travelers.\r\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
+                "     Welcome Travelers.\r\nUse you arrow keys or  \nWASD to move about the \nworld. Go explore!     ",
                 "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
                 "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
                 "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",

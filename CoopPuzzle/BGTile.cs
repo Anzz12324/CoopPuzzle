@@ -45,7 +45,7 @@ namespace CoopPuzzle
             if (texNum == 1)
             {
                 tex = Assets.GrassTileSet;
-                srcRec= new Rectangle[5];
+                srcRec= new Rectangle[10];
                 srcRec[0] = new Rectangle(157,93,40,40);
                 srcRec[1] = new Rectangle(125,30,40,40);
                 srcRec[2] = new Rectangle(76,13,40,40);

@@ -24,7 +24,7 @@ namespace CoopPuzzle.Npc
             {
                 "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nTry to push the box.",
                 "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nHave you pressed the\nbuttons. Go on try.",
-                "Watch out for the spikes.\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
+                "What doesn't kill you  \nmakes you stronger.    \nBut spikes kill you... \nWatch out for spikes!",
                 "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
                 "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum"
             };
