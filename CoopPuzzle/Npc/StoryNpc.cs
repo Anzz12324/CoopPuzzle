@@ -21,13 +21,15 @@ namespace CoopPuzzle.Npc
             bubblePos = new Vector2(pos.X - (bubbleSrcRec.Width / 2) + srcRecArray[0].Width+2, pos.Y - bubbleSrcRec.Height);
             textPos = new Vector2(bubblePos.X + 5, bubblePos.Y + 10);
             color = Color.Black;
-            text = new string[5] 
+            dialogueArray = new string[][]
             {
-                "     Welcome Travelers.\r\nUse you arrow keys or  \nWASD to move about the \nworld. Go explore!     ",
-                "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
-                "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
-                "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
-                "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum"
+                new string[]
+                {
+                    "   Welcome travelers!\n\nPress space to talk to\ntownspeople like me",
+                    "What's that? You and\nyour friend have an\nincredibly important\nletter for the king?",
+                    "It has to be delivered\nby dawn or else the\nwhole kingdom will be in\ndanger?",
+                    "Quick! Head south to\nenter the castle."
+                }
             };
             hitbox = new Rectangle((int)pos.X, (int)pos.Y + (srcRecArray[0].Height * 2 - 10), srcRecArray[0].Width * 2, 10);
         }
@@ -38,7 +40,7 @@ namespace CoopPuzzle.Npc
             if (playerInRange)
             {
                 sb.Draw(bubbleTex, bubblePos, bubbleSrcRec, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, depth);
-                sb.DrawString(Assets.font, text[textNum].ToUpper(), textPos, color, 0, Vector2.Zero, 1, SpriteEffects.None, depth+0.01f);
+                sb.DrawString(Assets.font, dialogueArray[dialogueNum][textNum], textPos, color, 0, Vector2.Zero, 1, SpriteEffects.None, depth+0.01f);
             }
             
             base.Draw(sb);

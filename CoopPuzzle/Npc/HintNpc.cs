@@ -20,13 +20,16 @@ namespace CoopPuzzle.Npc
             bubblePos = new Vector2(pos.X - (bubbleSrcRec.Width / 2) + srcRecArray[0].Width-5, pos.Y - bubbleSrcRec.Height);
             textPos = new Vector2(bubblePos.X + 5, bubblePos.Y + 5);
             color = Color.Black;
-            text = new string[5]
+            dialogueArray = new string[][]
             {
-                "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nTry to push the box.",
-                "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nHave you pressed the\nbuttons. Go on try.",
-                "What doesn't kill you  \nmakes you stronger.    \nBut spikes kill you... \nWatch out for spikes!",
+            new string[]
+            {
+                "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
+                "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
+                "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
                 "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
                 "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum"
+            }
             };
             hitbox = new Rectangle((int)pos.X, (int)pos.Y + (srcRecArray[0].Height * 2 - 10), srcRecArray[0].Width * 2, 10);
         }
@@ -38,7 +41,7 @@ namespace CoopPuzzle.Npc
             if (playerInRange)
             {
                 sb.Draw(bubbleTex, bubblePos, bubbleSrcRec, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, depth);
-                sb.DrawString(Assets.font, text[textNum], textPos , color, 0, Vector2.Zero, 1, SpriteEffects.None, depth + 0.01f);
+                sb.DrawString(Assets.font, dialogueArray[dialogueNum][textNum], textPos , color, 0, Vector2.Zero, 1, SpriteEffects.None, depth + 0.01f);
             }
 
             base.Draw(sb);

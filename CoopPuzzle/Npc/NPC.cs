@@ -6,11 +6,11 @@
         protected float depth;
         protected Texture2D tex, bubbleTex;
         protected Vector2 pos, bubblePos, textPos;
-        protected string[] text;
+        protected string[][] dialogueArray;
         protected bool playerInRange;
         protected Rectangle[] srcRecArray;
         protected Rectangle bubbleSrcRec, range;
-        protected int frame = 0, textNum, frameCount;
+        protected int frame = 0, dialogueNum, textNum, frameCount;
         public int Npc { get; protected set; }
         protected double frameTimer, frameInterval = 500;
         protected Rectangle hitbox;
@@ -18,18 +18,23 @@
         public object Value { get; }
         public Rectangle Range { get { return range; } }
         public Vector2 Pos { get { return pos; } }
-        public int TextNum { get { return textNum; } }
+        public int TextNum { get { return dialogueNum; } }
+
+        KeyboardState board, prevBoard;
 
         public NPC(Vector2 pos, int textNum)
         {
             this.pos = pos;
-            this.textNum = textNum;
+            this.dialogueNum = textNum;
             this.bubbleTex = Assets.bubbleTex;
             
         }
 
-        public virtual void Update(GameTime gT, Player player, Player otherPlayer, Game1 game1) 
+        public virtual void Update(GameTime gT, Player player, Player otherPlayer, Game1 game1)
         {
+            prevBoard = board;
+            board = Keyboard.GetState();
+
             Collision(player, otherPlayer);
 
             depth = Math.Clamp((hitbox.Top - 6 - game1.camera.Position.Y) / Assets.ScreenHeight, 0, 1);
@@ -39,6 +44,12 @@
                     playerInRange = true;
                 if (Npc != 3)
                     Animation(gT);
+                if (board.IsKeyDown(Keys.Space) && prevBoard.IsKeyUp(Keys.Space))
+                {
+                    textNum++;
+                    if (textNum >= dialogueArray[dialogueNum].Length)
+                        textNum = 0;
+                }
             }
             else 
             {
@@ -56,7 +67,7 @@
             sb.DrawRectangle(Range, Color.White, 1, 1);
             sb.FillRectangle(Hitbox, Color.HotPink, 1);
 
-            sb.DrawString(Assets.font, textNum.ToString(), new Vector2(pos.X, pos.Y - 16), Color.Black);
+            sb.DrawString(Assets.font, dialogueNum.ToString(), new Vector2(pos.X, pos.Y - 16), Color.Black);
         }
 
         protected void Animation(GameTime gT)

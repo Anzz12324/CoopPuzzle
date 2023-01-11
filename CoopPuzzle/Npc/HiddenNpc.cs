@@ -32,7 +32,7 @@ namespace CoopPuzzle.Npc
             if (playerInRange)
             {
                 sb.Draw(bubbleTex, bubblePos, bubbleSrcRec, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, depth+0.03f);
-                sb.DrawString(Assets.font, text[textNum], textPos, Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, depth + 0.04f);
+                sb.DrawString(Assets.font, dialogueArray[dialogueNum][textNum], textPos, Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, depth + 0.04f);
             }
             base.Draw(sb);
         }
@@ -50,13 +50,16 @@ namespace CoopPuzzle.Npc
                 bubbleSrcRec = new Rectangle(21, 18, 99, 108);
                 range = new Rectangle((int)pos.X, (int)pos.Y + srcRecArray[0].Height, 200, 100);
                 textPos = new Vector2(bubblePos.X + 15, bubblePos.Y + 5);
-                text = new string[5]
+                dialogueArray = new string[][]
                 {
-                    "Lorem ipsum\nLorem ipsum\nLorem ipsum\nLorem ipsum\nLorem ipsum",
-                    "Lorem ipsum\nLorem ipsum\nLorem ipsum\nLorem ipsum\nLorem ipsum",
-                    "Lorem ipsum\nLorem ipsum\nLorem ipsum\nLorem ipsum\nLorem ipsum",
-                    "Lorem ipsum\nLorem ipsum\nLorem ipsum\nLorem ipsum\nLorem ipsum",
-                    "Lorem ipsum\nLorem ipsum\nLorem ipsum\nLorem ipsum\nLorem ipsum"
+                    new string[]
+                    {
+                        "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
+                        "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
+                        "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
+                        "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
+                        "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum"
+                    }
                 };
                 hitbox = new Rectangle((int)pos.X+20, (int)pos.Y + (srcRecArray[0].Height * 2 - 30), srcRecArray[0].Width * 2-25 , 20);
             }
@@ -72,13 +75,16 @@ namespace CoopPuzzle.Npc
                 bubbleSrcRec = new Rectangle(20, 315, 174, 105);
                 range = new Rectangle((int)pos.X, (int)pos.Y+100, 110, 100);
                 textPos = new Vector2(bubblePos.X + 5, bubblePos.Y + 10);
-                text = new string[5]
+                dialogueArray = new string[][]
                 {
-                    "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
-                    "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
-                    "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
-                    "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
-                    "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum"
+                    new string[]
+                    {
+                        "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
+                        "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
+                        "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
+                        "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
+                        "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum"
+                    }
                 };
                 hitbox = new Rectangle((int)pos.X, (int)pos.Y + (srcRecArray[0].Height * 2 - 10), srcRecArray[0].Width * 2, 10);
             }
@@ -100,13 +106,16 @@ namespace CoopPuzzle.Npc
                 bubbleSrcRec = new Rectangle(21,18,99,108);
                 range = new Rectangle((int)pos.X-40,(int)pos.Y + 149, 130,40);
                 textPos = new Vector2(bubblePos.X + 15, bubblePos.Y + 5);
-                text = new string[5]
+                dialogueArray = new string[][]
                 {
-                    "Lorem ipsum\nLorem ipsum\nLorem ipsum\nLorem ipsum\nLorem ipsum",
-                    "Lorem ipsum\nLorem ipsum\nLorem ipsum\nLorem ipsum\nLorem ipsum",
-                    "Lorem ipsum\nLorem ipsum\nLorem ipsum\nLorem ipsum\nLorem ipsum",
-                    "Lorem ipsum\nLorem ipsum\nLorem ipsum\nLorem ipsum\nLorem ipsum",
-                    "Lorem ipsum\nLorem ipsum\nLorem ipsum\nLorem ipsum\nLorem ipsum"
+                    new string[]
+                    {
+                        "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
+                        "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
+                        "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
+                        "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum",
+                        "Lorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum\nLorem ipsum Lorem ipsum"
+                    }
                 };
                 hitbox = new Rectangle((int)grillbyTablePos.X, (int)grillbyTablePos.Y + (grillbyTable.Height * 2 - 10), grillbyTable.Width * 2, 10);
             }
