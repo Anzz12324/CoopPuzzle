@@ -241,10 +241,8 @@ namespace CoopPuzzle
                     break;
             }
 
-            sb.DrawLine(new Vector2(ghostRectangle.Left, ghostRectangle.Top), new Vector2(ghostRectangle.Right, ghostRectangle.Top), 1, Color.Black);
-            sb.DrawLine(new Vector2(ghostRectangle.Left, ghostRectangle.Top), new Vector2(ghostRectangle.Left, ghostRectangle.Bottom), 1, Color.Black);
-            sb.DrawLine(new Vector2(ghostRectangle.Left, ghostRectangle.Bottom), new Vector2(ghostRectangle.Right, ghostRectangle.Bottom), 1, Color.Black);
-            sb.DrawLine(new Vector2(ghostRectangle.Right, ghostRectangle.Bottom), new Vector2(ghostRectangle.Right, ghostRectangle.Top), 1, Color.Black);
+            sb.DrawRectangle(ghostRectangle, Color.Black, 1, 1);
+
             if (placeType == "Door" || placeType == "WeighedSwitch" || placeType.Contains("Npc") || placeType == "Trap")
                 sb.DrawString(Assets.font, id.ToString(), new Vector2(ghostRectangle.X, ghostRectangle.Y - 16), Color.Black); 
             sb.End();
@@ -253,22 +251,16 @@ namespace CoopPuzzle
             for (int i = 0; i < HUDobjects.Count; i++)
             {
                 HUDobjects[i].Draw(sb);
-                int lineWidth = (HUDobjects[i].GetType().Name == placeType) ? 4 : 2;
-                sb.DrawLine(HUDobjects[i].Pos, new Vector2(0, 1), Assets.tileSize, lineWidth, Color.Black);
-                sb.DrawLine(HUDobjects[i].Pos, new Vector2(1, 0), Assets.tileSize, lineWidth, Color.Black);
-                sb.DrawLine(new Vector2(HUDobjects[i].Pos.X + Assets.tileSize, HUDobjects[i].Pos.Y), new Vector2(0, 1), Assets.tileSize, lineWidth, Color.Black);
-                sb.DrawLine(new Vector2(HUDobjects[i].Pos.X, HUDobjects[i].Pos.Y + Assets.tileSize), new Vector2(1, 0), Assets.tileSize, lineWidth, Color.Black);
+                int lineWidth = (HUDobjects[i].GetType().Name == placeType) ? 3 : 1;
+                sb.DrawRectangle(new Rectangle((int)HUDobjects[i].Pos.X, (int)HUDobjects[i].Pos.Y, Assets.tileSize, Assets.tileSize), Color.Black, lineWidth);
             }
             for (int i = 0; i < HUDNpcs.Count; i++)
             {
-                Rectangle rect = HUDNpcs[i].Range;
-                int lineWidth = (HUDNpcs[i].GetType().Name == placeType) ? 4 : 2;
+                int lineWidth = (HUDNpcs[i].GetType().Name == placeType) ? 3 : 1;
                 if(HUDNpcs[i].GetType().Name == "HiddenNpc" && placeType == "HiddenNpc")
-                    lineWidth = (currentColor == HUDNpcs[i].Npc) ? 4 : 2;
-                sb.DrawLine(new Vector2(rect.Left, rect.Top), new Vector2(rect.Left, rect.Bottom), lineWidth, Color.Black);
-                sb.DrawLine(new Vector2(rect.Left, rect.Top), new Vector2(rect.Right, rect.Top), lineWidth, Color.Black);
-                sb.DrawLine(new Vector2(rect.Right, rect.Bottom), new Vector2(rect.Right, rect.Top), lineWidth, Color.Black);
-                sb.DrawLine(new Vector2(rect.Right, rect.Bottom), new Vector2(rect.Left, rect.Bottom), lineWidth, Color.Black);
+                    lineWidth = (currentColor == HUDNpcs[i].Npc) ? 3 : 1;
+
+                sb.DrawRectangle(HUDNpcs[i].Range, Color.Black, lineWidth, 1);
 
                 string npcName = "";
                 string[] hiddenNames = new string[] { "", "nice", "asgo", "grill" };
@@ -282,7 +274,7 @@ namespace CoopPuzzle
                     npcName = hiddenNames[hidden.Npc];
                 }
 
-                sb.DrawString(Assets.font, npcName, new Vector2(rect.X + 2, rect.Y), Color.Black);
+                sb.DrawString(Assets.font, npcName, new Vector2(HUDNpcs[i].Range.X + 2, HUDNpcs[i].Range.Y), Color.Black);
             }
             sb.DrawString(Assets.font, placeType, new Vector2(Assets.tileSize * 1, HUDHeight + Assets.tileSize), Color.Black);
             sb.End();

@@ -92,13 +92,13 @@ namespace CoopPuzzle
                     {
                         Door door = (Door)objects[i];
                         if (!door.Open)
-                            HandleCollision();
+                            HandleCollision(objects[i].hitbox);
                         else
                             continue;
                     }
 
                     if (objects[i] is Block)
-                        HandleCollision();
+                        HandleCollision(objects[i].hitbox);
 
                     if (objects[i] is MovableBlock)
                     {
@@ -109,7 +109,7 @@ namespace CoopPuzzle
                             movable.Push(this, objects, out bool stuck, out float divideSpeedBy, ref movables);
                             speed = speed / divideSpeedBy;
                             if (stuck)
-                                HandleCollision();
+                                HandleCollision(objects[i].hitbox);
                         }
                     }
 
@@ -130,16 +130,32 @@ namespace CoopPuzzle
             //base.Draw(sb);
             particles.Draw(sb);
             sb.Draw(sprite, spritePos, 0f, Vector2.One * 2f);
-            sb.DrawLine(new Vector2(hitbox.Left, hitbox.Top), new Vector2(hitbox.Right, hitbox.Top), 1, Color.White);
-            sb.DrawLine(new Vector2(hitbox.Left, hitbox.Top), new Vector2(hitbox.Left, hitbox.Bottom), 1, Color.White);
-            sb.DrawLine(new Vector2(hitbox.Left, hitbox.Bottom), new Vector2(hitbox.Right, hitbox.Bottom), 1, Color.White);
-            sb.DrawLine(new Vector2(hitbox.Right, hitbox.Bottom), new Vector2(hitbox.Right, hitbox.Top), 1, Color.White);
-            sb.DrawRectangle(Range, Color.HotPink, 1,1);
+
+            //sb.DrawRectangle(hitbox, Color.White, 1, 1);
+            //sb.DrawRectangle(Range, Color.HotPink, 1,1);
         }
 
         public void HandleCollision()
         {
             Pos = oldPos;
+        }
+
+        public void HandleCollision(Rectangle hitbox)
+        {
+            Vector2 up = new Vector2(0, hitbox.Top - this.hitbox.Bottom);
+            Vector2 down = new Vector2(0, hitbox.Bottom - this.hitbox.Top);
+            Vector2 left = new Vector2(hitbox.Left - this.hitbox.Right, 0);
+            Vector2 right = new Vector2(hitbox.Right - this.hitbox.Left, 0);
+            Vector2[] vectors = new Vector2[] { up, down, left, right };
+            IEnumerable<Vector2> sortedVectors = vectors.OrderBy(v => v.Length());
+            vectors = sortedVectors.ToArray();
+
+            //Pos += vectors[0] * 0.95f; //gå kortaste vägen ur objektet du kolliderade med
+            if(vectors[0].Y == 0)
+                Pos = (vectors[0].X > 0) ? new Vector2(hitbox.Right, Pos.Y) : new Vector2(hitbox.Left - this.hitbox.Width, Pos.Y);
+
+            if (vectors[0].X == 0)
+                Pos = (vectors[0].Y > 0) ? new Vector2(Pos.X, hitbox.Bottom) : new Vector2(Pos.X, hitbox.Top - this.hitbox.Height);
         }
         private void TrapCollision()
         {
