@@ -1,8 +1,4 @@
-﻿
-
-using SharpDX.Direct3D9;
-
-namespace CoopPuzzle.Npc
+﻿namespace CoopPuzzle.Npc
 {
     abstract class NPC
     {

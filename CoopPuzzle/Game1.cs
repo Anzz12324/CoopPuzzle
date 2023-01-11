@@ -29,6 +29,7 @@ namespace CoopPuzzle
         Player player, otherPlayer;
         List<GameObject> objects;
         List<NPC> npcs;
+        List<BGTile> bgTiles;
 
         RenderTarget2D renderTarget;
 
@@ -80,6 +81,20 @@ namespace CoopPuzzle
             sound = new SoundManager();
             npcs = new List<NPC>();
             objects = new List<GameObject>();
+
+            bgTiles = new List<BGTile>()
+            {
+                new BGTile(new Vector2(340+40,40+0),0,0),
+                new BGTile(new Vector2(340+40,40+40),0,1),
+                new BGTile(new Vector2(340+40,40+80),0,2),
+                new BGTile(new Vector2(340+40,40+120),0,3),
+                new BGTile(new Vector2(340+40,40+160),0,4),
+                new BGTile(new Vector2(340+80,40+0),1,0),
+                new BGTile(new Vector2(340+80,40+40),1,1),
+                new BGTile(new Vector2(340+80,40+80),1,2),
+                new BGTile(new Vector2(340+80,40+120),1,3),
+                new BGTile(new Vector2(340+80,40+160),1,4),
+            };
 
             LoadLevel();
         }
@@ -162,9 +177,10 @@ namespace CoopPuzzle
             GraphicsDevice.SetRenderTarget(renderTarget);
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin(samplerState: SamplerState.PointWrap, transformMatrix: transformMatrix);
-            spriteBatch.Draw(Content.Load<Texture2D>("ExamplePNG"), new Vector2(400, 100), Color.White);
-            spriteBatch.Draw(Assets.GrassTileSet, new Vector2(1280, 0), null, Color.White, 0, Vector2.Zero, 2, SpriteEffects.None, 0);
-            spriteBatch.Draw(Assets.StoneTileSet, new Vector2(1280 + Assets.GrassTileSet.Width * 2, 0), null, Color.White, 0, Vector2.Zero, 2, SpriteEffects.None, 0);
+            for (int i = 0; i < bgTiles.Count; i++)
+            {
+                bgTiles[i].Draw(spriteBatch);
+            }
             for (int i = 0; i < objects.Count; i++)
             {
                 if (objects[i] is WeighedSwitch)
