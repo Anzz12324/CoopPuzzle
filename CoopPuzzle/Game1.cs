@@ -18,7 +18,12 @@ global using CoopPuzzle.Npc;
 
 namespace CoopPuzzle
 {
-
+    /*
+     
+     
+            BARA BYGGA MAPEN!!!!!!!!!!
+     
+     */
     public class Game1 : Game
     {
         bool active = false, host = false, connected = false, editmodePlayer = false, netStats = false, fps = true, EditmodeUI = true;
