@@ -19,9 +19,9 @@ namespace CoopPuzzle
         {
             random = new Random();
 
-            //MediaPlayer.Play(Assets.song);
-            //MediaPlayer.IsRepeating = true;
-            //MediaPlayer.Volume = 0.25f;
+            MediaPlayer.Play(Assets.song);
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Volume = 0.25f;
         }
     }
 }
