@@ -319,6 +319,7 @@ namespace CoopPuzzle
             listener.PeerDisconnectedEvent += (fromPeer, peer) =>
             {
                 Debug.WriteLine("Lost Connection");
+                Exit();
             };
             active = true;
         }
