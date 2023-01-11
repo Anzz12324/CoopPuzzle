@@ -322,7 +322,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(296, 285);
+            this.ClientSize = new System.Drawing.Size(292, 281);
             this.ControlBox = false;
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.grpCredits);
@@ -340,6 +340,7 @@
             this.Name = "ConnectForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ConnectForm";
             this.TopMost = true;
             this.grpHost.ResumeLayout(false);
