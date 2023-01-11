@@ -158,8 +158,6 @@ namespace CoopPuzzle
 
             if (vectors[0].X == 0)
                 Pos = (vectors[0].Y > 0) ? new Vector2(Pos.X, hitbox.Bottom) : new Vector2(Pos.X, hitbox.Top - this.hitbox.Height);
-
-            Debug.WriteLine(this.hitbox);
         }
         private void TrapCollision()
         {
