@@ -30,12 +30,17 @@ namespace CoopPuzzle
             if (texNum == 0)
             {
                 tex = Assets.StoneTileSet;
-                srcRec = new Rectangle[5];
+                srcRec = new Rectangle[10];
                 srcRec[0] = new Rectangle(8,6,40,40);
                 srcRec[1] = new Rectangle(47,4,40,40);
                 srcRec[2] = new Rectangle(46,47,40,40);
                 srcRec[3] = new Rectangle(12,44,40,40);
                 srcRec[4] = new Rectangle(170,43,40,40);
+                srcRec[5] = new Rectangle(8, 6, 40, 40);
+                srcRec[6] = new Rectangle(47, 4, 40, 40);
+                srcRec[7] = new Rectangle(46, 47, 40, 40);
+                srcRec[8] = new Rectangle(12, 44, 40, 40);
+                srcRec[9] = new Rectangle(170, 43, 40, 40);
             }
             if (texNum == 1)
             {
@@ -46,6 +51,11 @@ namespace CoopPuzzle
                 srcRec[2] = new Rectangle(76,13,40,40);
                 srcRec[3] = new Rectangle(63,71,40,40);
                 srcRec[4] = new Rectangle(15,54,40,40);
+                srcRec[5] = new Rectangle(76, 13, 40, 40);
+                srcRec[6] = new Rectangle(63, 71, 40, 40);
+                srcRec[7] = new Rectangle(15, 54, 40, 40);
+                srcRec[8] = new Rectangle(76, 13, 40, 40);
+                srcRec[9] = new Rectangle(63, 71, 40, 40);
             }
         }
     }
