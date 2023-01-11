@@ -1,11 +1,11 @@
 {
   "player": {
-    "positionX": 606.66534,
-    "positionY": 1067.2869
+    "positionX": 645.19385,
+    "positionY": 1247.5527
   },
   "otherPlayer": {
-    "positionX": 659.3731,
-    "positionY": 1003.1178
+    "positionX": 659.0,
+    "positionY": 1003.0
   },
   "block": [
     {
@@ -70,6 +70,13 @@
       "height": 40.0,
       "width": 1280.0,
       "id": 4
+    },
+    {
+      "positionX": 160.0,
+      "positionY": 880.0,
+      "height": 40.0,
+      "width": 40.0,
+      "id": 0
     }
   ],
   "checkpoint": [
