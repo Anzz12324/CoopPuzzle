@@ -52,7 +52,7 @@ namespace CoopPuzzle
 
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(tex, Pos + Size / 2, srcRect, Color, rotate, Size / 2, 1f, SpriteEffects.None, 1f);
+            sb.Draw(tex, Pos + Size / 2, srcRect, Color, rotate, Size / 2, 1f, SpriteEffects.None, depth);
         }
     }
 }

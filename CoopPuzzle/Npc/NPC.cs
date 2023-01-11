@@ -85,11 +85,11 @@ namespace CoopPuzzle.Npc
         {
             if (hitbox.Intersects(p1.hitbox))
             {
-                p1.HandleCollision();
+                p1.HandleCollision(hitbox);
             }
             if (hitbox.Intersects(p1.hitbox))
             {
-                p2.HandleCollision();
+                p2.HandleCollision(hitbox);
             }
         }
 
