@@ -1,11 +1,11 @@
 {
   "player": {
-    "positionX": 645.19385,
-    "positionY": 1247.5527
+    "positionX": 1510.9182,
+    "positionY": 1810.1113
   },
   "otherPlayer": {
-    "positionX": 659.0,
-    "positionY": 1003.0
+    "positionX": 1468.0,
+    "positionY": 1800.0
   },
   "block": [
     {
@@ -69,6 +69,90 @@
       "positionY": 720.0,
       "height": 40.0,
       "width": 1280.0,
+      "id": 4
+    },
+    {
+      "positionX": 1240.0,
+      "positionY": 1440.0,
+      "height": 320.0,
+      "width": 40.0,
+      "id": 0
+    },
+    {
+      "positionX": 1240.0,
+      "positionY": 1840.0,
+      "height": 320.0,
+      "width": 40.0,
+      "id": 0
+    },
+    {
+      "positionX": 1280.0,
+      "positionY": 1440.0,
+      "height": 320.0,
+      "width": 40.0,
+      "id": 0
+    },
+    {
+      "positionX": 1280.0,
+      "positionY": 1840.0,
+      "height": 320.0,
+      "width": 40.0,
+      "id": 0
+    },
+    {
+      "positionX": 1240.0,
+      "positionY": 760.0,
+      "height": 680.0,
+      "width": 40.0,
+      "id": 4
+    },
+    {
+      "positionX": -1280.0,
+      "positionY": 720.0,
+      "height": 40.0,
+      "width": 1280.0,
+      "id": 4
+    },
+    {
+      "positionX": 0.0,
+      "positionY": 2840.0,
+      "height": 40.0,
+      "width": 1280.0,
+      "id": 4
+    },
+    {
+      "positionX": -1280.0,
+      "positionY": 2840.0,
+      "height": 40.0,
+      "width": 1280.0,
+      "id": 4
+    },
+    {
+      "positionX": -1280.0,
+      "positionY": 2160.0,
+      "height": 720.0,
+      "width": 40.0,
+      "id": 4
+    },
+    {
+      "positionX": -1280.0,
+      "positionY": 1440.0,
+      "height": 720.0,
+      "width": 40.0,
+      "id": 4
+    },
+    {
+      "positionX": -1280.0,
+      "positionY": 760.0,
+      "height": 720.0,
+      "width": 40.0,
+      "id": 4
+    },
+    {
+      "positionX": 1240.0,
+      "positionY": 2160.0,
+      "height": 680.0,
+      "width": 40.0,
       "id": 4
     }
   ],
