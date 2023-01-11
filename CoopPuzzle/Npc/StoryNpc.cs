@@ -25,10 +25,10 @@ namespace CoopPuzzle.Npc
             {
                 new string[]
                 {
-                    "   Welcome travelers!\n\nPress space to talk to\ntownspeople like me",
+                    "   Welcome travelers,\n\nPress space to talk to\ntownspeople like me.",
                     "What's that? You and\nyour friend have an\nincredibly important\nletter for the king?",
                     "It has to be delivered\nby dawn or else the\nwhole kingdom will be in\ndanger?",
-                    "Quick! Head south to\nenter the castle."
+                    "Alright, head south to\nenter the castle."
                 }
             };
             hitbox = new Rectangle((int)pos.X, (int)pos.Y + (srcRecArray[0].Height * 2 - 10), srcRecArray[0].Width * 2, 10);
