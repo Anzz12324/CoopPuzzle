@@ -38,7 +38,7 @@
             Collision(player, otherPlayer);
 
             depth = Math.Clamp((hitbox.Top - 6 - game1.camera.Position.Y) / Assets.ScreenHeight, 0, 1);
-            if (range.Intersects(player.hitbox) || range.Intersects(otherPlayer.hitbox))
+            if (range.Intersects(player.hitbox))
             {
                 if (!playerInRange)
                     playerInRange = true;
