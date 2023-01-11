@@ -316,6 +316,10 @@ namespace CoopPuzzle
             {
                 this.ping = latency;
             };
+            listener.PeerDisconnectedEvent += (fromPeer, peer) =>
+            {
+                Debug.WriteLine("Lost Connection");
+            };
             active = true;
         }
         public void Host()
