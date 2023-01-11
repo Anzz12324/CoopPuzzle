@@ -193,7 +193,13 @@ namespace CoopPuzzle
                 {
                     for (int j = 0; j < ghostRectangle.Height; j += 40)
                     {
-                        bgtiles.Add(new BGTile(new Vector2(ghostRectangle.X + i, ghostRectangle.Y + j), id % 2, Assets.random.Next(10)));
+                        Vector2 pos = new Vector2(ghostRectangle.X + i, ghostRectangle.Y + j);
+                        for (int k = 0; k < bgtiles.Count; k++)
+                        {
+                            if (bgtiles[k].Pos == pos)
+                                bgtiles.RemoveAt(k);
+                        }
+                        bgtiles.Add(new BGTile(pos, id % 2, Assets.random.Next(10)));
                     }
                 }
             }
