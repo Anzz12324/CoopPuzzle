@@ -57,11 +57,7 @@ namespace CoopPuzzle.Npc
 
         public virtual void DebugDraw(SpriteBatch sb)
         {
-            sb.DrawLine(new Vector2(range.Left, range.Top), new Vector2(range.Right, range.Top), 1, Color.White);
-            sb.DrawLine(new Vector2(range.Left, range.Top), new Vector2(range.Left, range.Bottom), 1, Color.White);
-            sb.DrawLine(new Vector2(range.Left, range.Bottom), new Vector2(range.Right, range.Bottom), 1, Color.White);
-            sb.DrawLine(new Vector2(range.Right, range.Bottom), new Vector2(range.Right, range.Top), 1, Color.White);
-
+            sb.DrawRectangle(Range, Color.White, 1, 1);
             sb.FillRectangle(Hitbox, Color.HotPink, 1);
 
             sb.DrawString(Assets.font, textNum.ToString(), new Vector2(pos.X, pos.Y - 16), Color.Black);
