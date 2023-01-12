@@ -229,7 +229,7 @@ namespace CoopPuzzle
             }
 
             if (!connected && !editmode)
-                spriteBatch.Draw(Assets.wait, new Vector2(Assets.ScreenWidth / 2 - Assets.wait.Width / 2, Assets.ScreenHeight / 2 - Assets.wait.Height),
+                spriteBatch.Draw(Assets.wait, new Vector2(Assets.ScreenWidth / 2 - Assets.wait.Width / 2, Assets.ScreenHeight / 2 - Assets.wait.Height) + camera.Position,
                     new Rectangle(0, 0, Assets.wait.Width, Assets.wait.Height), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
 
 
